@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-import json
 import re
 from dataclasses import dataclass, field
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse, urlunparse
 
 from bs4 import BeautifulSoup, Tag
 
+from .api_models import SearchApiResponse, warn_extras
 from .config import DETAIL_URL_TEMPLATE
 
 _YEAR_RE = re.compile(r"\b(?:circa\s+|c\.?\s*)?(\d{4})(?:\s*[-/]\s*(\d{4}))?\b", re.I)
@@ -150,31 +150,30 @@ def parse_search(html: str, base_url: str) -> SearchParseResult:
 def parse_search_json(
     payload: str, search_url: str, start: int = 0, limit: int = 24
 ) -> SearchParseResult:
-    body = json.loads(payload)
+    body = SearchApiResponse.model_validate_json(payload)
     results: list[SearchResult] = []
-    for raw in body.get("images", []):
-        image_id = str(raw.get("assetId", "")).strip()
-        if not image_id:
-            continue
-        date_display = raw.get("date")
+    for raw in body.images:
+        image_id = str(raw.asset_id)
+        warn_extras(raw)
+        date_display = raw.date
         circa_year, year_start, year_end = parse_date(date_display)
-        thumbnail = raw.get("url")
+        thumbnail = raw.url
         results.append(
             SearchResult(
                 source_record_id=image_id,
                 detail_url=DETAIL_URL_TEMPLATE.format(image_id=image_id),
-                title=raw.get("name"),
+                title=raw.name,
                 date_display=date_display,
                 circa_year=circa_year,
                 year_start=year_start,
                 year_end=year_end,
-                location_text=raw.get("address"),
+                location_text=raw.address,
                 thumbnail_url=urljoin(search_url, thumbnail) if thumbnail else None,
-                raw_metadata={key: str(value) for key, value in raw.items()},
+                raw_metadata=raw.model_dump(by_alias=True),
             )
         )
     next_page_url = None
-    total = int(body.get("totalImages", 0))
+    total = body.total_images or 0
     if start + limit < total:
         parsed_url = urlparse(search_url)
         query = parse_qs(parsed_url.query)

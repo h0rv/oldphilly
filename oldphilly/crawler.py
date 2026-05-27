@@ -14,7 +14,7 @@ from .config import (
     SEARCH_DATA_URL,
     Settings,
 )
-from .db import enqueue_url, init_db, reconcile_assets, upsert_asset, upsert_source_record
+from .db import enqueue_url, init_db, upsert_asset, upsert_source_record
 from .http import CrawlStop, FetchError, FetchResult, PoliteHttpClient
 from .models import CrawlPage, CrawlQueue, CrawlRun, ImageAsset, SourceRecord, utc_now
 from .parse_detail import parse_detail, parse_detail_json
@@ -267,7 +267,9 @@ class Crawler:
                     for response in responses:
                         self._record_page(session, response, "search", force_save_html=True)
                     summary.pages_fetched += len(responses)
-                self._mark_error(current, exc)
+                current.status = "failed"
+                current.last_error = f"{type(exc).__name__}: {exc}"
+                current.updated_at = utc_now()
                 session.add(current)
                 session.commit()
             summary.errors += 1
@@ -323,9 +325,6 @@ class Crawler:
                     record.thumbnail_url = existing_record.thumbnail_url
                     record.search_result_url = existing_record.search_result_url
                 stored, inserted = upsert_source_record(session, record)
-                reconcile_assets(
-                    session, record.source_record_id, {asset.asset_url for asset in assets}
-                )
                 for asset in assets:
                     upsert_asset(session, asset)
                 current.status = "parsed"

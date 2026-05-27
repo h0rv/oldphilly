@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-import json
 import re
 from datetime import UTC, datetime
 from urllib.parse import parse_qs, urljoin, urlparse
 
 from bs4 import BeautifulSoup
 
+from .api_models import DetailApiResponse, warn_extras
 from .config import DETAIL_URL_TEMPLATE
 from .models import ImageAsset, SourceRecord
 from .parse_search import parse_date
@@ -178,21 +178,34 @@ def parse_detail(html: str, url: str) -> tuple[SourceRecord, list[ImageAsset]]:
     return record, assets
 
 
+def _parse_point(point: str | None) -> tuple[float | None, float | None]:
+    if not point:
+        return None, None
+    parts = point.split(",", 1)
+    if len(parts) != 2:
+        return None, None
+    try:
+        return float(parts[0]), float(parts[1])
+    except ValueError:
+        return None, None
+
+
 def parse_detail_json(payload: str, detail_url: str) -> tuple[SourceRecord, list[ImageAsset]]:
-    body = json.loads(payload)
-    raw = body.get("assets", [{}])[0]
-    if not raw or not raw.get("assetId"):
+    body = DetailApiResponse.model_validate_json(payload)
+    if not body.assets:
         raise ValueError("detail metadata response has no asset")
-    image_id = str(raw["assetId"])
-    date_display = str(raw.get("date", "")).split("*", 1)[-1] or None
+    raw = body.assets[0]
+    warn_extras(raw)
+    image_id = str(raw.asset_id)
+    date_display = (raw.date or "").split("*", 1)[-1] or None
     circa_year, year_start, year_end = parse_date(date_display)
+    state_plane_x, state_plane_y = _parse_point(raw.point)
     assets: list[ImageAsset] = []
     image_url: str | None = None
-    for media in raw.get("medialist") or []:
-        media_id = media.get("mediaId")
-        if media_id is None:
+    for media in raw.medialist:
+        if media.media_id is None:
             continue
-        asset_url = urljoin(detail_url, f"MediaStream.ashx?mediaId={media_id}")
+        asset_url = urljoin(detail_url, f"MediaStream.ashx?mediaId={media.media_id}")
         assets.append(
             ImageAsset(
                 source_record_id=image_id,
@@ -202,14 +215,14 @@ def parse_detail_json(payload: str, detail_url: str) -> tuple[SourceRecord, list
                 reuse_status="likely_public_preview",
             )
         )
-        if media.get("mediaHasHires") is True:
+        if media.media_has_hires is True:
             hires_url = urljoin(detail_url, "HiRes.ashx")
             full_extent_url = (
-                f"{hires_url}?mediaID={media_id}&{_HIRES_WMS_COMMON}&"
+                f"{hires_url}?mediaID={media.media_id}&{_HIRES_WMS_COMMON}&"
                 f"BBOX={_HIRES_EXTENT}&WIDTH=5900&HEIGHT=5000"
             )
             tile_template_url = (
-                f"{hires_url}?mediaID={media_id}&{_HIRES_WMS_COMMON}&"
+                f"{hires_url}?mediaID={media.media_id}&{_HIRES_WMS_COMMON}&"
                 "BBOX={bbox}&WIDTH=256&HEIGHT=256"
             )
             for candidate in (full_extent_url, tile_template_url):
@@ -230,23 +243,25 @@ def parse_detail_json(payload: str, detail_url: str) -> tuple[SourceRecord, list
         source_record_id=image_id,
         canonical_url=DETAIL_URL_TEMPLATE.format(image_id=image_id),
         detail_url=detail_url,
-        title=raw.get("title"),
-        description=raw.get("desc"),
-        notes=raw.get("notes"),
-        collection=raw.get("coll"),
-        archive_id=raw.get("collId"),
+        title=raw.title,
+        description=raw.desc,
+        notes=raw.notes,
+        collection=raw.coll,
+        archive_id=raw.coll_id,
         date_display=date_display,
         circa_year=circa_year,
         year_start=year_start,
         year_end=year_end,
-        address_text=raw.get("address"),
-        location_text=raw.get("address"),
-        latitude=raw.get("lat"),
-        longitude=raw.get("lon"),
+        address_text=raw.address,
+        location_text=raw.address,
+        latitude=raw.lat,
+        longitude=raw.lon,
+        state_plane_x=state_plane_x,
+        state_plane_y=state_plane_y,
         has_digitized_media=bool(assets),
         preview_url=preview_url,
         image_url=image_url,
-        raw_metadata_json={"metadata_api": raw},
+        raw_metadata_json={"metadata_api": raw.model_dump(by_alias=True)},
         first_seen_at=now,
         last_seen_at=now,
         last_fetched_at=now,

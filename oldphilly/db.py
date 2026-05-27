@@ -69,18 +69,6 @@ def upsert_asset(session: Session, incoming: ImageAsset) -> tuple[ImageAsset, bo
     return existing, False
 
 
-def reconcile_assets(session: Session, source_record_id: str, asset_urls: set[str]) -> None:
-    existing = session.exec(
-        select(ImageAsset).where(
-            ImageAsset.source == "phillyhistory",
-            ImageAsset.source_record_id == source_record_id,
-        )
-    ).all()
-    for asset in existing:
-        if asset.asset_url not in asset_urls and asset.asset_kind != "thumbnail":
-            session.delete(asset)
-
-
 def enqueue_url(
     session: Session,
     url: str,
