@@ -24,9 +24,7 @@ def test_parse_search_finds_detail_records_and_next_page() -> None:
 
 def test_parse_live_search_api_shape_extracts_assets_and_paging() -> None:
     parsed = parse_search_json(
-        (Path(__file__).parent / "fixtures" / "search_api_sample.json").read_text(
-            encoding="utf-8"
-        ),
+        (Path(__file__).parent / "fixtures" / "search_api_sample.json").read_text(encoding="utf-8"),
         "https://www.phillyhistory.org/PhotoArchive/Search.aspx?type=area&limit=24",
         limit=24,
     )

@@ -16,6 +16,7 @@ dev = [
     "polars[pyarrow]>=1.0.0",
     "pytest>=9.0.3",
     "ruff>=0.15.14",
+    "ty>=0.0.39",
 ]
 
 [tool.pytest.ini_options]
@@ -29,3 +30,9 @@ extend-exclude = [".agents", ".codex"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.ty]
+src = { include = ["oldphilly/", "scripts/"] }
+
+[tool.ty.analysis]
+replace-imports-with-any = ["sqlalchemy.**", "bs4.**"]

@@ -26,9 +26,7 @@ TIMEOUT_SECONDS = 30.0
 MAX_RETRIES = 3
 BACKOFF_BASE_SECONDS = 5.0
 CONCURRENCY = 1
-USER_AGENT = (
-    "oldphilly-metadata-crawler/0.1; civic archival metadata index; contact: local-dev"
-)
+USER_AGENT = "oldphilly-metadata-crawler/0.1; civic archival metadata index; contact: local-dev"
 
 
 @dataclass(frozen=True)

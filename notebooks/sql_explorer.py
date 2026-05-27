@@ -75,7 +75,7 @@ def _(connection, mo):
         SELECT 'crawl_runs', COUNT(*) FROM crawl_runs
         ORDER BY table_name;
         """,
-        engine=connection
+        engine=connection,
     )
     return
 
@@ -105,7 +105,7 @@ def _(connection, mo):
         ORDER BY last_fetched_at DESC, id DESC
         LIMIT 25;
         """,
-        engine=connection
+        engine=connection,
     )
     return
 
@@ -131,7 +131,7 @@ def _(connection, mo):
         GROUP BY decade
         ORDER BY decade;
         """,
-        engine=connection
+        engine=connection,
     )
     return
 
@@ -163,7 +163,7 @@ def _(connection, mo):
         ORDER BY asset_count DESC, records.source_record_id
         LIMIT 25;
         """,
-        engine=connection
+        engine=connection,
     )
     return
 
@@ -190,7 +190,7 @@ def _(connection, mo):
         GROUP BY url_type, status
         ORDER BY url_type, status;
         """,
-        engine=connection
+        engine=connection,
     )
     return
 
@@ -223,7 +223,7 @@ def _(connection, mo):
         ORDER BY started_at DESC
         LIMIT 20;
         """,
-        engine=connection
+        engine=connection,
     )
     return
 
@@ -255,7 +255,7 @@ def _(connection, mo):
         ORDER BY circa_year, source_record_id
         LIMIT 25;
         """,
-        engine=connection
+        engine=connection,
     )
     return
 

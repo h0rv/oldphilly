@@ -40,9 +40,7 @@ def test_parse_detail_maps_fields_and_preserves_raw_metadata() -> None:
 
 def test_parse_live_detail_api_shape_stores_preview_only_and_raw_data() -> None:
     record, assets = parse_detail_json(
-        (Path(__file__).parent / "fixtures" / "detail_api_sample.json").read_text(
-            encoding="utf-8"
-        ),
+        (Path(__file__).parent / "fixtures" / "detail_api_sample.json").read_text(encoding="utf-8"),
         URL,
     )
 

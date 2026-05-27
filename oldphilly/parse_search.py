@@ -10,9 +10,7 @@ from .api_models import SearchApiResponse, warn_extras
 from .config import DETAIL_URL_TEMPLATE
 
 _YEAR_RE = re.compile(r"\b(?:circa\s+|c\.?\s*)?(\d{4})(?:\s*[-/]\s*(\d{4}))?\b", re.I)
-_TYPED_DATE_RE = re.compile(
-    r"^\s*(?:circa\s+|c\.?\s*)?(\d{4})(?:\s*[-/]\s*(\d{4}))?\s*$", re.I
-)
+_TYPED_DATE_RE = re.compile(r"^\s*(?:circa\s+|c\.?\s*)?(\d{4})(?:\s*[-/]\s*(\d{4}))?\s*$", re.I)
 _FULL_DATE_RE = re.compile(r"^\s*\d{1,2}/\d{1,2}/(\d{4})\s*$")
 
 

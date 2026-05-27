@@ -56,13 +56,15 @@ class Crawler:
     def __exit__(self, *args: object) -> None:
         self.close()
 
-    def _start_run(self, mode: str, seed: str | None) -> CrawlRun:
+    def _start_run(self, mode: str, seed: str | None) -> int:
         with Session(self.engine) as session:
             run = CrawlRun(mode=mode, seed=seed)
             session.add(run)
             session.commit()
             session.refresh(run)
-            return run
+            if run.id is None:
+                raise RuntimeError("CrawlRun was not assigned an id after commit")
+            return run.id
 
     def _finish_run(self, run_id: int, summary: CrawlSummary) -> CrawlSummary:
         with Session(self.engine) as session:
@@ -360,7 +362,7 @@ class Crawler:
     def one_detail(self, image_id: str) -> CrawlSummary:
         url = DETAIL_URL_TEMPLATE.format(image_id=image_id)
         summary = CrawlSummary(mode="one-detail")
-        run = self._start_run(summary.mode, url)
+        run_id = self._start_run(summary.mode, url)
         with Session(self.engine) as session:
             queue = self._queue_for_url(session, url, "detail", image_id)
             session.commit()
@@ -371,23 +373,23 @@ class Crawler:
         except CrawlStop as exc:
             summary.stopped_reason = str(exc)
             summary.errors += 1
-        return self._finish_run(run.id, summary)
+        return self._finish_run(run_id, summary)
 
     def one_search(self, seed_url: str = DEFAULT_SEARCH_URL) -> CrawlSummary:
         summary = CrawlSummary(mode="one-search")
-        run = self._start_run(summary.mode, seed_url)
+        run_id = self._start_run(summary.mode, seed_url)
         try:
             self._fetch_search(seed_url, summary)
         except CrawlStop as exc:
             summary.stopped_reason = str(exc)
             summary.errors += 1
-        return self._finish_run(run.id, summary)
+        return self._finish_run(run_id, summary)
 
     def sample(
         self, max_search_pages: int, max_details: int, seed_url: str = DEFAULT_SEARCH_URL
     ) -> CrawlSummary:
         summary = CrawlSummary(mode="sample")
-        run = self._start_run(summary.mode, seed_url)
+        run_id = self._start_run(summary.mode, seed_url)
         url: str | None = seed_url
         try:
             for _ in range(max_search_pages):
@@ -398,17 +400,17 @@ class Crawler:
         except CrawlStop as exc:
             summary.stopped_reason = str(exc)
             summary.errors += 1
-        return self._finish_run(run.id, summary)
+        return self._finish_run(run_id, summary)
 
     def details(self, max_details: int) -> CrawlSummary:
         summary = CrawlSummary(mode="details")
-        run = self._start_run(summary.mode, None)
+        run_id = self._start_run(summary.mode, None)
         try:
             self._process_pending_details(max_details, summary)
         except CrawlStop as exc:
             summary.stopped_reason = str(exc)
             summary.errors += 1
-        return self._finish_run(run.id, summary)
+        return self._finish_run(run_id, summary)
 
     def _process_pending_details(self, limit: int, summary: CrawlSummary) -> None:
         with Session(self.engine) as session:

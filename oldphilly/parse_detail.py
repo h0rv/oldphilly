@@ -13,8 +13,7 @@ from .parse_search import parse_date
 
 _KEY_NORMALIZE_RE = re.compile(r"[^a-z0-9]+")
 _HIRES_WMS_COMMON = (
-    "SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=&STYLES=&"
-    "FORMAT=image/jpeg&SRS=EPSG:4326"
+    "SERVICE=WMS&VERSION=1.1.1&REQUEST=GetMap&LAYERS=&STYLES=&FORMAT=image/jpeg&SRS=EPSG:4326"
 )
 _HIRES_EXTENT = "0,0,5900,5000"
 
