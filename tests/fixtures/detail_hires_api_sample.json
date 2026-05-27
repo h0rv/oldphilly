@@ -1,0 +1,15 @@
+{
+  "assets": [
+    {
+      "assetId": 99999,
+      "date": "Date*1912",
+      "title": "Public high-resolution viewer example",
+      "medialist": [
+        {
+          "mediaId": 12345,
+          "mediaHasHires": true
+        }
+      ]
+    }
+  ]
+}

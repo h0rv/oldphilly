@@ -1,0 +1,24 @@
+{
+  "assets": [
+    {
+      "assetId": 45557,
+      "date": "Date*12/23/1912",
+      "address": "N 22nd St and Brown St",
+      "point": "-8368315.17559498,4861524.13428759",
+      "medialist": [
+        {
+          "mediaId": 21341,
+          "mediaIsForSale": true
+        }
+      ],
+      "notes": "",
+      "desc": "Alexander D. Bache School--Medical Inspection Branch. ",
+      "title": "Alexander D. Bache School--Medical Inspection Branch",
+      "coll": "DOR Archives",
+      "collId": "Schools-2629-0-",
+      "lon": -75.1738542456631,
+      "lat": 39.9695897905185,
+      "extraSourceField": "preserve this"
+    }
+  ]
+}

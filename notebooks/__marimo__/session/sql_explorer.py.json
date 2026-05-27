@@ -1,0 +1,230 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.8",
+    "script_metadata_hash": "3bdf3d7213e8a6701d469365f5df5801"
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "51271947243720b8b0fbf706d4f4f04d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "9332575350214c70b448f187c999b491",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"old-philly-sqlite-explorer\">Old Philly SQLite explorer</h1>\n<span class=\"paragraph\">Read-only queries against the crawler database using marimo's SQL support.\nEach result cell is regular SQL and can be edited or duplicated for spot checks.</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "b04498add66d119629eb65df0fbb24f3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\"><strong>Database:</strong> <code>/home/h0rv/projects/oldphilly/data/oldphilly.sqlite</code></span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "ac72c586768f581ce5e8f0d6332ff5a2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "05d3db4ceb697886040b3df3b7e33918",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"table-inventory\">Table inventory</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "d8765f17780d65f529f253104521ab67",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='PKri-0' random-id='c71bf16b-0b64-9eee-57c6-206c9378798b'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;table_name&#92;&quot;:&#92;&quot;crawl_pages&#92;&quot;,&#92;&quot;row_count&#92;&quot;:13},{&#92;&quot;table_name&#92;&quot;:&#92;&quot;crawl_queue&#92;&quot;,&#92;&quot;row_count&#92;&quot;:51},{&#92;&quot;table_name&#92;&quot;:&#92;&quot;crawl_runs&#92;&quot;,&#92;&quot;row_count&#92;&quot;:7},{&#92;&quot;table_name&#92;&quot;:&#92;&quot;image_assets&#92;&quot;,&#92;&quot;row_count&#92;&quot;:50},{&#92;&quot;table_name&#92;&quot;:&#92;&quot;source_records&#92;&quot;,&#92;&quot;row_count&#92;&quot;:2}]&quot;' data-total-rows='5' data-size-bytes='222' data-total-columns='2' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;table_name&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;row_count&quot;,[&quot;integer&quot;,&quot;i64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "42e6f230040df44c194239b8ef5b83dc",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"recent-source-records\">Recent source records</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "2c1170680cec64c0d4dac305901205aa",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='SFPL-0' random-id='121415b1-0f31-0bd2-ac82-01e7a35f7556'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;source_record_id&#92;&quot;:&#92;&quot;45557&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Alexander D. Bache School--Medical Inspection Branch&#92;&quot;,&#92;&quot;date_display&#92;&quot;:&#92;&quot;12/23/1912&#92;&quot;,&#92;&quot;circa_year&#92;&quot;:1912,&#92;&quot;address_text&#92;&quot;:&#92;&quot;N 22nd St and Brown St&#92;&quot;,&#92;&quot;neighborhood&#92;&quot;:null,&#92;&quot;has_digitized_media&#92;&quot;:1,&#92;&quot;last_fetched_at&#92;&quot;:&#92;&quot;2026-05-27 15:49:42.016228&#92;&quot;},{&#92;&quot;source_record_id&#92;&quot;:&#92;&quot;6958&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Line in City Hall Court Yard - People Waiting to Pay Water Rent&#92;&quot;,&#92;&quot;date_display&#92;&quot;:&#92;&quot;5/31/1913&#92;&quot;,&#92;&quot;circa_year&#92;&quot;:1913,&#92;&quot;address_text&#92;&quot;:&#92;&quot;City Hall&#92;&quot;,&#92;&quot;neighborhood&#92;&quot;:null,&#92;&quot;has_digitized_media&#92;&quot;:1,&#92;&quot;last_fetched_at&#92;&quot;:&#92;&quot;2026-05-27 15:42:53.511615&#92;&quot;}]&quot;' data-total-rows='2' data-size-bytes='535' data-total-columns='8' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;source_record_id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;title&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;date_display&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;circa_year&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;address_text&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;neighborhood&quot;,[&quot;unknown&quot;,&quot;null&quot;]],[&quot;has_digitized_media&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;last_fetched_at&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "99e3332eb95ffdcfde0e5485771d1560",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"decade-spot-check\">Decade spot check</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "27d74bad3d164033c9c8175ba0e71ac2",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='RGSE-0' random-id='abe59ed4-ce49-9a0a-bd9e-97150beb31c0'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;decade&#92;&quot;:1910,&#92;&quot;records&#92;&quot;:2,&#92;&quot;digitized_records&#92;&quot;:2}]&quot;' data-total-rows='1' data-size-bytes='51' data-total-columns='3' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;decade&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;records&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;digitized_records&quot;,[&quot;integer&quot;,&quot;i64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "3829bf61158686f4dcee0047c3d27505",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"records-and-discovered-image-assets\">Records and discovered image assets</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "e35a4675af1b2137024e2f1507dd5c19",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='emfo-0' random-id='4523a547-839f-4c00-acd0-18120fb718e0'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;source_record_id&#92;&quot;:&#92;&quot;6958&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Line in City Hall Court Yard - People Waiting to Pay Water Rent&#92;&quot;,&#92;&quot;asset_count&#92;&quot;:2,&#92;&quot;thumbnails&#92;&quot;:1,&#92;&quot;previews&#92;&quot;:1,&#92;&quot;full_candidates&#92;&quot;:0},{&#92;&quot;source_record_id&#92;&quot;:&#92;&quot;45557&#92;&quot;,&#92;&quot;title&#92;&quot;:&#92;&quot;Alexander D. Bache School--Medical Inspection Branch&#92;&quot;,&#92;&quot;asset_count&#92;&quot;:1,&#92;&quot;thumbnails&#92;&quot;:0,&#92;&quot;previews&#92;&quot;:1,&#92;&quot;full_candidates&#92;&quot;:0}]&quot;' data-total-rows='2' data-size-bytes='323' data-total-columns='6' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;source_record_id&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;title&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;asset_count&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;thumbnails&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;previews&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;full_candidates&quot;,[&quot;integer&quot;,&quot;i64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "647735f372812789fb7e71c25a2c466b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"crawl-queue-status\">Crawl queue status</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "2f654fc58b14a6ec6b1dd8b145a7892b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='nWHF-0' random-id='17396e3d-4570-2764-c52f-96a7c4a623eb'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;url_type&#92;&quot;:&#92;&quot;detail&#92;&quot;,&#92;&quot;status&#92;&quot;:&#92;&quot;parsed&#92;&quot;,&#92;&quot;queued_urls&#92;&quot;:2,&#92;&quot;attempts&#92;&quot;:4,&#92;&quot;most_recent_attempt&#92;&quot;:&#92;&quot;2026-05-27 15:49:40.025519&#92;&quot;},{&#92;&quot;url_type&#92;&quot;:&#92;&quot;detail&#92;&quot;,&#92;&quot;status&#92;&quot;:&#92;&quot;pending&#92;&quot;,&#92;&quot;queued_urls&#92;&quot;:47,&#92;&quot;attempts&#92;&quot;:0,&#92;&quot;most_recent_attempt&#92;&quot;:null},{&#92;&quot;url_type&#92;&quot;:&#92;&quot;search&#92;&quot;,&#92;&quot;status&#92;&quot;:&#92;&quot;parsed&#92;&quot;,&#92;&quot;queued_urls&#92;&quot;:2,&#92;&quot;attempts&#92;&quot;:3,&#92;&quot;most_recent_attempt&#92;&quot;:&#92;&quot;2026-05-27 15:47:40.504492&#92;&quot;}]&quot;' data-total-rows='3' data-size-bytes='339' data-total-columns='5' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;url_type&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;status&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;queued_urls&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;attempts&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;most_recent_attempt&quot;,[&quot;string&quot;,&quot;str&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "iLit",
+      "code_hash": "00ade78d6c459faa5a3ad51104a27ee8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"crawl-run-history\">Crawl run history</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "d8e7fa645988f5b9107404940ad453b3",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='ZHCJ-0' random-id='3d8e3ca7-fbfd-b332-cf4d-4ce36127c519'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;id&#92;&quot;:7,&#92;&quot;started_at&#92;&quot;:&#92;&quot;2026-05-27 15:49:39.977799&#92;&quot;,&#92;&quot;finished_at&#92;&quot;:&#92;&quot;2026-05-27 15:49:42.072335&#92;&quot;,&#92;&quot;mode&#92;&quot;:&#92;&quot;one-detail&#92;&quot;,&#92;&quot;seed&#92;&quot;:&#92;&quot;https://www.phillyhistory.org/PhotoArchive/detail.aspx?ImageId=45557&#92;&quot;,&#92;&quot;records_discovered&#92;&quot;:0,&#92;&quot;records_inserted&#92;&quot;:0,&#92;&quot;records_updated&#92;&quot;:1,&#92;&quot;pages_fetched&#92;&quot;:2,&#92;&quot;errors&#92;&quot;:0,&#92;&quot;stopped_reason&#92;&quot;:null},{&#92;&quot;id&#92;&quot;:6,&#92;&quot;started_at&#92;&quot;:&#92;&quot;2026-05-27 15:47:40.470177&#92;&quot;,&#92;&quot;finished_at&#92;&quot;:&#92;&quot;2026-05-27 15:47:44.245675&#92;&quot;,&#92;&quot;mode&#92;&quot;:&#92;&quot;one-search&#92;&quot;,&#92;&quot;seed&#92;&quot;:&#92;&quot;https://www.phillyhistory.org/PhotoArchive/Search.aspx?type=area&amp;minx=-8395000&amp;miny=4835000&amp;maxx=-8340000&amp;maxy=4885000&amp;limit=24&#92;&quot;,&#92;&quot;records_discovered&#92;&quot;:24,&#92;&quot;records_inserted&#92;&quot;:0,&#92;&quot;records_updated&#92;&quot;:0,&#92;&quot;pages_fetched&#92;&quot;:3,&#92;&quot;errors&#92;&quot;:0,&#92;&quot;stopped_reason&#92;&quot;:null},{&#92;&quot;id&#92;&quot;:5,&#92;&quot;started_at&#92;&quot;:&#92;&quot;2026-05-27 15:42:51.469250&#92;&quot;,&#92;&quot;finished_at&#92;&quot;:&#92;&quot;2026-05-27 15:42:53.547739&#92;&quot;,&#92;&quot;mode&#92;&quot;:&#92;&quot;details&#92;&quot;,&#92;&quot;seed&#92;&quot;:null,&#92;&quot;records_discovered&#92;&quot;:0,&#92;&quot;records_inserted&#92;&quot;:1,&#92;&quot;records_updated&#92;&quot;:0,&#92;&quot;pages_fetched&#92;&quot;:2,&#92;&quot;errors&#92;&quot;:0,&#92;&quot;stopped_reason&#92;&quot;:null},{&#92;&quot;id&#92;&quot;:4,&#92;&quot;started_at&#92;&quot;:&#92;&quot;2026-05-27 15:42:36.924762&#92;&quot;,&#92;&quot;finished_at&#92;&quot;:&#92;&quot;2026-05-27 15:42:39.285254&#92;&quot;,&#92;&quot;mode&#92;&quot;:&#92;&quot;one-search&#92;&quot;,&#92;&quot;seed&#92;&quot;:&#92;&quot;https://www.phillyhistory.org/PhotoArchive/Search.aspx?type=area&amp;minx=-8395000&amp;miny=4835000&amp;maxx=-8340000&amp;maxy=4885000&amp;limit=24&#92;&quot;,&#92;&quot;records_discovered&#92;&quot;:24,&#92;&quot;records_inserted&#92;&quot;:0,&#92;&quot;records_updated&#92;&quot;:0,&#92;&quot;pages_fetched&#92;&quot;:2,&#92;&quot;errors&#92;&quot;:0,&#92;&quot;stopped_reason&#92;&quot;:null},{&#92;&quot;id&#92;&quot;:3,&#92;&quot;started_at&#92;&quot;:&#92;&quot;2026-05-27 15:42:23.118647&#92;&quot;,&#92;&quot;finished_at&#92;&quot;:&#92;&quot;2026-05-27 15:42:25.630692&#92;&quot;,&#92;&quot;mode&#92;&quot;:&#92;&quot;one-detail&#92;&quot;,&#92;&quot;seed&#92;&quot;:&#92;&quot;https://www.phillyhistory.org/PhotoArchive/detail.aspx?ImageId=45557&#92;&quot;,&#92;&quot;records_discovered&#92;&quot;:0,&#92;&quot;records_inserted&#92;&quot;:0,&#92;&quot;records_updated&#92;&quot;:1,&#92;&quot;pages_fetched&#92;&quot;:2,&#92;&quot;errors&#92;&quot;:0,&#92;&quot;stopped_reason&#92;&quot;:null},{&#92;&quot;id&#92;&quot;:2,&#92;&quot;started_at&#92;&quot;:&#92;&quot;2026-05-27 15:33:08.701174&#92;&quot;,&#92;&quot;finished_at&#92;&quot;:&#92;&quot;2026-05-27 15:33:08.956848&#92;&quot;,&#92;&quot;mode&#92;&quot;:&#92;&quot;one-search&#92;&quot;,&#92;&quot;seed&#92;&quot;:&#92;&quot;https://www.phillyhistory.org/PhotoArchive/Search.aspx&#92;&quot;,&#92;&quot;records_discovered&#92;&quot;:0,&#92;&quot;records_inserted&#92;&quot;:0,&#92;&quot;records_updated&#92;&quot;:0,&#92;&quot;pages_fetched&#92;&quot;:1,&#92;&quot;errors&#92;&quot;:0,&#92;&quot;stopped_reason&#92;&quot;:null},{&#92;&quot;id&#92;&quot;:1,&#92;&quot;started_at&#92;&quot;:&#92;&quot;2026-05-27 15:32:52.694177&#92;&quot;,&#92;&quot;finished_at&#92;&quot;:&#92;&quot;2026-05-27 15:32:53.010093&#92;&quot;,&#92;&quot;mode&#92;&quot;:&#92;&quot;one-detail&#92;&quot;,&#92;&quot;seed&#92;&quot;:&#92;&quot;https://www.phillyhistory.org/PhotoArchive/detail.aspx?ImageId=45557&#92;&quot;,&#92;&quot;records_discovered&#92;&quot;:0,&#92;&quot;records_inserted&#92;&quot;:1,&#92;&quot;records_updated&#92;&quot;:0,&#92;&quot;pages_fetched&#92;&quot;:1,&#92;&quot;errors&#92;&quot;:0,&#92;&quot;stopped_reason&#92;&quot;:null}]&quot;' data-total-rows='7' data-size-bytes='2187' data-total-columns='11' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;id&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;started_at&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;finished_at&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;mode&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;seed&quot;,[&quot;string&quot;,&quot;str&quot;]],[&quot;records_discovered&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;records_inserted&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;records_updated&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;pages_fetched&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;errors&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;stopped_reason&quot;,[&quot;unknown&quot;,&quot;null&quot;]]]' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "97995766ee12923a1b86bff2bd52cae7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"useful-scratch-queries\">Useful scratch queries</h2>\n<span class=\"paragraph\">Duplicate a SQL cell above and try one of these filters:</span>\n<div class=\"language-sql codehilite\"><pre><span></span><code><span class=\"k\">WHERE</span><span class=\"w\"> </span><span class=\"n\">title</span><span class=\"w\"> </span><span class=\"k\">LIKE</span><span class=\"w\"> </span><span class=\"s1\">&#39;%City Hall%&#39;</span>\n<span class=\"k\">WHERE</span><span class=\"w\"> </span><span class=\"n\">circa_year</span><span class=\"w\"> </span><span class=\"k\">BETWEEN</span><span class=\"w\"> </span><span class=\"mi\">1900</span><span class=\"w\"> </span><span class=\"k\">AND</span><span class=\"w\"> </span><span class=\"mi\">1920</span>\n<span class=\"k\">WHERE</span><span class=\"w\"> </span><span class=\"n\">latitude</span><span class=\"w\"> </span><span class=\"k\">IS</span><span class=\"w\"> </span><span class=\"k\">NOT</span><span class=\"w\"> </span><span class=\"k\">NULL</span><span class=\"w\"> </span><span class=\"k\">AND</span><span class=\"w\"> </span><span class=\"n\">longitude</span><span class=\"w\"> </span><span class=\"k\">IS</span><span class=\"w\"> </span><span class=\"k\">NOT</span><span class=\"w\"> </span><span class=\"k\">NULL</span>\n<span class=\"k\">WHERE</span><span class=\"w\"> </span><span class=\"n\">last_error</span><span class=\"w\"> </span><span class=\"k\">IS</span><span class=\"w\"> </span><span class=\"k\">NOT</span><span class=\"w\"> </span><span class=\"k\">NULL</span>\n</code></pre></div></span>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

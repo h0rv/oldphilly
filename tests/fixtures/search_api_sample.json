@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "totalImages": 25,
+  "images": [
+    {
+      "name": "Line in City Hall Court Yard - People Waiting to Pay Water Rent",
+      "address": "City Hall",
+      "date": "1913",
+      "url": "MediaStream.ashx?mediaId=19896",
+      "assetId": 6958
+    },
+    {
+      "name": "Alexander D. Bache School--Medical Inspection Branch",
+      "address": "N 22nd St and Brown St",
+      "date": "12/23/1912",
+      "url": "MediaStream.ashx?mediaId=21341",
+      "assetId": 45557
+    }
+  ]
+}
