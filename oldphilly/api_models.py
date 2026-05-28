@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import logging
+from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field
+from bs4 import BeautifulSoup
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +46,27 @@ class MediaItem(BaseModel):
     media_purchase_link: str | None = Field(default=None, alias="mediaPurchaseLink")
 
 
+class RelatedLink(BaseModel):
+    model_config = ConfigDict(populate_by_name=True, extra="allow")
+
+    text: str | None = None
+    href: str | None = None
+
+
+def _parse_related_links_html(html: str) -> list[dict[str, str | None]]:
+    soup = BeautifulSoup(html, "html.parser")
+    links: list[dict[str, str | None]] = []
+    for anchor in soup.find_all("a"):
+        text = anchor.get_text(" ", strip=True) or None
+        href = str(anchor.get("href")) if anchor.get("href") else None
+        if text or href:
+            links.append({"text": text, "href": href})
+    if links:
+        return links
+    text = soup.get_text(" ", strip=True) or None
+    return [{"text": text, "href": None}] if text else []
+
+
 class DetailAsset(BaseModel):
     model_config = ConfigDict(populate_by_name=True, extra="allow")
 
@@ -61,7 +84,8 @@ class DetailAsset(BaseModel):
     lat: float | None = None
     tags: str | None = None
     series: str | None = None
-    related_list: list | None = Field(default=None, alias="relatedList")
+    related_list: list[RelatedLink] | None = Field(default=None, alias="relatedList")
+    related_list_raw_html: str | None = Field(default=None, alias="relatedListRawHtml")
     tab: str | None = None
     city: str | None = None
     country: str | None = None
@@ -78,6 +102,19 @@ class DetailAsset(BaseModel):
     use_sv: bool | None = Field(default=None, alias="useSV")
     allow_comments: bool | None = Field(default=None, alias="allowComments")
     comment_list: list | None = Field(default=None, alias="commentList")
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_related_list(cls, data: Any) -> Any:
+        if not isinstance(data, dict):
+            return data
+        related = data.get("relatedList")
+        if isinstance(related, str):
+            normalized = dict(data)
+            normalized["relatedListRawHtml"] = related
+            normalized["relatedList"] = _parse_related_links_html(related)
+            return normalized
+        return data
 
 
 class DetailApiResponse(BaseModel):

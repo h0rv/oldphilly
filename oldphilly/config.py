@@ -20,12 +20,12 @@ DEFAULT_SEARCH_PARAMS = {
 DEFAULT_SEARCH_URL = f"{SEARCH_URL}?{urlencode(DEFAULT_SEARCH_PARAMS)}"
 ALLOWED_HOSTS = frozenset({"www.phillyhistory.org", "phillyhistory.org"})
 
-REQUEST_DELAY_SECONDS = 1.5
-REQUEST_JITTER_SECONDS = 0.75
+REQUEST_DELAY_SECONDS = 0.35
+REQUEST_JITTER_SECONDS = 0.05
 TIMEOUT_SECONDS = 30.0
 MAX_RETRIES = 3
 BACKOFF_BASE_SECONDS = 5.0
-CONCURRENCY = 1
+CONCURRENCY = 4
 USER_AGENT = "oldphilly-metadata-crawler/0.1; civic archival metadata index; contact: local-dev"
 
 
@@ -37,6 +37,7 @@ class Settings:
     timeout_seconds: float = TIMEOUT_SECONDS
     max_retries: int = MAX_RETRIES
     backoff_base_seconds: float = BACKOFF_BASE_SECONDS
+    concurrency: int = CONCURRENCY
     user_agent: str = USER_AGENT
     save_html: bool = False
 

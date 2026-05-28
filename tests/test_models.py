@@ -10,6 +10,7 @@ from oldphilly.config import DEFAULT_SEARCH_URL, DETAIL_DATA_URL, SEARCH_DATA_UR
 from oldphilly.crawler import Crawler
 from oldphilly.db import init_db, upsert_source_record
 from oldphilly.http import PoliteHttpClient
+from oldphilly.maintenance import requeue_failed_details, requeue_stale_fetching_details
 from oldphilly.models import CrawlQueue, ImageAsset, SourceRecord
 
 FIXTURES = Path(__file__).parent / "fixtures"
@@ -59,6 +60,73 @@ def test_source_record_upsert_preserves_unique_row_and_first_seen(tmp_path: Path
     assert len(rows) == 1
     assert second.title == "Updated"
     assert second.first_seen_at == first_seen
+
+
+def test_requeue_failed_details_resets_matching_failed_rows(tmp_path: Path) -> None:
+    engine = init_db(_settings(tmp_path))
+    with Session(engine) as session:
+        session.add(
+            CrawlQueue(
+                url="https://www.phillyhistory.org/PhotoArchive/detail.aspx?ImageId=1",
+                url_type="detail",
+                source_record_id="1",
+                status="failed",
+                attempts=3,
+                last_error="ValidationError: relatedList",
+            )
+        )
+        session.add(
+            CrawlQueue(
+                url="https://www.phillyhistory.org/PhotoArchive/detail.aspx?ImageId=2",
+                url_type="detail",
+                source_record_id="2",
+                status="failed",
+                attempts=3,
+                last_error="FetchError: HTTP 500",
+            )
+        )
+        session.commit()
+
+        count = requeue_failed_details(session, "relatedList")
+        session.commit()
+        rows = session.exec(select(CrawlQueue).order_by(CrawlQueue.source_record_id)).all()
+
+    assert count == 1
+    assert rows[0].status == "pending"
+    assert rows[0].attempts == 0
+    assert rows[0].last_error is None
+    assert rows[1].status == "failed"
+
+
+def test_requeue_stale_fetching_details_resets_old_fetching_rows(tmp_path: Path) -> None:
+    engine = init_db(_settings(tmp_path))
+    with Session(engine) as session:
+        fresh = CrawlQueue(
+            url="https://www.phillyhistory.org/PhotoArchive/detail.aspx?ImageId=1",
+            url_type="detail",
+            source_record_id="1",
+            status="fetching",
+        )
+        stale = CrawlQueue(
+            url="https://www.phillyhistory.org/PhotoArchive/detail.aspx?ImageId=2",
+            url_type="detail",
+            source_record_id="2",
+            status="fetching",
+        )
+        session.add(fresh)
+        session.add(stale)
+        session.commit()
+        stale.updated_at = stale.updated_at.replace(year=2000)
+        session.add(stale)
+        session.commit()
+
+        count = requeue_stale_fetching_details(session, older_than_minutes=30)
+        session.commit()
+        rows = session.exec(select(CrawlQueue).order_by(CrawlQueue.source_record_id)).all()
+
+    assert count == 1
+    assert rows[0].status == "fetching"
+    assert rows[1].status == "pending"
 
 
 def test_sample_crawl_is_idempotent_and_does_not_fetch_assets(tmp_path: Path) -> None:
@@ -159,3 +227,64 @@ def test_one_search_page_can_supply_25_bounded_detail_records(tmp_path: Path) ->
     assert rerun.records_inserted == 0
     assert len(records) == 48
     assert len({record.source_record_id for record in records}) == 48
+
+
+def test_full_crawl_exhausts_search_pages_and_detail_queue(tmp_path: Path) -> None:
+    search_html = "<html><script src='AllSearch-min.js'></script></html>"
+    detail_html = "<html><script src='AllDetail-min.js'></script></html>"
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        params = parse_qs(request.content.decode()) if request.content else {}
+        if str(request.url) == SEARCH_DATA_URL:
+            offset = int(params["start"][0])
+            images = []
+            if offset < 4:
+                images = [
+                    {"assetId": value, "name": f"Record {value}", "date": "1912"}
+                    for value in range(offset + 1, min(offset + 3, 5))
+                ]
+            return httpx.Response(
+                200,
+                text=json.dumps({"success": True, "totalImages": 4, "images": images}),
+                request=request,
+            )
+        if str(request.url) == DETAIL_DATA_URL:
+            image_id = int(params["assetId"][0])
+            return httpx.Response(
+                200,
+                text=json.dumps(
+                    {
+                        "assets": [
+                            {
+                                "assetId": image_id,
+                                "date": "Date*1912",
+                                "title": f"Record {image_id}",
+                                "medialist": [],
+                            }
+                        ]
+                    }
+                ),
+                request=request,
+            )
+        if "Search.aspx" in str(request.url):
+            return httpx.Response(200, text=search_html, request=request)
+        return httpx.Response(200, text=detail_html, request=request)
+
+    seed_url = DEFAULT_SEARCH_URL.replace("limit=24", "limit=2")
+    settings = _settings(tmp_path)
+    polite = PoliteHttpClient(settings, client=httpx.Client(transport=httpx.MockTransport(handler)))
+    with Crawler(settings, polite) as crawler:
+        summary = crawler.full(seed_url)
+        with Session(crawler.engine) as session:
+            records = session.exec(select(SourceRecord)).all()
+            pending = session.exec(
+                select(CrawlQueue).where(
+                    CrawlQueue.url_type == "detail",
+                    CrawlQueue.status.in_(["pending", "retry"]),  # type: ignore[union-attr]
+                )
+            ).all()
+
+    assert summary.records_discovered == 4
+    assert summary.records_inserted == 4
+    assert len(records) == 4
+    assert pending == []

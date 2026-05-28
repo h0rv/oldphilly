@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import random
+import threading
 import time
 from dataclasses import dataclass
 from urllib.parse import urlparse
@@ -43,6 +44,8 @@ class PoliteHttpClient:
         self._owns_client = client is None
         self._last_request_at: float | None = None
         self._bad_status_counts: dict[int, int] = {}
+        self._request_start_lock = threading.Lock()
+        self._bad_status_lock = threading.Lock()
 
     def close(self) -> None:
         if self._owns_client:
@@ -59,26 +62,25 @@ class PoliteHttpClient:
         if parsed.scheme != "https" or parsed.hostname not in ALLOWED_HOSTS:
             raise ValueError(f"URL is not an allowed public PhillyHistory URL: {url}")
 
-    def _delay(self) -> None:
-        if self._last_request_at is None:
-            return
-        delay = self.settings.request_delay_seconds + random.uniform(
-            0, self.settings.request_jitter_seconds
-        )
-        remaining = delay - (time.monotonic() - self._last_request_at)
-        if remaining > 0:
-            time.sleep(remaining)
+    def _wait_for_request_slot(self) -> None:
+        with self._request_start_lock:
+            if self._last_request_at is not None:
+                delay = self.settings.request_delay_seconds + random.uniform(
+                    0, self.settings.request_jitter_seconds
+                )
+                remaining = delay - (time.monotonic() - self._last_request_at)
+                if remaining > 0:
+                    time.sleep(remaining)
+            self._last_request_at = time.monotonic()
 
     def _request(self, method: str, url: str, data: dict[str, str] | None = None) -> FetchResult:
         self._validate_url(url)
         last_error: Exception | None = None
         for attempt in range(self.settings.max_retries):
-            self._delay()
+            self._wait_for_request_slot()
             try:
                 response = self.client.request(method, url, data=data)
-                self._last_request_at = time.monotonic()
             except (httpx.TimeoutException, httpx.NetworkError) as exc:
-                self._last_request_at = time.monotonic()
                 last_error = exc
                 if attempt + 1 < self.settings.max_retries:
                     time.sleep(self.settings.backoff_base_seconds * (2**attempt))
@@ -92,8 +94,9 @@ class PoliteHttpClient:
             ):
                 raise CrawlStop(f"blocked by challenge or login page at {url}")
             if response.status_code in STOP_STATUSES:
-                count = self._bad_status_counts.get(response.status_code, 0) + 1
-                self._bad_status_counts[response.status_code] = count
+                with self._bad_status_lock:
+                    count = self._bad_status_counts.get(response.status_code, 0) + 1
+                    self._bad_status_counts[response.status_code] = count
                 if count >= 2:
                     raise CrawlStop(f"repeated HTTP {response.status_code} responses")
             if (

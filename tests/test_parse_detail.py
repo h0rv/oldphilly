@@ -68,3 +68,33 @@ def test_parse_hires_media_stores_wms_candidate_and_tile_template_uris() -> None
     hires = [asset.asset_url for asset in assets if asset.asset_kind == "full_candidate"]
     assert len(hires) == 2
     assert any("BBOX={bbox}&WIDTH=256&HEIGHT=256" in url for url in hires)
+
+
+def test_parse_detail_api_accepts_related_list_html_string() -> None:
+    payload = """
+    {
+      "assets": [
+        {
+          "assetId": 103136,
+          "date": "Date*1900",
+          "title": "Related List String",
+          "relatedList": "<a href='./Search.aspx?topic=1'>William Penn</a>",
+          "medialist": [
+            {
+              "mediaId": 1,
+              "mediaIsForSale": true,
+              "mediaHasHires": false
+            }
+          ]
+        }
+      ]
+    }
+    """
+    record, assets = parse_detail_json(payload, URL)
+
+    assert record.source_record_id == "103136"
+    assert assets[0].asset_kind == "preview"
+    assert record.raw_metadata_json["metadata_api"]["relatedList"] == [
+        {"text": "William Penn", "href": "./Search.aspx?topic=1"}
+    ]
+    assert record.raw_metadata_json["metadata_api"]["relatedListRawHtml"].startswith("<a href=")

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine, select
 
 from .config import Settings
@@ -10,7 +11,20 @@ _ASSET_KIND_PRIORITY = {"unknown": 0, "thumbnail": 1, "preview": 2, "full_candid
 
 def build_engine(settings: Settings):
     settings.create_data_dirs()
-    return create_engine(settings.database_url, connect_args={"check_same_thread": False})
+    engine = create_engine(
+        settings.database_url,
+        connect_args={"check_same_thread": False, "timeout": 30},
+    )
+
+    @event.listens_for(engine, "connect")
+    def set_sqlite_pragmas(dbapi_connection, _connection_record):
+        cursor = dbapi_connection.cursor()
+        cursor.execute("PRAGMA journal_mode=WAL")
+        cursor.execute("PRAGMA synchronous=NORMAL")
+        cursor.execute("PRAGMA busy_timeout=30000")
+        cursor.close()
+
+    return engine
 
 
 def init_db(settings: Settings):

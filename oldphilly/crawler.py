@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import hashlib
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass
 from datetime import timedelta
 from urllib.parse import parse_qsl, urlencode, urlparse
@@ -34,6 +36,14 @@ class CrawlSummary:
     def as_dict(self) -> dict[str, object]:
         return asdict(self)
 
+    def merge(self, other: CrawlSummary) -> None:
+        self.records_discovered += other.records_discovered
+        self.records_inserted += other.records_inserted
+        self.records_updated += other.records_updated
+        self.pages_fetched += other.pages_fetched
+        self.errors += other.errors
+        self.stopped_reason = self.stopped_reason or other.stopped_reason
+
 
 class Crawler:
     def __init__(
@@ -45,6 +55,7 @@ class Crawler:
         self.engine = init_db(settings)
         self.http = http_client or PoliteHttpClient(settings)
         self._owns_http = http_client is None
+        self._db_write_lock = threading.Lock()
 
     def close(self) -> None:
         if self._owns_http:
@@ -57,28 +68,30 @@ class Crawler:
         self.close()
 
     def _start_run(self, mode: str, seed: str | None) -> int:
-        with Session(self.engine) as session:
-            run = CrawlRun(mode=mode, seed=seed)
-            session.add(run)
-            session.commit()
-            session.refresh(run)
-            if run.id is None:
-                raise RuntimeError("CrawlRun was not assigned an id after commit")
-            return run.id
-
-    def _finish_run(self, run_id: int, summary: CrawlSummary) -> CrawlSummary:
-        with Session(self.engine) as session:
-            run = session.get(CrawlRun, run_id)
-            if run is not None:
-                run.finished_at = utc_now()
-                run.records_discovered = summary.records_discovered
-                run.records_inserted = summary.records_inserted
-                run.records_updated = summary.records_updated
-                run.pages_fetched = summary.pages_fetched
-                run.errors = summary.errors
-                run.stopped_reason = summary.stopped_reason
+        with self._db_write_lock:
+            with Session(self.engine) as session:
+                run = CrawlRun(mode=mode, seed=seed)
                 session.add(run)
                 session.commit()
+                session.refresh(run)
+                if run.id is None:
+                    raise RuntimeError("CrawlRun was not assigned an id after commit")
+                return run.id
+
+    def _finish_run(self, run_id: int, summary: CrawlSummary) -> CrawlSummary:
+        with self._db_write_lock:
+            with Session(self.engine) as session:
+                run = session.get(CrawlRun, run_id)
+                if run is not None:
+                    run.finished_at = utc_now()
+                    run.records_discovered = summary.records_discovered
+                    run.records_inserted = summary.records_inserted
+                    run.records_updated = summary.records_updated
+                    run.pages_fetched = summary.pages_fetched
+                    run.errors = summary.errors
+                    run.stopped_reason = summary.stopped_reason
+                    session.add(run)
+                    session.commit()
         return summary
 
     def _save_html(self, result: FetchResult, force: bool = False) -> str | None:
@@ -142,12 +155,13 @@ class Crawler:
             )
 
     def _fetch_search(self, url: str, summary: CrawlSummary) -> str | None:
-        with Session(self.engine) as session:
-            queue = self._queue_for_url(session, url, "search")
-            self._begin_attempt(queue)
-            queue_id = queue.id
-            session.add(queue)
-            session.commit()
+        with self._db_write_lock:
+            with Session(self.engine) as session:
+                queue = self._queue_for_url(session, url, "search")
+                self._begin_attempt(queue)
+                queue_id = queue.id
+                session.add(queue)
+                session.commit()
         assert queue_id is not None
         responses: list[FetchResult] = []
         try:
@@ -216,128 +230,140 @@ class Crawler:
                 )
             else:
                 parsed = parse_search(shell.text, shell.url)
-            with Session(self.engine) as session:
-                queue = session.get(CrawlQueue, queue_id)
-                assert queue is not None
-                queue.last_http_status = responses[-1].status_code
-                queue.status = "parsed"
-                queue.updated_at = utc_now()
-                for response in responses:
-                    self._record_page(session, response, "search")
-                for result in parsed.results:
-                    _, created = enqueue_url(
-                        session,
-                        result.detail_url,
-                        "detail",
-                        source_record_id=result.source_record_id,
-                    )
-                    if result.thumbnail_url:
-                        upsert_asset(
+            with self._db_write_lock:
+                with Session(self.engine) as session:
+                    queue = session.get(CrawlQueue, queue_id)
+                    assert queue is not None
+                    queue.last_http_status = responses[-1].status_code
+                    queue.status = "parsed"
+                    queue.updated_at = utc_now()
+                    for response in responses:
+                        self._record_page(session, response, "search")
+                    for result in parsed.results:
+                        _, created = enqueue_url(
                             session,
-                            ImageAsset(
-                                source_record_id=result.source_record_id,
-                                asset_url=result.thumbnail_url,
-                                asset_kind="thumbnail",
-                                discovered_from_url=url,
-                                reuse_status="likely_public_preview",
-                            ),
+                            result.detail_url,
+                            "detail",
+                            source_record_id=result.source_record_id,
                         )
-                        stored_record = session.exec(
-                            select(SourceRecord).where(
-                                SourceRecord.source_record_id == result.source_record_id
+                        if result.thumbnail_url:
+                            upsert_asset(
+                                session,
+                                ImageAsset(
+                                    source_record_id=result.source_record_id,
+                                    asset_url=result.thumbnail_url,
+                                    asset_kind="thumbnail",
+                                    discovered_from_url=url,
+                                    reuse_status="likely_public_preview",
+                                ),
                             )
-                        ).first()
-                        if stored_record:
-                            stored_record.thumbnail_url = result.thumbnail_url
-                            stored_record.search_result_url = url
-                            stored_record.last_seen_at = utc_now()
-                            session.add(stored_record)
-                    if created:
-                        summary.records_discovered += 1
-                session.add(queue)
-                session.commit()
+                            stored_record = session.exec(
+                                select(SourceRecord).where(
+                                    SourceRecord.source_record_id == result.source_record_id
+                                )
+                            ).first()
+                            if stored_record:
+                                stored_record.thumbnail_url = result.thumbnail_url
+                                stored_record.search_result_url = url
+                                stored_record.last_seen_at = utc_now()
+                                session.add(stored_record)
+                        if created:
+                            summary.records_discovered += 1
+                    session.add(queue)
+                    session.commit()
             summary.pages_fetched += len(responses)
             return parsed.next_page_url
         except CrawlStop:
             raise
         except Exception as exc:
-            with Session(self.engine) as session:
-                current = session.get(CrawlQueue, queue_id)
-                assert current is not None
-                if responses:
-                    current.last_http_status = responses[-1].status_code
-                    for response in responses:
-                        self._record_page(session, response, "search", force_save_html=True)
-                    summary.pages_fetched += len(responses)
-                current.status = "failed"
-                current.last_error = f"{type(exc).__name__}: {exc}"
-                current.updated_at = utc_now()
-                session.add(current)
-                session.commit()
+            with self._db_write_lock:
+                with Session(self.engine) as session:
+                    current = session.get(CrawlQueue, queue_id)
+                    assert current is not None
+                    if responses:
+                        current.last_http_status = responses[-1].status_code
+                        for response in responses:
+                            self._record_page(session, response, "search", force_save_html=True)
+                        summary.pages_fetched += len(responses)
+                    current.status = "failed"
+                    current.last_error = f"{type(exc).__name__}: {exc}"
+                    current.updated_at = utc_now()
+                    session.add(current)
+                    session.commit()
             summary.errors += 1
             return None
 
     def _fetch_detail(self, queue_id: int, summary: CrawlSummary) -> None:
-        with Session(self.engine) as session:
-            queue = session.get(CrawlQueue, queue_id)
-            assert queue is not None
-            self._begin_attempt(queue)
-            url = queue.url
-            source_record_id = queue.source_record_id
-            session.add(queue)
-            session.commit()
+        with self._db_write_lock:
+            with Session(self.engine) as session:
+                queue = session.get(CrawlQueue, queue_id)
+                assert queue is not None
+                self._begin_attempt(queue)
+                url = queue.url
+                source_record_id = queue.source_record_id
+                session.add(queue)
+                session.commit()
         responses: list[FetchResult] = []
         try:
-            shell = self.http.get(url)
-            responses.append(shell)
-            if shell.status_code >= 400:
-                raise FetchError(f"HTTP {shell.status_code}")
-            if "AllDetail-min.js" in shell.text:
+            shell: FetchResult | None = None
+            if source_record_id:
                 data = self.http.post(DETAIL_DATA_URL, {"assetId": source_record_id or ""})
                 responses.append(data)
                 if data.status_code >= 400:
                     raise FetchError(f"HTTP {data.status_code}")
                 record, assets = parse_detail_json(data.text, url)
             else:
-                record, assets = parse_detail(shell.text, shell.url)
+                shell = self.http.get(url)
+                responses.append(shell)
+                if shell.status_code >= 400:
+                    raise FetchError(f"HTTP {shell.status_code}")
+                if "AllDetail-min.js" in shell.text:
+                    data = self.http.post(DETAIL_DATA_URL, {"assetId": source_record_id or ""})
+                    responses.append(data)
+                    if data.status_code >= 400:
+                        raise FetchError(f"HTTP {data.status_code}")
+                    record, assets = parse_detail_json(data.text, url)
+                else:
+                    record, assets = parse_detail(shell.text, shell.url)
             if source_record_id and record.source_record_id != source_record_id:
                 raise ValueError(
                     f"detail response ImageId {record.source_record_id} does not match "
                     f"queued ImageId {source_record_id}"
                 )
-            record.raw_html_sha256 = shell.sha256
-            with Session(self.engine) as session:
-                current = session.get(CrawlQueue, queue_id)
-                assert current is not None
-                existing_record = session.exec(
-                    select(SourceRecord).where(
-                        SourceRecord.source_record_id == record.source_record_id
-                    )
-                ).first()
-                thumbnail = session.exec(
-                    select(ImageAsset).where(
-                        ImageAsset.source_record_id == record.source_record_id,
-                        ImageAsset.asset_kind == "thumbnail",
-                    )
-                ).first()
-                if thumbnail:
-                    record.thumbnail_url = thumbnail.asset_url
-                    record.search_result_url = thumbnail.discovered_from_url
-                elif existing_record:
-                    record.thumbnail_url = existing_record.thumbnail_url
-                    record.search_result_url = existing_record.search_result_url
-                stored, inserted = upsert_source_record(session, record)
-                for asset in assets:
-                    upsert_asset(session, asset)
-                current.status = "parsed"
-                current.last_http_status = responses[-1].status_code
-                current.last_error = None
-                current.updated_at = utc_now()
-                for response in responses:
-                    self._record_page(session, response, "detail")
-                session.add(current)
-                session.add(stored)
-                session.commit()
+            record.raw_html_sha256 = shell.sha256 if shell else None
+            with self._db_write_lock:
+                with Session(self.engine) as session:
+                    current = session.get(CrawlQueue, queue_id)
+                    assert current is not None
+                    existing_record = session.exec(
+                        select(SourceRecord).where(
+                            SourceRecord.source_record_id == record.source_record_id
+                        )
+                    ).first()
+                    thumbnail = session.exec(
+                        select(ImageAsset).where(
+                            ImageAsset.source_record_id == record.source_record_id,
+                            ImageAsset.asset_kind == "thumbnail",
+                        )
+                    ).first()
+                    if thumbnail:
+                        record.thumbnail_url = thumbnail.asset_url
+                        record.search_result_url = thumbnail.discovered_from_url
+                    elif existing_record:
+                        record.thumbnail_url = existing_record.thumbnail_url
+                        record.search_result_url = existing_record.search_result_url
+                    stored, inserted = upsert_source_record(session, record)
+                    for asset in assets:
+                        upsert_asset(session, asset)
+                    current.status = "parsed"
+                    current.last_http_status = responses[-1].status_code
+                    current.last_error = None
+                    current.updated_at = utc_now()
+                    for response in responses:
+                        self._record_page(session, response, "detail")
+                    session.add(current)
+                    session.add(stored)
+                    session.commit()
             summary.pages_fetched += len(responses)
             if inserted:
                 summary.records_inserted += 1
@@ -346,27 +372,29 @@ class Crawler:
         except CrawlStop:
             raise
         except Exception as exc:
-            with Session(self.engine) as session:
-                current = session.get(CrawlQueue, queue_id)
-                assert current is not None
-                if responses:
-                    current.last_http_status = responses[-1].status_code
-                    for response in responses:
-                        self._record_page(session, response, "detail", force_save_html=True)
-                    summary.pages_fetched += len(responses)
-                self._mark_error(current, exc)
-                session.add(current)
-                session.commit()
+            with self._db_write_lock:
+                with Session(self.engine) as session:
+                    current = session.get(CrawlQueue, queue_id)
+                    assert current is not None
+                    if responses:
+                        current.last_http_status = responses[-1].status_code
+                        for response in responses:
+                            self._record_page(session, response, "detail", force_save_html=True)
+                        summary.pages_fetched += len(responses)
+                    self._mark_error(current, exc)
+                    session.add(current)
+                    session.commit()
             summary.errors += 1
 
     def one_detail(self, image_id: str) -> CrawlSummary:
         url = DETAIL_URL_TEMPLATE.format(image_id=image_id)
         summary = CrawlSummary(mode="one-detail")
         run_id = self._start_run(summary.mode, url)
-        with Session(self.engine) as session:
-            queue = self._queue_for_url(session, url, "detail", image_id)
-            session.commit()
-            queue_id = queue.id
+        with self._db_write_lock:
+            with Session(self.engine) as session:
+                queue = self._queue_for_url(session, url, "detail", image_id)
+                session.commit()
+                queue_id = queue.id
         assert queue_id is not None
         try:
             self._fetch_detail(queue_id, summary)
@@ -402,6 +430,18 @@ class Crawler:
             summary.errors += 1
         return self._finish_run(run_id, summary)
 
+    def search(self, seed_url: str = DEFAULT_SEARCH_URL) -> CrawlSummary:
+        summary = CrawlSummary(mode="search")
+        run_id = self._start_run(summary.mode, seed_url)
+        url: str | None = seed_url
+        try:
+            while url is not None:
+                url = self._fetch_search(url, summary)
+        except CrawlStop as exc:
+            summary.stopped_reason = str(exc)
+            summary.errors += 1
+        return self._finish_run(run_id, summary)
+
     def details(self, max_details: int) -> CrawlSummary:
         summary = CrawlSummary(mode="details")
         run_id = self._start_run(summary.mode, None)
@@ -412,10 +452,35 @@ class Crawler:
             summary.errors += 1
         return self._finish_run(run_id, summary)
 
-    def _process_pending_details(self, limit: int, summary: CrawlSummary) -> None:
+    def details_all(self) -> CrawlSummary:
+        summary = CrawlSummary(mode="details-all")
+        run_id = self._start_run(summary.mode, None)
+        try:
+            while self._process_pending_details(None, summary):
+                pass
+        except CrawlStop as exc:
+            summary.stopped_reason = str(exc)
+            summary.errors += 1
+        return self._finish_run(run_id, summary)
+
+    def full(self, seed_url: str = DEFAULT_SEARCH_URL) -> CrawlSummary:
+        summary = CrawlSummary(mode="full")
+        run_id = self._start_run(summary.mode, seed_url)
+        url: str | None = seed_url
+        try:
+            while url is not None:
+                url = self._fetch_search(url, summary)
+            while self._process_pending_details(None, summary):
+                pass
+        except CrawlStop as exc:
+            summary.stopped_reason = str(exc)
+            summary.errors += 1
+        return self._finish_run(run_id, summary)
+
+    def _process_pending_details(self, limit: int | None, summary: CrawlSummary) -> int:
         with Session(self.engine) as session:
             now = utc_now()
-            queue_ids = session.exec(
+            query = (
                 select(CrawlQueue.id)
                 .where(
                     CrawlQueue.url_type == "detail",
@@ -424,11 +489,28 @@ class Crawler:
                     | (CrawlQueue.next_attempt_at <= now),
                 )
                 .order_by(CrawlQueue.priority, CrawlQueue.created_at)
-                .limit(limit)
-            ).all()
-        for queue_id in queue_ids:
-            assert queue_id is not None
-            self._fetch_detail(queue_id, summary)
+            )
+            effective_limit = limit or max(1, self.settings.concurrency * 8)
+            query = query.limit(effective_limit)
+            queue_ids = session.exec(query).all()
+        if self.settings.concurrency <= 1 or len(queue_ids) <= 1:
+            for queue_id in queue_ids:
+                assert queue_id is not None
+                self._fetch_detail(queue_id, summary)
+            return len(queue_ids)
+        with ThreadPoolExecutor(max_workers=self.settings.concurrency) as executor:
+            futures = []
+            for queue_id in queue_ids:
+                assert queue_id is not None
+                futures.append(executor.submit(self._fetch_detail_for_summary, queue_id))
+            for future in as_completed(futures):
+                summary.merge(future.result())
+        return len(queue_ids)
+
+    def _fetch_detail_for_summary(self, queue_id: int) -> CrawlSummary:
+        summary = CrawlSummary(mode="detail-worker")
+        self._fetch_detail(queue_id, summary)
+        return summary
 
 
 def html_sha256(html: str) -> str:

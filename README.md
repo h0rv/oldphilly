@@ -20,26 +20,47 @@ uv run python scripts/crawl.py --mode init
 The database is created at `data/oldphilly.sqlite`; runtime HTML samples and JSONL exports live
 under `data/raw_html/` and `data/exports/`.
 
+If the database already exists, `init` asks for confirmation and preserves existing rows. To
+intentionally rebuild from scratch, use `--reinit`; it also asks for confirmation unless `--yes` is
+provided:
+
+```bash
+uv run python scripts/crawl.py --mode init --reinit
+```
+
 ## Crawl Modes
 
-The client is single threaded, allows only PhillyHistory hosts, sends a descriptive user agent,
-delays requests, retries transient failures, and stops on repeated blocking statuses or challenge
-pages.
+The client allows only PhillyHistory hosts, sends a descriptive user agent, spaces request starts,
+retries transient failures, and stops on repeated blocking statuses or challenge pages. Search
+pagination is sequential; detail fetching uses bounded concurrency.
 
 ```bash
 uv run python scripts/crawl.py --mode one-detail --image-id 45557
 uv run python scripts/crawl.py --mode one-search
 uv run python scripts/crawl.py --mode sample --max-search-pages 1 --max-details 25
+uv run python scripts/crawl.py --mode search
 uv run python scripts/crawl.py --mode details --max-details 100
+uv run python scripts/crawl.py --mode details-all
+uv run python scripts/crawl.py --mode full
 ```
 
-`sample` requires both limits and `details` requires `--max-details`; there is no unbounded crawl
-mode. Add `--save-html` to retain fetched HTML for a small diagnostic run. Failed parsed pages are
-retained automatically for inspection.
+`sample` requires both limits and bounded `details` requires `--max-details`. Use `search` to
+follow search result pagination until exhausted, `details-all` to drain every currently eligible
+detail queue item, or `full` to do both in one run. Add `--save-html` to retain fetched HTML for a
+small diagnostic run. Failed parsed pages are retained automatically for inspection.
 
-`one-search` and `sample` accept `--seed-url` for a documented public `Search.aspx` URL. The
-observed advanced-search parameters, topics, series, and collections are recorded in
+`one-search`, `sample`, `search`, and `full` accept `--seed-url` for a documented public
+`Search.aspx` URL. The observed advanced-search parameters, topics, series, and collections are
+recorded in
 [docs/search_parameters.md](docs/search_parameters.md).
+
+The default crawl is tuned more aggressively than the original polite settings: four concurrent
+detail workers with a `0.35s` request-start delay plus up to `0.05s` jitter. Override those knobs
+when needed:
+
+```bash
+uv run python scripts/crawl.py --mode full --request-delay 0.5 --request-jitter 0.1 --concurrency 2
+```
 
 ## Inspect And Export
 
