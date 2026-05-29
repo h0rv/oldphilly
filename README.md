@@ -1,4 +1,4 @@
-# oldphilly
+# OldPhilly
 
 A small local crawler for public PhillyHistory metadata. It stores typed record metadata,
 unmapped source fields, crawl history, and directly exposed public image URL candidates in
@@ -7,6 +7,9 @@ SQLite. It does not download images or attempt to access restricted media.
 Public display images are typically preview-sized. Some records may expose a public
 high-resolution viewer URI; licensable original files remain subject to PhillyHistory's paid
 licensing workflow and are not retrieved by this crawler.
+
+The published metadata is available as a dataset on Hugging Face:
+[h0rv/phillyhistory-metadata](https://huggingface.co/datasets/h0rv/phillyhistory-metadata).
 
 ## Source Roadmap
 
@@ -126,5 +129,6 @@ uv run ruff check .
 
 ## Credit and Inspiration
 
-* [PhillyHistory.org](https://www.phillyhistory.org/PhotoArchive/Home.aspx)
-* [OldNYC](https://oldnyc.org) - [Source Code](https://github.com/danvk/oldnyc)
+* [PhillyHistory.org](https://www.phillyhistory.org/PhotoArchive/Home.aspx) - source of all photographs and metadata
+* [OldNYC](https://oldnyc.org) - [Source Code](https://github.com/danvk/oldnyc) - inspiration for this project
+* [Dataset on Hugging Face](https://huggingface.co/datasets/h0rv/phillyhistory-metadata)

@@ -86,6 +86,20 @@ crawl args="":
 marimo:
     uv run marimo edit notebooks/sql_explorer.py
 
+# --- Static site (HTML/CSS/JS) formatting & linting via Prettier ---
+WEB_GLOB := "site/*.html site/*.css site/*.js"
+
+# Check site HTML/CSS/JS formatting
+web-fmt:
+    npx --yes prettier@3 --check {{WEB_GLOB}}
+
+# Lint site HTML/CSS/JS (Prettier check; nonzero exit on issues)
+web-lint: web-fmt
+
+# Auto-format site HTML/CSS/JS in place
+web-fix:
+    npx --yes prettier@3 --write {{WEB_GLOB}}
+
 # Generate static site data from SQLite
 build-site-data:
     uv run python scripts/generate_site_data.py
