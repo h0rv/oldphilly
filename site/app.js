@@ -231,11 +231,16 @@
   // --- Open sidebar (lazy, paged grid for multi-photo locations) ---
   var PAGE = 30;
   var sidebarGen = 0;
+  var sidebarScroll = null; // active grid scroll handler, removed on re-open
 
   function openSidebar(rawIds) {
     var ids = rawIds.map(safeId).filter(Boolean);
     if (!ids.length) return;
     var gen = ++sidebarGen;
+    if (sidebarScroll) {
+      sidebar.removeEventListener("scroll", sidebarScroll);
+      sidebarScroll = null;
+    }
     sidebar.classList.remove("hidden");
     sidebar.scrollTop = 0;
     sidebarContent.innerHTML = '<div id="loading">Loading&hellip;</div>';
@@ -302,6 +307,20 @@
       { root: sidebar, rootMargin: "0px 0px -65% 0px" },
     );
 
+    // True when the sentinel (grid bottom) is within ~600px of the visible
+    // sidebar bottom — i.e. the user is near the end and we should fetch more.
+    function nearBottom() {
+      var sr = sidebar.getBoundingClientRect();
+      var br = sentinel.getBoundingClientRect();
+      return br.top - sr.bottom < 600;
+    }
+
+    function maybeLoad() {
+      if (!loading && nextStart < ids.length && nearBottom()) loadPage();
+    }
+    sidebarScroll = maybeLoad;
+    sidebar.addEventListener("scroll", maybeLoad);
+
     function loadPage() {
       if (loading || nextStart >= ids.length) return;
       loading = true;
@@ -331,20 +350,16 @@
         loading = false;
         if (activeIdx < 0) setActive(0);
         if (nextStart >= ids.length) {
-          observer.disconnect();
+          sidebar.removeEventListener("scroll", maybeLoad);
           sentinel.remove();
+          if (!loadedRecs.length) renderError();
+        } else {
+          // Keep filling until the viewport is covered (deferred to let the
+          // browser lay out the new rows so nearBottom() is accurate).
+          setTimeout(maybeLoad, 0);
         }
-        if (!loadedRecs.length && nextStart >= ids.length) renderError();
       });
     }
-
-    var observer = new IntersectionObserver(
-      function (entries) {
-        if (entries[0].isIntersecting) loadPage();
-      },
-      { root: sidebar, rootMargin: "300px" },
-    );
-    observer.observe(sentinel);
 
     loadPage();
   }
