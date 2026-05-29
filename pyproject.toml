@@ -12,6 +12,9 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "datasette>=0.65.2",
+    "datasette-cluster-map>=0.18.2",
+    "huggingface-hub>=1.17.0",
     "marimo>=0.23.8",
     "polars[pyarrow]>=1.0.0",
     "pytest>=9.0.3",

@@ -6,7 +6,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from oldphilly.config import Settings  # noqa: E402
+from oldphilly.crawlers.phillyhistory.config import Settings  # noqa: E402
 from oldphilly.export import export_jsonl  # noqa: E402
 
 

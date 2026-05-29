@@ -9,6 +9,8 @@ from urllib.parse import parse_qsl, urlencode, urlparse
 
 from sqlmodel import Session, select
 
+from ...db import enqueue_url, init_db, upsert_asset, upsert_source_record
+from ...models import CrawlPage, CrawlQueue, CrawlRun, ImageAsset, SourceRecord, utc_now
 from .config import (
     DEFAULT_SEARCH_URL,
     DETAIL_DATA_URL,
@@ -16,9 +18,7 @@ from .config import (
     SEARCH_DATA_URL,
     Settings,
 )
-from .db import enqueue_url, init_db, upsert_asset, upsert_source_record
 from .http import CrawlStop, FetchError, FetchResult, PoliteHttpClient
-from .models import CrawlPage, CrawlQueue, CrawlRun, ImageAsset, SourceRecord, utc_now
 from .parse_detail import parse_detail, parse_detail_json
 from .parse_search import SearchParseResult, parse_search, parse_search_json
 

@@ -13,7 +13,11 @@ from sqlmodel import Session, select
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from oldphilly.config import DETAIL_DATA_URL, DETAIL_URL_TEMPLATE, Settings  # noqa: E402
+from oldphilly.crawlers.phillyhistory.config import (  # noqa: E402
+    DETAIL_DATA_URL,
+    DETAIL_URL_TEMPLATE,
+    Settings,
+)
 from oldphilly.db import enqueue_url, init_db  # noqa: E402
 from oldphilly.models import CrawlQueue  # noqa: E402
 

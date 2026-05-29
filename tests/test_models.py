@@ -6,11 +6,19 @@ import httpx
 from sqlalchemy import inspect
 from sqlmodel import Session, select
 
-from oldphilly.config import DEFAULT_SEARCH_URL, DETAIL_DATA_URL, SEARCH_DATA_URL, Settings
-from oldphilly.crawler import Crawler
+from oldphilly.crawlers.phillyhistory.config import (
+    DEFAULT_SEARCH_URL,
+    DETAIL_DATA_URL,
+    SEARCH_DATA_URL,
+    Settings,
+)
+from oldphilly.crawlers.phillyhistory.crawler import Crawler
+from oldphilly.crawlers.phillyhistory.http import PoliteHttpClient
+from oldphilly.crawlers.phillyhistory.maintenance import (
+    requeue_failed_details,
+    requeue_stale_fetching_details,
+)
 from oldphilly.db import init_db, upsert_source_record
-from oldphilly.http import PoliteHttpClient
-from oldphilly.maintenance import requeue_failed_details, requeue_stale_fetching_details
 from oldphilly.models import CrawlQueue, ImageAsset, SourceRecord
 
 FIXTURES = Path(__file__).parent / "fixtures"

@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Protocol
 
 from sqlmodel import Session, select
 
-from .config import Settings
 from .db import init_db
 from .models import SourceRecord
 
@@ -34,7 +34,14 @@ EXPORT_FIELDS = (
 )
 
 
-def export_jsonl(settings: Settings, output_path: Path | None = None) -> tuple[Path, int]:
+class ExportSettings(Protocol):
+    database_url: str
+    export_dir: Path
+
+    def create_data_dirs(self) -> None: ...
+
+
+def export_jsonl(settings: ExportSettings, output_path: Path | None = None) -> tuple[Path, int]:
     engine = init_db(settings)
     path = output_path or settings.export_dir / "phillyhistory.jsonl"
     count = 0

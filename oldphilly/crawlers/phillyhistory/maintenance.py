@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from sqlmodel import Session, select
 
-from .models import CrawlQueue, utc_now
+from ...models import CrawlQueue, utc_now
 
 
 def requeue_failed_details(session: Session, error_contains: str | None = None) -> int:

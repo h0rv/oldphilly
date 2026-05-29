@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from oldphilly.parse_detail import parse_detail, parse_detail_json
-from oldphilly.parse_search import parse_date
+from oldphilly.crawlers.phillyhistory.parse_detail import parse_detail, parse_detail_json
+from oldphilly.crawlers.phillyhistory.parse_search import parse_date
 
 FIXTURE = Path(__file__).parent / "fixtures" / "detail_sample.html"
 URL = "https://www.phillyhistory.org/PhotoArchive/detail.aspx?ImageId=45557"

@@ -6,9 +6,9 @@ from urllib.parse import parse_qs, urljoin, urlparse
 
 from bs4 import BeautifulSoup
 
+from ...models import ImageAsset, SourceRecord
 from .api_models import DetailApiResponse, warn_extras
 from .config import DETAIL_URL_TEMPLATE
-from .models import ImageAsset, SourceRecord
 from .parse_search import parse_date
 
 _KEY_NORMALIZE_RE = re.compile(r"[^a-z0-9]+")

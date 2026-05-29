@@ -9,8 +9,8 @@ from sqlmodel import Session, select
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from oldphilly.config import DEFAULT_SEARCH_URL, Settings  # noqa: E402
-from oldphilly.crawler import Crawler  # noqa: E402
+from oldphilly.crawlers.phillyhistory.config import DEFAULT_SEARCH_URL, Settings  # noqa: E402
+from oldphilly.crawlers.phillyhistory.crawler import Crawler  # noqa: E402
 from oldphilly.db import init_db  # noqa: E402
 from oldphilly.models import SourceRecord  # noqa: E402
 

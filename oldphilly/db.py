@@ -1,15 +1,22 @@
 from __future__ import annotations
 
+from typing import Protocol
+
 from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine, select
 
-from .config import Settings
 from .models import CrawlQueue, ImageAsset, SourceRecord, utc_now
 
 _ASSET_KIND_PRIORITY = {"unknown": 0, "thumbnail": 1, "preview": 2, "full_candidate": 3}
 
 
-def build_engine(settings: Settings):
+class DatabaseSettings(Protocol):
+    database_url: str
+
+    def create_data_dirs(self) -> None: ...
+
+
+def build_engine(settings: DatabaseSettings):
     settings.create_data_dirs()
     engine = create_engine(
         settings.database_url,
@@ -27,7 +34,7 @@ def build_engine(settings: Settings):
     return engine
 
 
-def init_db(settings: Settings):
+def init_db(settings: DatabaseSettings):
     engine = build_engine(settings)
     SQLModel.metadata.create_all(engine)
     return engine

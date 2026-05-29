@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from oldphilly.parse_search import parse_search, parse_search_json
+from oldphilly.crawlers.phillyhistory.parse_search import parse_search, parse_search_json
 
 FIXTURE = Path(__file__).parent / "fixtures" / "search_sample.html"
 

@@ -9,3 +9,5 @@ data/raw_html/*
 !data/raw_html/.gitkeep
 data/exports/*
 !data/exports/.gitkeep
+data/releases/*
+!data/releases/.gitkeep

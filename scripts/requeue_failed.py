@@ -8,12 +8,12 @@ from sqlmodel import Session
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from oldphilly.config import Settings  # noqa: E402
-from oldphilly.db import init_db  # noqa: E402
-from oldphilly.maintenance import (  # noqa: E402
+from oldphilly.crawlers.phillyhistory.config import Settings  # noqa: E402
+from oldphilly.crawlers.phillyhistory.maintenance import (  # noqa: E402
     requeue_failed_details,
     requeue_stale_fetching_details,
 )
+from oldphilly.db import init_db  # noqa: E402
 
 
 def main() -> None:
