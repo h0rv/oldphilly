@@ -136,16 +136,19 @@
 
   // --- Open sidebar (single or multi-photo location) ---
   var MAX_PHOTOS = 24;
+  var sidebarGen = 0; // increments each open; callbacks check before rendering
 
   function openSidebar(rawIds) {
     var ids = rawIds.map(safeId).filter(Boolean);
     if (!ids.length) return;
+    var gen = ++sidebarGen;
     sidebar.classList.remove('hidden');
     sidebarContent.innerHTML = '<div id="loading">Loading&hellip;</div>';
 
     var limited = ids.slice(0, MAX_PHOTOS);
 
     fetchMultiple(limited, function (records) {
+      if (gen !== sidebarGen) return; // superseded by a newer click
       var recs = limited.map(function (id) { return records[id]; }).filter(Boolean);
       sidebarContent.innerHTML = '';
 
@@ -290,6 +293,7 @@
 
   // Year filter change: rebuild visible markers from scratch.
   function applyFilter() {
+    closeSidebar();
     clusters.clearLayers();
     addedSet.clear();
     loadViewport();
