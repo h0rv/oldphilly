@@ -2,7 +2,7 @@
 """Generate static site data files.
 
 Outputs:
-  site/markers.json        - compact [[lat, lon, id, year], ...] for all records
+  site/markers.json        - [[lat, lon, [ids], [years]], ...] grouped by location
   site/chunks/{n}.json     - per-chunk detail records, loaded on click
 
 Sources (mutually exclusive):
@@ -112,23 +112,35 @@ def main() -> None:
 
     source = rows_from_parquet(args.from_hf) if args.from_hf else rows_from_sqlite()
 
-    markers: list = []
+    # (lat_r, lon_r) → ([ids...], [years...])
+    # Round to 4 decimal places (~11m) to merge photos shot at same location.
+    loc_map: dict[tuple[float, float], tuple[list, list]] = {}
     chunks: dict[int, dict] = {}
     count = 0
 
     for row in source:
         rid = row["source_record_id"]
-        lat = round(float(row["latitude"]), 6)
-        lon = round(float(row["longitude"]), 6)
+        lat_r = round(float(row["latitude"]), 4)
+        lon_r = round(float(row["longitude"]), 4)
         year = int(row["circa_year"]) if row["circa_year"] else 0
-        markers.append([lat, lon, rid, year])
+
+        key = (lat_r, lon_r)
+        if key not in loc_map:
+            loc_map[key] = ([], [])
+        loc_map[key][0].append(rid)
+        loc_map[key][1].append(year)
 
         record = build_record(row)
         chunk_id = int(rid) // CHUNK_SIZE
         chunks.setdefault(chunk_id, {})[rid] = json.loads(record.model_dump_json(exclude_none=True))
         count += 1
 
-    print(f"Exporting {count:,} records...")
+    markers = [
+        [lat, lon, ids, years]
+        for (lat, lon), (ids, years) in loc_map.items()
+    ]
+
+    print(f"Exporting {count:,} records → {len(markers):,} locations...")
 
     (OUT_DIR / "markers.json").write_text(json.dumps(markers, separators=(",", ":")))
 
@@ -138,7 +150,7 @@ def main() -> None:
         tmp.write_text(json.dumps(records, separators=(",", ":")))
         os.replace(tmp, dest)
 
-    print(f"Wrote {OUT_DIR / 'markers.json'} ({len(markers):,} markers)")
+    print(f"Wrote {OUT_DIR / 'markers.json'} ({len(markers):,} locations)")
     print(f"Wrote {len(chunks):,} chunk files to {CHUNKS_DIR}/ ({CHUNK_SIZE} records/chunk)")
 
 

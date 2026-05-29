@@ -215,6 +215,42 @@ html, body {
   text-align: center;
 }
 
+.photo-count {
+  font-size: 0.72rem;
+  color: #888;
+  font-family: sans-serif;
+  margin-bottom: 6px;
+}
+
+.thumb-strip {
+  display: flex;
+  overflow-x: auto;
+  gap: 4px;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #eee;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.strip-thumb {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 2px;
+  border: 2px solid transparent;
+  opacity: 0.6;
+  transition: opacity 0.1s, border-color 0.1s;
+}
+
+.strip-thumb:hover,
+.strip-thumb.active {
+  opacity: 1;
+  border-color: #0055aa;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
   #sidebar {
