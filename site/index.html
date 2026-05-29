@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Old Philadelphia</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="map"></div>
+
+  <div id="title-card">
+    <h1>Old Philadelphia</h1>
+    <p>Historical photographs from the Philadelphia City Archives</p>
+    <input id="year-filter" type="text" placeholder="e.g. 1900 or 1850-1907, 1920" autocomplete="off">
+    <p class="dataset-link"><a href="https://huggingface.co/datasets/h0rv/phillyhistory-metadata" target="_blank" rel="noopener">Dataset on Hugging Face</a></p>
+  </div>
+
+  <div id="sidebar" class="hidden">
+    <button id="close-btn" aria-label="Close">&times;</button>
+    <div id="sidebar-content">
+      <div id="loading">Loading&hellip;</div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

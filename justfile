@@ -85,3 +85,18 @@ crawl args="":
 
 marimo:
     uv run marimo edit notebooks/sql_explorer.py
+
+# Generate static site data from SQLite
+build-site-data:
+    uv run python scripts/generate_site_data.py
+
+# Serve site locally at http://localhost:8080
+serve-site:
+    python -m http.server 8080 --directory site --bind 127.0.0.1
+
+# Build then serve
+build-site: build-site-data serve-site
+
+# Deploy site to Cloudflare Pages (requires wrangler login)
+deploy: build-site-data
+    wrangler pages deploy site --project-name=oldphilly --branch=deploy --commit-dirty=true

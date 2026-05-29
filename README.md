@@ -126,5 +126,5 @@ uv run ruff check .
 
 ## Credit and Inspiration
 
-[PhillyHistory.org](https://www.phillyhistory.org/PhotoArchive/Home.aspx)
-[OldNYC](https://oldnyc.org) - [Source Code](https://github.com/danvk/oldnyc)
+* [PhillyHistory.org](https://www.phillyhistory.org/PhotoArchive/Home.aspx)
+* [OldNYC](https://oldnyc.org) - [Source Code](https://github.com/danvk/oldnyc)
