@@ -732,6 +732,18 @@
   }
 
   // --- Bootstrap ---
+  document.getElementById("random-btn").addEventListener("click", function () {
+    if (!spatialIndex.length) return;
+    var e = spatialIndex[Math.floor(Math.random() * spatialIndex.length)];
+    map.setView([e[0], e[1]], 16);
+    setTimeout(function () {
+      loadViewport();
+      updateZoomHint();
+      openSidebar(e[2], e);
+      updateHash(e, null);
+    }, 300);
+  });
+
   fetch("markers.json")
     .then(function (r) {
       return r.json();
