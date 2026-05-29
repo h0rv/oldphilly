@@ -323,11 +323,17 @@
   var sidebarScroll = null;
   var currentLocEntry = null; // [[lat,lon,ids,years]] entry for permalink
 
-  function openSidebar(rawIds, locEntry) {
+  // opts: { entry, years, header } — all optional.
+  //   entry:  location entry [lat,lon,ids,years] for permalink (location view)
+  //   years:  array parallel to rawIds for year-sort (search results)
+  //   header: override header text (search results)
+  function openSidebar(rawIds, opts) {
+    opts = opts || {};
+    var locEntry = opts.entry || null;
     var ids = rawIds.map(safeId).filter(Boolean);
     if (!ids.length) return;
     var gen = ++sidebarGen;
-    currentLocEntry = locEntry || null;
+    currentLocEntry = locEntry;
 
     if (sidebarScroll) {
       sidebar.removeEventListener("scroll", sidebarScroll);
@@ -361,7 +367,8 @@
     header.className = "grid-header";
     var countEl = document.createElement("span");
     countEl.className = "photo-count";
-    countEl.textContent = ids.length + " photos at this location";
+    countEl.textContent =
+      opts.header || ids.length + " photos at this location";
     header.appendChild(countEl);
 
     var sortSel = document.createElement("select");
@@ -393,8 +400,8 @@
     sidebarContent.appendChild(sentinel);
 
     // --- Sort ---
-    // rawIds with years [years] from locEntry
-    var rawYears = locEntry ? locEntry[3] : null;
+    // Years parallel to ids: from opts.years (search) or locEntry[3] (location).
+    var rawYears = opts.years || (locEntry ? locEntry[3] : null);
     var idYearPairs = ids.map(function (id, i) {
       return { id: id, year: rawYears ? rawYears[i] : 0 };
     });
@@ -590,7 +597,7 @@
     m.on("click", function (e) {
       L.DomEvent.stopPropagation(e);
       setSelected(m, count);
-      openSidebar(ids || entry[2], entry);
+      openSidebar(ids || entry[2], { entry: entry });
       updateHash(entry, null);
     });
     return m;
@@ -731,6 +738,152 @@
     }
   }
 
+  // --- Fuzzy search (Enter-triggered, ranked) ---
+  // search.json: { ids: [...], t: [lowercased text, ...] } — ~2.4MB gzipped,
+  // loaded lazily on first search. Also build id→[lat,lon,year] for fly-to/sort.
+  var searchData = null;
+  var searchLoading = false;
+  var idToLoc = null; // id → [lat, lon, year]
+
+  function buildIdToLoc() {
+    if (idToLoc) return;
+    idToLoc = Object.create(null);
+    for (var i = 0; i < spatialIndex.length; i++) {
+      var e = spatialIndex[i];
+      var ids = e[2],
+        years = e[3];
+      for (var k = 0; k < ids.length; k++) {
+        idToLoc[ids[k]] = [e[0], e[1], years ? years[k] : 0];
+      }
+    }
+  }
+
+  // Subsequence fuzzy score. Returns score (higher better) or -1 if no match.
+  // Bonuses: contiguous run, match at word start, early position.
+  function fuzzyScore(needle, hay) {
+    var ni = 0,
+      score = 0,
+      run = 0,
+      hi = 0;
+    var prevMatch = -2;
+    for (hi = 0; hi < hay.length && ni < needle.length; hi++) {
+      if (hay[hi] === needle[ni]) {
+        var bonus = 0;
+        if (hi === prevMatch + 1) {
+          run++;
+          bonus += run * 3;
+        } else {
+          run = 0;
+        }
+        if (hi === 0 || hay[hi - 1] === " ") bonus += 8; // word start
+        bonus += Math.max(0, 10 - hi * 0.05); // earliness
+        score += 1 + bonus;
+        prevMatch = hi;
+        ni++;
+      }
+    }
+    return ni === needle.length ? score : -1;
+  }
+
+  // A record matches a multi-term query if every term fuzzy-matches; the
+  // record's score is the sum of per-term scores.
+  function searchRecords(query) {
+    var terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!terms.length) return [];
+    var ids = searchData.ids,
+      texts = searchData.t;
+    var results = [];
+    for (var i = 0; i < texts.length; i++) {
+      var hay = texts[i];
+      var total = 0,
+        ok = true;
+      for (var t = 0; t < terms.length; t++) {
+        var s = fuzzyScore(terms[t], hay);
+        if (s < 0) {
+          ok = false;
+          break;
+        }
+        total += s;
+      }
+      if (ok) {
+        // year filter (if active) applies as AND
+        if (filterRanges) {
+          buildIdToLoc();
+          var loc = idToLoc[ids[i]];
+          if (!loc || !yearMatches(loc[2])) continue;
+        }
+        results.push([ids[i], total]);
+      }
+    }
+    results.sort(function (a, b) {
+      return b[1] - a[1];
+    });
+    return results.slice(0, 150);
+  }
+
+  var SEARCH_LIMIT = 150;
+
+  function runSearch(query) {
+    query = query.trim();
+    if (!query) return;
+    if (!searchData) {
+      if (searchLoading) return;
+      searchLoading = true;
+      sidebar.classList.remove("hidden");
+      sidebar.scrollTop = 0;
+      sidebarContent.innerHTML =
+        '<div id="loading">Loading search index&hellip;</div>';
+      fetch("search.json")
+        .then(function (r) {
+          return r.json();
+        })
+        .then(function (data) {
+          searchData = data;
+          searchLoading = false;
+          runSearch(query);
+        })
+        .catch(function () {
+          searchLoading = false;
+          sidebarContent.innerHTML =
+            '<p class="error">Search index failed to load.</p>';
+        });
+      return;
+    }
+
+    var results = searchRecords(query);
+    if (!results.length) {
+      sidebar.classList.remove("hidden");
+      sidebar.scrollTop = 0;
+      sidebarContent.innerHTML =
+        '<p class="error">No matches for "' +
+        query.replace(/[<>&"]/g, "") +
+        '".</p>';
+      return;
+    }
+    buildIdToLoc();
+    var ids = results.map(function (r) {
+      return r[0];
+    });
+    var years = ids.map(function (id) {
+      var loc = idToLoc[id];
+      return loc ? loc[2] : 0;
+    });
+    var capped = results.length >= SEARCH_LIMIT;
+    openSidebar(ids, {
+      years: years,
+      header:
+        (capped ? "top " + SEARCH_LIMIT : results.length) +
+        ' results for "' +
+        query +
+        '"',
+    });
+  }
+
+  var searchInput = document.getElementById("photo-search");
+  searchInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") runSearch(this.value);
+  });
+
   // --- Bootstrap ---
   document.getElementById("random-btn").addEventListener("click", function () {
     if (!spatialIndex.length) return;
@@ -739,7 +892,7 @@
     setTimeout(function () {
       loadViewport();
       updateZoomHint();
-      openSidebar(e[2], e);
+      openSidebar(e[2], { entry: e });
       updateHash(e, null);
     }, 300);
   });
@@ -773,7 +926,7 @@
           setTimeout(function () {
             loadViewport();
             updateZoomHint();
-            openSidebar(best.e[2], best.e);
+            openSidebar(best.e[2], { entry: best.e });
           }, 300);
           return;
         }

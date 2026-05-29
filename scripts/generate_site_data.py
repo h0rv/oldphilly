@@ -217,6 +217,8 @@ def main() -> None:
     # its cluster's centroid, on the real street position.
     points: list[tuple[str, float, float, int]] = []
     chunks: dict[int, dict] = {}
+    search_ids: list[str] = []
+    search_text: list[str] = []
     count = 0
 
     for row in source:
@@ -230,6 +232,17 @@ def main() -> None:
         record = build_record(row)
         chunk_id = int(rid) // CHUNK_SIZE
         chunks.setdefault(chunk_id, {})[rid] = json.loads(record.model_dump_json(exclude_none=True))
+
+        # Search index text: lowercased, whitespace-collapsed concatenation of
+        # the human-meaningful fields. Loaded lazily client-side on first search.
+        text_parts = [
+            record.title, record.description, record.address,
+            record.neighborhood, record.photographer, record.date,
+        ]
+        text = " ".join(p for p in text_parts if p)
+        search_ids.append(rid)
+        search_text.append(" ".join(text.lower().split()))
+
         count += 1
 
     clusters = cluster_points(points)
@@ -242,6 +255,9 @@ def main() -> None:
 
     (OUT_DIR / "markers.json").write_text(json.dumps(markers, separators=(",", ":")))
 
+    search_index = {"ids": search_ids, "t": search_text}
+    (OUT_DIR / "search.json").write_text(json.dumps(search_index, separators=(",", ":")))
+
     for chunk_id, records in chunks.items():
         dest = CHUNKS_DIR / f"{chunk_id}.json"
         tmp = dest.with_suffix(".json.tmp")
@@ -249,6 +265,7 @@ def main() -> None:
         os.replace(tmp, dest)
 
     print(f"Wrote {OUT_DIR / 'markers.json'} ({len(markers):,} locations)")
+    print(f"Wrote {OUT_DIR / 'search.json'} ({len(search_ids):,} records)")
     print(f"Wrote {len(chunks):,} chunk files to {CHUNKS_DIR}/ ({CHUNK_SIZE} records/chunk)")
 
 

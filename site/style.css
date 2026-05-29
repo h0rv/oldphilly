@@ -82,7 +82,8 @@ body {
 }
 
 #year-filter,
-#address-search {
+#address-search,
+#photo-search {
   display: block;
   width: 100%;
   margin-top: 8px;
@@ -97,7 +98,8 @@ body {
 }
 
 #year-filter:focus,
-#address-search:focus {
+#address-search:focus,
+#photo-search:focus {
   outline: none;
   border-color: #888;
 }

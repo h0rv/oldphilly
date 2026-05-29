@@ -13,5 +13,6 @@ data/releases/*
 !data/releases/.gitkeep
 .wrangler/
 site/markers.json
+site/search.json
 site/by-id/
 site/chunks/
