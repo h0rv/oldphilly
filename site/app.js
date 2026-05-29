@@ -763,38 +763,11 @@
     }
   }
 
-  // Subsequence fuzzy score. Returns score (higher better) or -1 if no match.
-  // Bonuses: contiguous run, match at word start, early position.
-  function fuzzyScore(needle, hay) {
-    var ni = 0,
-      score = 0,
-      run = 0,
-      hi = 0;
-    var prevMatch = -2;
-    for (hi = 0; hi < hay.length && ni < needle.length; hi++) {
-      if (hay[hi] === needle[ni]) {
-        var bonus = 0;
-        if (hi === prevMatch + 1) {
-          run++;
-          bonus += run * 3;
-        } else {
-          run = 0;
-        }
-        if (hi === 0 || hay[hi - 1] === " ") bonus += 8; // word start
-        bonus += Math.max(0, 10 - hi * 0.05); // earliness
-        score += 1 + bonus;
-        prevMatch = hi;
-        ni++;
-      }
-    }
-    return ni === needle.length ? score : -1;
-  }
-
-  // A record matches a multi-term query if every term fuzzy-matches; the
-  // record's score is the sum of per-term scores.
-  function searchRecords(query) {
-    var terms = query.toLowerCase().split(/\s+/).filter(Boolean);
-    if (!terms.length) return [];
+  // Substring match: every query term must appear as a substring of the
+  // record text (AND). Scored by word-start + earliness so the best matches
+  // rank first. Predictable — nonsense queries return nothing rather than
+  // garbage subsequence hits.
+  function searchRecords(terms) {
     var ids = searchData.ids,
       texts = searchData.t;
     var results = [];
@@ -803,30 +776,141 @@
       var total = 0,
         ok = true;
       for (var t = 0; t < terms.length; t++) {
-        var s = fuzzyScore(terms[t], hay);
-        if (s < 0) {
+        var pos = hay.indexOf(terms[t]);
+        if (pos < 0) {
           ok = false;
           break;
         }
-        total += s;
+        var wordStart = pos === 0 || hay[pos - 1] === " ";
+        total += (wordStart ? 12 : 0) + Math.max(0, 20 - pos * 0.1);
       }
-      if (ok) {
-        // year filter (if active) applies as AND
-        if (filterRanges) {
-          buildIdToLoc();
-          var loc = idToLoc[ids[i]];
-          if (!loc || !yearMatches(loc[2])) continue;
-        }
-        results.push([ids[i], total]);
+      if (!ok) continue;
+      if (filterRanges) {
+        buildIdToLoc();
+        var loc = idToLoc[ids[i]];
+        if (!loc || !yearMatches(loc[2])) continue;
       }
+      results.push([ids[i], total]);
     }
     results.sort(function (a, b) {
       return b[1] - a[1];
     });
-    return results.slice(0, 150);
+    return results.slice(0, SEARCH_LIMIT);
   }
 
   var SEARCH_LIMIT = 150;
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+
+  // Escape text, then wrap each query-term occurrence in <mark>.
+  function highlight(text, terms) {
+    var out = escapeHtml(text);
+    terms.forEach(function (term) {
+      var re = new RegExp(
+        "(" + term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")",
+        "gi",
+      );
+      out = out.replace(re, "<mark>$1</mark>");
+    });
+    return out;
+  }
+
+  // Build a ~120-char snippet of the description around the first matched term.
+  function snippet(desc, terms) {
+    if (!desc) return "";
+    var low = desc.toLowerCase();
+    var at = -1;
+    terms.forEach(function (term) {
+      var p = low.indexOf(term);
+      if (p >= 0 && (at < 0 || p < at)) at = p;
+    });
+    var start = at < 0 ? 0 : Math.max(0, at - 30);
+    var slice = desc.slice(start, start + 140);
+    if (start > 0) slice = "…" + slice;
+    if (start + 140 < desc.length) slice = slice + "…";
+    return slice;
+  }
+
+  function showSearchResults(query, terms, results) {
+    var gen = ++sidebarGen;
+    if (sidebarScroll) {
+      sidebar.removeEventListener("scroll", sidebarScroll);
+      sidebarScroll = null;
+    }
+    sidebar.classList.remove("hidden");
+    sidebar.scrollTop = 0;
+    disableMapKeys();
+    currentLocEntry = null;
+    sidebarContent.innerHTML = '<div id="loading">Loading&hellip;</div>';
+
+    var ids = results.map(function (r) {
+      return r[0];
+    });
+    fetchMultiple(ids, function (records) {
+      if (gen !== sidebarGen) return;
+      var recs = ids
+        .map(function (id) {
+          return records[id];
+        })
+        .filter(Boolean);
+      sidebarContent.innerHTML = "";
+
+      var header = document.createElement("div");
+      header.className = "grid-header search-header";
+      var count = document.createElement("span");
+      count.className = "photo-count";
+      var capped = results.length >= SEARCH_LIMIT;
+      count.textContent =
+        (capped ? "top " + SEARCH_LIMIT : recs.length) +
+        ' results for "' +
+        query +
+        '"';
+      header.appendChild(count);
+      sidebarContent.appendChild(header);
+
+      var list = document.createElement("div");
+      list.className = "search-list";
+      sidebarContent.appendChild(list);
+
+      recs.forEach(function (d, i) {
+        var row = document.createElement("div");
+        row.className = "search-row";
+
+        var thumbUrl = safeUrl(d.thumb) || safeUrl(d.preview);
+        var img = document.createElement("img");
+        img.className = "search-thumb";
+        img.loading = "lazy";
+        if (thumbUrl) img.src = thumbUrl;
+        img.alt = d.title || "";
+        row.appendChild(img);
+
+        var txt = document.createElement("div");
+        txt.className = "search-text";
+        var parts = [];
+        if (d.title)
+          parts.push(
+            '<div class="sr-title">' + highlight(d.title, terms) + "</div>",
+          );
+        var meta = [d.date, d.neighborhood].filter(Boolean).join(" · ");
+        if (meta)
+          parts.push('<div class="sr-meta">' + escapeHtml(meta) + "</div>");
+        var sn = snippet(d.description, terms);
+        if (sn)
+          parts.push('<div class="sr-snip">' + highlight(sn, terms) + "</div>");
+        txt.innerHTML = parts.join("");
+        row.appendChild(txt);
+
+        row.addEventListener("click", function () {
+          openModal(recs, i);
+        });
+        list.appendChild(row);
+      });
+    });
+  }
 
   function runSearch(query) {
     query = query.trim();
@@ -855,33 +939,16 @@
       return;
     }
 
-    var results = searchRecords(query);
+    var terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+    var results = searchRecords(terms);
     if (!results.length) {
       sidebar.classList.remove("hidden");
       sidebar.scrollTop = 0;
       sidebarContent.innerHTML =
-        '<p class="error">No matches for "' +
-        query.replace(/[<>&"]/g, "") +
-        '".</p>';
+        '<p class="error">No matches for “' + escapeHtml(query) + "”.</p>";
       return;
     }
-    buildIdToLoc();
-    var ids = results.map(function (r) {
-      return r[0];
-    });
-    var years = ids.map(function (id) {
-      var loc = idToLoc[id];
-      return loc ? loc[2] : 0;
-    });
-    var capped = results.length >= SEARCH_LIMIT;
-    openSidebar(ids, {
-      years: years,
-      header:
-        (capped ? "top " + SEARCH_LIMIT : results.length) +
-        ' results for "' +
-        query +
-        '"',
-    });
+    showSearchResults(query, terms, results);
   }
 
   var searchInput = document.getElementById("photo-search");

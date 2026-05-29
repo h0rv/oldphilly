@@ -359,13 +359,83 @@ body {
   text-align: center;
 }
 
-/* Grid header: count + sort */
+/* Grid header: count + sort. padding-right keeps the sort dropdown clear
+   of the absolutely-positioned close (×) button. */
 .grid-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 6px;
+  padding-right: 30px;
+}
+
+/* Search results list */
+.search-header {
+  margin-bottom: 10px;
+}
+
+.search-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-row {
+  display: flex;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.search-row:hover {
+  background: #faf7f3;
+}
+
+.search-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background: #eee;
+}
+
+.search-text {
+  min-width: 0;
+  font-family: sans-serif;
+  align-self: center;
+}
+
+.sr-title {
+  font-family: Georgia, serif;
+  font-size: 0.84rem;
+  color: #1a1a1a;
+  line-height: 1.3;
+  margin-bottom: 2px;
+}
+
+.sr-meta {
+  font-size: 0.7rem;
+  color: #999;
+  margin-bottom: 2px;
+}
+
+.sr-snip {
+  font-size: 0.74rem;
+  color: #666;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.search-text mark {
+  background: #ffe08a;
+  color: inherit;
+  padding: 0 1px;
+  border-radius: 2px;
 }
 
 .photo-count {
