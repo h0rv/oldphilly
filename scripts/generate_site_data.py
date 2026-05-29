@@ -14,15 +14,19 @@ import argparse
 import json
 import os
 import sqlite3
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
 
 from pydantic import BaseModel
 
 DB_PATH = Path(__file__).parent.parent / "data" / "oldphilly.sqlite"
 OUT_DIR = Path(__file__).parent.parent / "site"
 CHUNKS_DIR = OUT_DIR / "chunks"
-CHUNK_SIZE = 500
+
+# --- Tuning knobs ---
+CHUNK_SIZE = 500          # records per chunk JSON file
+COORD_PRECISION = 3       # decimal places for lat/lon grouping
+                          # 4 ≈ 11m (address-level), 3 ≈ 110m (block-level), 2 ≈ 1.1km
 
 
 class SiteRecord(BaseModel):
@@ -73,15 +77,30 @@ def rows_from_parquet(path: str) -> Iterator[dict]:
             & (pl.col("thumbnail_url") != "")
         )
         .sort("source_record_id")
-        .select([
-            "source_record_id", "latitude", "longitude", "circa_year",
-            "title", "description", "date_display", "address_text", "neighborhood",
-            "photographer", "creator", "collection", "record_group", "notes", "rights_text",
-            "thumbnail_url", "preview_url", "canonical_url",
-        ])
+        .select(
+            [
+                "source_record_id",
+                "latitude",
+                "longitude",
+                "circa_year",
+                "title",
+                "description",
+                "date_display",
+                "address_text",
+                "neighborhood",
+                "photographer",
+                "creator",
+                "collection",
+                "record_group",
+                "notes",
+                "rights_text",
+                "thumbnail_url",
+                "preview_url",
+                "canonical_url",
+            ]
+        )
     )
-    for row in df.iter_rows(named=True):
-        yield row
+    yield from df.iter_rows(named=True)
 
 
 def build_record(row: dict) -> SiteRecord:
@@ -113,15 +132,15 @@ def main() -> None:
     source = rows_from_parquet(args.from_hf) if args.from_hf else rows_from_sqlite()
 
     # (lat_r, lon_r) → ([ids...], [years...])
-    # Round to 4 decimal places (~11m) to merge photos shot at same location.
+    # Round to 3 decimal places (~110m, block level) to merge same-block addresses.
     loc_map: dict[tuple[float, float], tuple[list, list]] = {}
     chunks: dict[int, dict] = {}
     count = 0
 
     for row in source:
         rid = row["source_record_id"]
-        lat_r = round(float(row["latitude"]), 4)
-        lon_r = round(float(row["longitude"]), 4)
+        lat_r = round(float(row["latitude"]), COORD_PRECISION)
+        lon_r = round(float(row["longitude"]), COORD_PRECISION)
         year = int(row["circa_year"]) if row["circa_year"] else 0
 
         key = (lat_r, lon_r)
@@ -135,10 +154,7 @@ def main() -> None:
         chunks.setdefault(chunk_id, {})[rid] = json.loads(record.model_dump_json(exclude_none=True))
         count += 1
 
-    markers = [
-        [lat, lon, ids, years]
-        for (lat, lon), (ids, years) in loc_map.items()
-    ]
+    markers = [[lat, lon, ids, years] for (lat, lon), (ids, years) in loc_map.items()]
 
     print(f"Exporting {count:,} records → {len(markers):,} locations...")
 

@@ -74,6 +74,7 @@ body {
 .dataset-link a {
   color: #888;
   text-decoration: none;
+  pointer-events: auto;
 }
 
 .dataset-link a:hover {
@@ -503,13 +504,21 @@ body {
     width: 100%;
   }
 
+  /* Compact card — sits in top-left corner without swamping the map */
   #title-card {
-    left: 10px;
-    max-width: 200px;
+    top: 8px;
+    left: 50px;
+    right: 8px;
+    max-width: none;
+    padding: 8px 12px;
   }
 
   #title-card h1 {
     font-size: 1rem;
+  }
+
+  #title-card > p:first-of-type {
+    display: none; /* hide subtitle to save space */
   }
 
   .photo-wrap img {

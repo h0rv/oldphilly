@@ -1,6 +1,8 @@
 (function () {
   "use strict";
 
+  var isMobile = window.innerWidth <= 600;
+
   // City Hall, Philadelphia
   const map = L.map("map", { zoomControl: true, preferCanvas: true }).setView(
     [39.9526, -75.1652],
@@ -400,8 +402,11 @@
   var dotLayer = L.layerGroup().addTo(map);
 
   function dotStyle(count, selected) {
-    // Radius grows sub-linearly with photo count (sqrt), like oldnyc.
-    var r = count <= 1 ? 4 : Math.min(4 + Math.sqrt(count) * 1.1, 11);
+    // Small dots — keep readable even at neighborhood zoom.
+    // Mobile even smaller to avoid overlap on tiny screens.
+    var base = isMobile ? 2 : 3;
+    var max = isMobile ? 5 : 7;
+    var r = count <= 1 ? base : Math.min(base + Math.sqrt(count) * 0.55, max);
     return {
       renderer: dotRenderer,
       radius: selected ? r + 3 : r,
@@ -499,7 +504,8 @@
 
   // Dots are cheap on canvas, but instantiating all 32K markers at once is not.
   // Keep viewport culling; gate slightly so we never dump the whole city at once.
-  var MIN_LOAD_ZOOM = 12;
+  // Higher threshold on mobile — small screen = fewer pixels = zoom out = more overlap.
+  var MIN_LOAD_ZOOM = 14;
 
   function loadViewport() {
     var zoom = map.getZoom();
