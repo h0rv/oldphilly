@@ -34,13 +34,18 @@
     }
   }
 
-  // --- Title card collapse ---
+  // --- Title card collapse (auto-collapsed on mobile) ---
   (function () {
     var card = document.getElementById("title-card");
     var btn = document.getElementById("title-toggle");
+    function sync() {
+      btn.textContent = card.classList.contains("collapsed") ? "▸" : "▾";
+    }
+    if (isMobile) card.classList.add("collapsed");
+    sync();
     btn.addEventListener("click", function () {
       card.classList.toggle("collapsed");
-      btn.textContent = card.classList.contains("collapsed") ? "▸" : "▾";
+      sync();
     });
   })();
 

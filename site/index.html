@@ -19,11 +19,13 @@
         <button id="title-toggle" aria-label="Collapse panel">▾</button>
       </div>
       <div id="title-body">
-        <p>Historical photographs from the Philadelphia City Archives</p>
+        <p class="subtitle">
+          Historical photographs from the Philadelphia City Archives
+        </p>
         <input
-          id="year-filter"
+          id="photo-search"
           type="text"
-          placeholder="e.g. 1900 or 1850-1907, 1920"
+          placeholder="Search photos (press Enter)…"
           autocomplete="off"
         />
         <input
@@ -33,15 +35,15 @@
           autocomplete="off"
         />
         <input
-          id="photo-search"
+          id="year-filter"
           type="text"
-          placeholder="Search photos (press Enter)…"
+          placeholder="Filter by year (e.g. 1900 or 1850-1907)"
           autocomplete="off"
         />
-        <p class="dataset-link">
-          <a href="about.html">About</a> &middot;
-          <button id="random-btn">Random</button>
-        </p>
+        <div class="card-footer">
+          <a href="about.html">About</a>
+          <button id="random-btn">🎲 Random</button>
+        </div>
       </div>
     </div>
 

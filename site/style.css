@@ -24,12 +24,12 @@ body {
   top: 16px;
   left: 16px;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.93);
-  padding: 10px 14px;
-  border-radius: 4px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
-  max-width: 240px;
-  pointer-events: none;
+  width: 232px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px 14px;
+  border-radius: 6px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  font-family: sans-serif;
 }
 
 #title-row {
@@ -40,7 +40,8 @@ body {
 }
 
 #title-card h1 {
-  font-size: 1.15rem;
+  font-family: Georgia, serif;
+  font-size: 1.2rem;
   color: #222;
   line-height: 1.2;
 }
@@ -50,9 +51,8 @@ body {
   border: none;
   cursor: pointer;
   font-size: 0.8rem;
-  color: #888;
+  color: #999;
   padding: 2px 4px;
-  pointer-events: auto;
   flex-shrink: 0;
 }
 #title-toggle:hover {
@@ -64,21 +64,20 @@ body {
   transition:
     max-height 0.2s ease,
     opacity 0.2s ease;
-  max-height: 200px;
+  max-height: 240px;
   opacity: 1;
 }
 
 #title-card.collapsed #title-body {
   max-height: 0;
   opacity: 0;
-  pointer-events: none;
 }
 
-#title-card p {
-  font-size: 0.75rem;
+.subtitle {
+  font-size: 0.74rem;
   color: #666;
-  margin-top: 4px;
-  font-family: sans-serif;
+  margin: 4px 0 10px;
+  line-height: 1.4;
 }
 
 #year-filter,
@@ -86,15 +85,20 @@ body {
 #photo-search {
   display: block;
   width: 100%;
-  margin-top: 8px;
-  padding: 5px 7px;
-  font-size: 0.75rem;
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  font-size: 0.78rem;
   font-family: sans-serif;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
   color: #333;
   background: #fff;
-  pointer-events: auto;
+}
+
+#year-filter::placeholder,
+#address-search::placeholder,
+#photo-search::placeholder {
+  color: #aaa;
 }
 
 #year-filter:focus,
@@ -104,35 +108,42 @@ body {
   border-color: #888;
 }
 
-.dataset-link {
-  margin-top: 6px;
-  font-size: 0.7rem;
+/* Footer row: About link + Random pill */
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
 }
 
-.dataset-link a {
+.card-footer a {
+  font-size: 0.74rem;
   color: #888;
   text-decoration: none;
-  pointer-events: auto;
 }
-
-.dataset-link a:hover {
+.card-footer a:hover {
   color: #444;
   text-decoration: underline;
 }
 
 #random-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: 0.7rem;
-  color: #888;
-  cursor: pointer;
-  pointer-events: auto;
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 0.74rem;
   font-family: sans-serif;
+  color: #fff;
+  background: #c0392b;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.12s;
 }
 
 #random-btn:hover {
-  color: #444;
+  background: #a52f22;
 }
 
 /* About page */
@@ -626,14 +637,15 @@ body {
     width: 100%;
   }
 
-  /* Compact card — full width minus small margins, no left offset needed
-     (zoom controls now bottom-right, no conflict) */
+  /* Full width minus small margins (zoom is bottom-right, no conflict).
+     Auto-collapse is applied in JS via the .collapsed class so the toggle
+     can still expand it. */
   #title-card {
     top: 8px;
     left: 8px;
     right: 8px;
-    max-width: none;
-    padding: 8px 12px;
+    width: auto;
+    padding: 10px 12px;
   }
 
   #title-card h1 {
@@ -642,16 +654,5 @@ body {
 
   .photo-wrap img {
     height: 200px;
-  }
-
-  /* Auto-collapse on mobile to save map space */
-  #title-card #title-body {
-    max-height: 0;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  #title-toggle {
-    /* Show ▸ by default on mobile (collapsed) */
   }
 }
