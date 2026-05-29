@@ -27,6 +27,18 @@
     </div>
   </div>
 
+  <div id="modal" class="hidden" role="dialog" aria-modal="true">
+    <div id="modal-backdrop"></div>
+    <button id="modal-close" aria-label="Close">&times;</button>
+    <button id="modal-prev" class="modal-nav" aria-label="Previous photo">&#8249;</button>
+    <button id="modal-next" class="modal-nav" aria-label="Next photo">&#8250;</button>
+    <div id="modal-img-wrap">
+      <img id="modal-img" src="" alt="">
+    </div>
+  </div>
+
+  <div id="zoom-hint">Zoom in to explore photos</div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="https://unpkg.com/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.js"></script>

@@ -26,13 +26,57 @@
     .addTo(map);
 
   // --- Sidebar ---
-  const sidebar = document.getElementById('sidebar');
+  const sidebar   = document.getElementById('sidebar');
   const sidebarContent = document.getElementById('sidebar-content');
-  const closeBtn = document.getElementById('close-btn');
+  const closeBtn  = document.getElementById('close-btn');
 
   function closeSidebar() { sidebar.classList.add('hidden'); }
   closeBtn.addEventListener('click', closeSidebar);
   map.on('click', closeSidebar);
+
+  // --- Modal / lightbox ---
+  const modal      = document.getElementById('modal');
+  const modalImg   = document.getElementById('modal-img');
+  const modalPrev  = document.getElementById('modal-prev');
+  const modalNext  = document.getElementById('modal-next');
+
+  var modalRecs = [];
+  var modalIdx  = 0;
+
+  function openModal(recs, startIdx) {
+    modalRecs = recs;
+    showModalAt(startIdx);
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function showModalAt(idx) {
+    idx = Math.max(0, Math.min(idx, modalRecs.length - 1));
+    modalIdx = idx;
+    var d = modalRecs[idx];
+    var url = safeUrl(d.preview) || safeUrl(d.thumb);
+    modalImg.src = url || '';
+    modalImg.alt = d.title || '';
+    modalPrev.classList.toggle('hidden', idx === 0);
+    modalNext.classList.toggle('hidden', idx === modalRecs.length - 1);
+  }
+
+  document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  modalPrev.addEventListener('click', function () { showModalAt(modalIdx - 1); });
+  modalNext.addEventListener('click', function () { showModalAt(modalIdx + 1); });
+
+  document.addEventListener('keydown', function (e) {
+    if (modal.classList.contains('hidden')) return;
+    if (e.key === 'ArrowLeft')  showModalAt(modalIdx - 1);
+    else if (e.key === 'ArrowRight') showModalAt(modalIdx + 1);
+    else if (e.key === 'Escape') closeModal();
+  });
 
   // --- Security ---
   var ALLOWED_ORIGIN = 'https://www.phillyhistory.org/';
@@ -55,7 +99,6 @@
       .catch(function () { chunkCache[chunkId] = null; cb(null); });
   }
 
-  // Fetch multiple IDs in parallel (may span multiple chunks).
   function fetchMultiple(ids, cb) {
     var byChunk = {};
     ids.forEach(function (id) {
@@ -80,7 +123,11 @@
   }
 
   // --- Render detail panel ---
-  function renderDetail(d, container) {
+  // sidebarRecs and sidebarActiveIdx are set by openSidebar before renderDetail is called.
+  var sidebarRecs      = [];
+  var sidebarActiveIdx = 0;
+
+  function renderDetail(d, container, recIdx) {
     var previewUrl = safeUrl(d.preview) || safeUrl(d.thumb);
     var thumbUrl   = safeUrl(d.thumb);
     var sourceUrl  = safeUrl(d.url);
@@ -88,16 +135,16 @@
     if (previewUrl) {
       var wrap = document.createElement('div');
       wrap.className = 'photo-wrap';
-      var link = document.createElement('a');
-      link.href = previewUrl; link.target = '_blank'; link.rel = 'noopener';
       var img = document.createElement('img');
       img.alt = d.title || '';
       img.src = previewUrl;
       if (thumbUrl && thumbUrl !== previewUrl) {
         img.onerror = function () { this.src = thumbUrl; this.onerror = null; };
       }
-      link.appendChild(img);
-      wrap.appendChild(link);
+      wrap.appendChild(img);
+      wrap.addEventListener('click', function () {
+        openModal(sidebarRecs, recIdx);
+      });
       container.appendChild(wrap);
     }
 
@@ -134,9 +181,9 @@
     container.appendChild(meta);
   }
 
-  // --- Open sidebar (single or multi-photo location) ---
+  // --- Open sidebar ---
   var MAX_PHOTOS = 24;
-  var sidebarGen = 0; // increments each open; callbacks check before rendering
+  var sidebarGen = 0;
 
   function openSidebar(rawIds) {
     var ids = rawIds.map(safeId).filter(Boolean);
@@ -148,8 +195,10 @@
     var limited = ids.slice(0, MAX_PHOTOS);
 
     fetchMultiple(limited, function (records) {
-      if (gen !== sidebarGen) return; // superseded by a newer click
+      if (gen !== sidebarGen) return;
       var recs = limited.map(function (id) { return records[id]; }).filter(Boolean);
+      sidebarRecs = recs;
+      sidebarActiveIdx = 0;
       sidebarContent.innerHTML = '';
 
       if (!recs.length) {
@@ -161,11 +210,10 @@
       }
 
       if (recs.length === 1) {
-        renderDetail(recs[0], sidebarContent);
+        renderDetail(recs[0], sidebarContent, 0);
         return;
       }
 
-      // Multi-photo: count line + thumbnail strip + detail panel
       var note = document.createElement('p');
       note.className = 'photo-count';
       note.textContent = (ids.length > MAX_PHOTOS)
@@ -180,7 +228,7 @@
       var detail = document.createElement('div');
       detail.className = 'detail-panel';
       sidebarContent.appendChild(detail);
-      renderDetail(recs[0], detail);
+      renderDetail(recs[0], detail, 0);
 
       recs.forEach(function (d, i) {
         var thumbUrl = safeUrl(d.thumb) || safeUrl(d.preview);
@@ -188,12 +236,13 @@
         btn.className = 'strip-thumb' + (i === 0 ? ' active' : '');
         if (thumbUrl) btn.src = thumbUrl;
         btn.alt = d.title || '';
-        btn.title = d.date ? (d.title || '') + ' (' + d.date + ')' : (d.title || '');
+        btn.title = [d.title, d.date].filter(Boolean).join(' · ');
         btn.addEventListener('click', function () {
+          sidebarActiveIdx = i;
           strip.querySelectorAll('.strip-thumb').forEach(function (t) { t.classList.remove('active'); });
           btn.classList.add('active');
           detail.innerHTML = '';
-          renderDetail(d, detail);
+          renderDetail(d, detail, i);
           detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
         strip.appendChild(btn);
@@ -202,17 +251,34 @@
   }
 
   // --- Markers & clustering ---
+  // maxClusterRadius is zoom-dependent: aggressive when zoomed out so overlapping
+  // pins group into manageable clusters, minimal at street level.
   const clusters = L.markerClusterGroup({
     chunkedLoading: true,
-    maxClusterRadius: 8,
+    maxClusterRadius: function (zoom) {
+      if (zoom <= 12) return 80;
+      if (zoom <= 13) return 50;
+      if (zoom <= 14) return 25;
+      if (zoom <= 15) return 12;
+      return 8;
+    },
     spiderfyOnMaxZoom: true,
-    disableClusteringAtZoom: 16,
+    disableClusteringAtZoom: 17,
     showCoverageOnHover: false,
   });
   map.addLayer(clusters);
 
+  // Small red dot marker — much less visual noise than default blue pins.
+  var DOT_STYLE = {
+    radius: 5,
+    color: '#7b1111',
+    fillColor: '#c0392b',
+    fillOpacity: 0.85,
+    weight: 1.5,
+  };
+
   // spatialIndex: [[lat, lon, [ids...], [years...]], ...]  loaded once from markers.json
-  // addedSet: tracks which indices have been added to cluster (never removed, avoids rebuild flicker)
+  // addedSet: tracks which indices have been added (never removed, prevents cluster rebuild flicker)
   var spatialIndex = [];
   var addedSet = new Set();
   var BATCH = 500;
@@ -223,13 +289,11 @@
     if (end < list.length) setTimeout(function () { addInBatches(list, end); }, 0);
   }
 
-  function makeLocationMarker(entry, filteredIds) {
-    var m = L.marker([entry[0], entry[1]]);
-    m._entry = entry;
-    m._filteredIds = filteredIds; // null = show all
+  function makeLocationMarker(entry, ids) {
+    var m = L.circleMarker([entry[0], entry[1]], DOT_STYLE);
     m.on('click', function (e) {
       L.DomEvent.stopPropagation(e);
-      openSidebar(m._filteredIds || m._entry[2]);
+      openSidebar(ids || entry[2]);
     });
     return m;
   }
@@ -260,8 +324,8 @@
     return false;
   }
 
-  // Returns filtered ids for a location entry, or null if all pass (no filter active).
-  // Returns empty array if no photos in entry match (location should be hidden).
+  // Returns a filtered ids array for the entry, or null if all pass.
+  // Returns [] if no photos match (location should be hidden).
   function filteredIds(entry) {
     if (!filterRanges) return null;
     var ids = entry[2], years = entry[3];
@@ -273,9 +337,15 @@
     return out;
   }
 
-  // Scan spatialIndex for entries in the current viewport and add new ones to cluster.
+  // Don't load new markers below this zoom — prevents dumping 32K pins at city level.
+  var MIN_LOAD_ZOOM = 13;
+
   function loadViewport() {
-    var b = map.getBounds().pad(0.3);
+    var zoom = map.getZoom();
+    if (zoom < MIN_LOAD_ZOOM) return;
+    // Less buffer at lower zoom to limit how many markers are added at once.
+    var pad = zoom >= 15 ? 0.3 : zoom >= 14 ? 0.15 : 0.05;
+    var b = map.getBounds().pad(pad);
     var minLat = b.getSouth(), maxLat = b.getNorth();
     var minLng = b.getWest(),  maxLng = b.getEast();
     var toAdd = [];
@@ -284,14 +354,18 @@
       var e = spatialIndex[i];
       if (e[0] < minLat || e[0] > maxLat || e[1] < minLng || e[1] > maxLng) continue;
       var fids = filteredIds(e);
-      if (fids !== null && fids.length === 0) continue; // filtered out
+      if (fids !== null && fids.length === 0) continue;
       addedSet.add(i);
       toAdd.push(makeLocationMarker(e, fids));
     }
     if (toAdd.length) addInBatches(toAdd, 0);
   }
 
-  // Year filter change: rebuild visible markers from scratch.
+  var zoomHint = document.getElementById('zoom-hint');
+  function updateZoomHint() {
+    zoomHint.style.display = map.getZoom() < MIN_LOAD_ZOOM ? 'block' : 'none';
+  }
+
   function applyFilter() {
     closeSidebar();
     clusters.clearLayers();
@@ -299,7 +373,10 @@
     loadViewport();
   }
 
-  map.on('moveend zoomend', loadViewport);
+  map.on('moveend zoomend', function () {
+    loadViewport();
+    updateZoomHint();
+  });
 
   var filterTimer;
   document.getElementById('year-filter').addEventListener('input', function () {
@@ -314,6 +391,10 @@
   // --- Bootstrap ---
   fetch('markers.json')
     .then(function (r) { return r.json(); })
-    .then(function (raw) { spatialIndex = raw; loadViewport(); })
+    .then(function (raw) {
+      spatialIndex = raw;
+      loadViewport();
+      updateZoomHint();
+    })
     .catch(function (err) { console.error('Failed to load markers:', err); });
 })();
