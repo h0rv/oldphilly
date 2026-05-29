@@ -12,6 +12,7 @@ Sources (mutually exclusive):
 
 import argparse
 import json
+import math
 import os
 import sqlite3
 from collections.abc import Iterator
@@ -25,8 +26,11 @@ CHUNKS_DIR = OUT_DIR / "chunks"
 
 # --- Tuning knobs ---
 CHUNK_SIZE = 500          # records per chunk JSON file
-COORD_PRECISION = 3       # decimal places for lat/lon grouping
-                          # 4 ≈ 11m (address-level), 3 ≈ 110m (block-level), 2 ≈ 1.1km
+MERGE_RADIUS_M = 80       # photos within this many meters of a cluster merge
+                          # into it (distance-based, grid-orientation-agnostic).
+                          # Larger = fewer, coarser dots; smaller = denser.
+PHILLY_LAT = 39.95        # reference latitude for the meters↔degrees conversion
+M_PER_DEG_LAT = 111_320.0
 
 
 class SiteRecord(BaseModel):
@@ -122,6 +126,83 @@ def build_record(row: dict) -> SiteRecord:
     )
 
 
+class Cluster:
+    __slots__ = ("ids", "years", "lat_sum", "lon_sum", "n")
+
+    def __init__(self, rid: str, year: int, lat: float, lon: float):
+        self.ids = [rid]
+        self.years = [year]
+        self.lat_sum = lat
+        self.lon_sum = lon
+        self.n = 1
+
+    @property
+    def lat(self) -> float:
+        return self.lat_sum / self.n
+
+    @property
+    def lon(self) -> float:
+        return self.lon_sum / self.n
+
+    def add(self, rid: str, year: int, lat: float, lon: float) -> None:
+        self.ids.append(rid)
+        self.years.append(year)
+        self.lat_sum += lat
+        self.lon_sum += lon
+        self.n += 1
+
+
+def cluster_points(points: list[tuple[str, float, float, int]]) -> list[Cluster]:
+    """Greedy distance-based clustering (DBSCAN-style leader algorithm).
+
+    Each point joins the nearest existing cluster whose centroid is within
+    MERGE_RADIUS_M, else seeds a new cluster. A spatial hash grid (cell size =
+    radius) keeps neighbor lookup O(1), so this scales to all records in one
+    pass. Distance is measured in meters via a local equirectangular
+    approximation, so clusters grow along the real street direction regardless
+    of grid orientation (rotated West Philly, diagonal South Philly, etc.).
+    """
+    cos_lat = math.cos(math.radians(PHILLY_LAT))
+    m_per_deg_lon = M_PER_DEG_LAT * cos_lat
+    cell_lat = MERGE_RADIUS_M / M_PER_DEG_LAT
+    cell_lon = MERGE_RADIUS_M / m_per_deg_lon
+
+    clusters: list[Cluster] = []
+    grid: dict[tuple[int, int], list[int]] = {}
+
+    def cell_of(lat: float, lon: float) -> tuple[int, int]:
+        return (int(lat / cell_lat), int(lon / cell_lon))
+
+    for rid, lat, lon, year in points:
+        ci, cj = cell_of(lat, lon)
+        best_idx = None
+        best_d = MERGE_RADIUS_M
+        for di in (-1, 0, 1):
+            for dj in (-1, 0, 1):
+                for idx in grid.get((ci + di, cj + dj), ()):
+                    c = clusters[idx]
+                    dy = (lat - c.lat) * M_PER_DEG_LAT
+                    dx = (lon - c.lon) * m_per_deg_lon
+                    d = math.hypot(dx, dy)
+                    if d < best_d:
+                        best_d = d
+                        best_idx = idx
+        if best_idx is None:
+            idx = len(clusters)
+            clusters.append(Cluster(rid, year, lat, lon))
+            grid.setdefault((ci, cj), []).append(idx)
+        else:
+            c = clusters[best_idx]
+            old_cell = cell_of(c.lat, c.lon)
+            c.add(rid, year, lat, lon)
+            new_cell = cell_of(c.lat, c.lon)
+            if new_cell != old_cell:  # centroid drifted; re-bucket
+                grid[old_cell].remove(best_idx)
+                grid.setdefault(new_cell, []).append(best_idx)
+
+    return clusters
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--from-hf", metavar="PARQUET", help="path to source_records.parquet")
@@ -131,30 +212,31 @@ def main() -> None:
 
     source = rows_from_parquet(args.from_hf) if args.from_hf else rows_from_sqlite()
 
-    # (lat_r, lon_r) → ([ids...], [years...])
-    # Round to 3 decimal places (~110m, block level) to merge same-block addresses.
-    loc_map: dict[tuple[float, float], tuple[list, list]] = {}
+    # Collect points and per-record detail, then merge nearby photos into
+    # location clusters by distance (see cluster_points). Each marker sits at
+    # its cluster's centroid, on the real street position.
+    points: list[tuple[str, float, float, int]] = []
     chunks: dict[int, dict] = {}
     count = 0
 
     for row in source:
         rid = row["source_record_id"]
-        lat_r = round(float(row["latitude"]), COORD_PRECISION)
-        lon_r = round(float(row["longitude"]), COORD_PRECISION)
+        lat = float(row["latitude"])
+        lon = float(row["longitude"])
         year = int(row["circa_year"]) if row["circa_year"] else 0
 
-        key = (lat_r, lon_r)
-        if key not in loc_map:
-            loc_map[key] = ([], [])
-        loc_map[key][0].append(rid)
-        loc_map[key][1].append(year)
+        points.append((rid, lat, lon, year))
 
         record = build_record(row)
         chunk_id = int(rid) // CHUNK_SIZE
         chunks.setdefault(chunk_id, {})[rid] = json.loads(record.model_dump_json(exclude_none=True))
         count += 1
 
-    markers = [[lat, lon, ids, years] for (lat, lon), (ids, years) in loc_map.items()]
+    clusters = cluster_points(points)
+    markers = [
+        [round(c.lat, 6), round(c.lon, 6), c.ids, c.years]
+        for c in clusters
+    ]
 
     print(f"Exporting {count:,} records → {len(markers):,} locations...")
 
