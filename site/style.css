@@ -329,22 +329,31 @@ body {
   transform: translateX(100%);
 }
 
+/* Above the sticky .active-detail header (z-index 2) so it stays clickable;
+   subtle surface chip keeps the × legible over photos and text. */
 #close-btn {
   position: absolute;
   top: var(--space-2);
   right: var(--space-3);
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: var(--ink-3);
+  z-index: 5;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-card);
+  font-size: 1.25rem;
   line-height: 1;
-  padding: var(--space-1) var(--space-2);
-  z-index: 1;
+  color: var(--ink-3);
+  cursor: pointer;
 }
 
 #close-btn:hover {
   color: #000;
+  background: var(--surface);
 }
 
 #sidebar-content {
@@ -676,7 +685,8 @@ body {
   align-items: center;
   justify-content: center;
   padding: var(--modal-pad-y) var(--modal-pad-x);
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: zoom-out;
 }
 
 #modal-img {
@@ -684,7 +694,8 @@ body {
   height: 100%;
   object-fit: contain;
   border-radius: var(--r-xs);
-  pointer-events: auto;
+  pointer-events: none;
+  cursor: default;
 }
 
 #modal-close {

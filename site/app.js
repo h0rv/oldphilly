@@ -148,6 +148,7 @@
   // --- Modal ---
   const modal = document.getElementById("modal");
   const modalImg = document.getElementById("modal-img");
+  const modalImgWrap = document.getElementById("modal-img-wrap");
   const modalPrev = document.getElementById("modal-prev");
   const modalNext = document.getElementById("modal-next");
   const modalCaption = document.getElementById("modal-caption");
@@ -278,6 +279,31 @@
     .getElementById("modal-backdrop")
     .addEventListener("click", closeModal);
   document.getElementById("modal-close").addEventListener("click", closeModal);
+
+  // The image element fills its wrap (so small previews upscale to fit), which
+  // means the transparent letterbox is part of the <img>. Close the modal when
+  // the click lands on that border — but not on the actual photo content.
+  modalImgWrap.addEventListener("click", function (e) {
+    var w = modalImg.naturalWidth,
+      h = modalImg.naturalHeight;
+    if (!w || !h) {
+      closeModal();
+      return;
+    }
+    var box = modalImg.getBoundingClientRect();
+    // object-fit: contain → compute the rendered photo rect inside the box
+    var scale = Math.min(box.width / w, box.height / h);
+    var cw = w * scale,
+      ch = h * scale;
+    var cx = box.left + (box.width - cw) / 2;
+    var cy = box.top + (box.height - ch) / 2;
+    var onPhoto =
+      e.clientX >= cx &&
+      e.clientX <= cx + cw &&
+      e.clientY >= cy &&
+      e.clientY <= cy + ch;
+    if (!onPhoto) closeModal();
+  });
   modalPrev.addEventListener("click", function () {
     showModalAt(modalIdx - 1);
   });
