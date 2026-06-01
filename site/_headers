@@ -1,0 +1,25 @@
+# Cloudflare Pages cache rules.
+# Data files are regenerated on each deploy under the same names, so cache
+# them briefly and serve stale while revalidating — instant repeat loads
+# without pinning users to old data.
+
+/chunks/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+
+/markers.json
+  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+
+/search.json
+  Cache-Control: public, max-age=3600, stale-while-revalidate=604800
+
+/*.css
+  Cache-Control: public, max-age=3600
+
+/*.js
+  Cache-Control: public, max-age=3600
+
+/favicon.svg
+  Cache-Control: public, max-age=86400
+
+/og-image.png
+  Cache-Control: public, max-age=86400

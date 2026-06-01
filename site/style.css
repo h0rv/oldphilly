@@ -102,6 +102,26 @@ body {
   font-family: var(--serif);
 }
 
+/* Visible keyboard focus everywhere; suppressed for pointer focus. */
+:focus-visible {
+  outline: 2px solid var(--select);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Respect users who prefer minimal motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 #map {
   position: fixed;
   inset: 0;
@@ -194,8 +214,7 @@ body {
 #year-filter:focus,
 #address-search:focus,
 #photo-search:focus {
-  outline: none;
-  border-color: var(--muted-2);
+  border-color: var(--select);
 }
 
 /* Footer row: About link + Random pill */

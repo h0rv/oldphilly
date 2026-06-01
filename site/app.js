@@ -1,7 +1,13 @@
 (function () {
   "use strict";
 
-  var isMobile = window.innerWidth <= 600;
+  // Kept in sync with the CSS breakpoint so marker sizing matches the layout
+  // after a resize / device rotation (new markers use the current value).
+  var mobileMq = window.matchMedia("(max-width: 600px)");
+  var isMobile = mobileMq.matches;
+  mobileMq.addEventListener("change", function (e) {
+    isMobile = e.matches;
+  });
 
   // --- Map ---
   const map = L.map("map", { zoomControl: false, preferCanvas: true }).setView(
@@ -182,8 +188,16 @@
     idx = Math.max(0, Math.min(idx, modalRecs.length - 1));
     modalIdx = idx;
     var d = modalRecs[idx];
-    var url = safeUrl(d.preview) || safeUrl(d.thumb);
-    modalImg.src = url || "";
+    var previewUrl = safeUrl(d.preview) || safeUrl(d.thumb);
+    var thumbUrl = safeUrl(d.thumb);
+    modalImg.onerror =
+      thumbUrl && thumbUrl !== previewUrl
+        ? function () {
+            this.onerror = null;
+            this.src = thumbUrl;
+          }
+        : null;
+    modalImg.src = previewUrl || "";
     modalImg.alt = d.title || "";
     // Full synced detail panel (the "focused" sidebar)
     renderFocusDetail(d, idx, modalRecs.length);
@@ -310,6 +324,34 @@
   modalNext.addEventListener("click", function () {
     showModalAt(modalIdx + 1);
   });
+
+  // Touch swipe (mobile): horizontal drag navigates photos.
+  var touchX = null,
+    touchY = null;
+  modalImgWrap.addEventListener(
+    "touchstart",
+    function (e) {
+      var t = e.changedTouches[0];
+      touchX = t.clientX;
+      touchY = t.clientY;
+    },
+    { passive: true },
+  );
+  modalImgWrap.addEventListener(
+    "touchend",
+    function (e) {
+      if (touchX === null || modalRecs.length < 2) return;
+      var t = e.changedTouches[0];
+      var dx = t.clientX - touchX,
+        dy = t.clientY - touchY;
+      // Horizontal intent only, with a minimum travel.
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        showModalAt(dx < 0 ? modalIdx + 1 : modalIdx - 1);
+      }
+      touchX = touchY = null;
+    },
+    { passive: true },
+  );
 
   document.addEventListener("keydown", function (e) {
     if (!modal.classList.contains("hidden")) {
