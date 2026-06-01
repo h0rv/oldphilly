@@ -169,6 +169,12 @@
     modal.classList.add("hidden");
     document.body.style.overflow = "";
     enableMapKeys();
+    // Restore hash to the underlying location, or clear (e.g. search results)
+    if (!sidebar.classList.contains("hidden") && currentLocEntry) {
+      updateHash(currentLocEntry, null);
+    } else {
+      updateHash(null, null);
+    }
   }
 
   function showModalAt(idx) {
@@ -178,17 +184,94 @@
     var url = safeUrl(d.preview) || safeUrl(d.thumb);
     modalImg.src = url || "";
     modalImg.alt = d.title || "";
-    var cap = [d.title, d.date].filter(Boolean).join(" · ");
-    modalCaption.textContent =
-      modalRecs.length > 1
-        ? cap + "  (" + (idx + 1) + " / " + modalRecs.length + ")"
-        : cap;
+    // Full synced detail panel (the "focused" sidebar)
+    renderFocusDetail(d, idx, modalRecs.length);
     modalPrev.classList.toggle("hidden", idx === 0);
     modalNext.classList.toggle("hidden", idx === modalRecs.length - 1);
-    // Update hash with photo id for permalinking
-    if (currentLocEntry) updateHash(currentLocEntry, d.id);
+    // Permalink: #photo=id works from any context (location, search, deep-link)
+    if (safeId(d.id)) updatePhotoHash(d.id);
     // Track recently viewed
     trackViewed(d.id);
+  }
+
+  // Permalink to share with someone, e.g. <origin><path>#photo=<id>
+  function photoPermalink(id) {
+    return location.origin + location.pathname + "#photo=" + id;
+  }
+
+  // Full detail for the focused image: title, date, place, description, all
+  // metadata, source backlink, and a copy-permalink button. Synced on cycle.
+  function renderFocusDetail(d, idx, total) {
+    modalCaption.innerHTML = "";
+
+    if (total > 1) {
+      var counter = document.createElement("div");
+      counter.className = "mc-counter";
+      counter.textContent = idx + 1 + " / " + total;
+      modalCaption.appendChild(counter);
+    }
+
+    function addP(cls, text) {
+      if (!text) return;
+      var p = document.createElement("p");
+      p.className = cls;
+      p.textContent = text;
+      modalCaption.appendChild(p);
+    }
+
+    if (d.title) {
+      var h = document.createElement("h2");
+      h.className = "mc-title";
+      h.textContent = d.title;
+      modalCaption.appendChild(h);
+    }
+    addP("mc-date", d.date);
+    addP("mc-place", [d.address, d.neighborhood].filter(Boolean).join(" · "));
+    addP("mc-desc", d.description);
+    addP("mc-notes", d.notes);
+    addP(
+      "mc-attr",
+      [d.photographer, d.collection, d.record_group]
+        .filter(Boolean)
+        .join(" · "),
+    );
+    addP("mc-rights", d.rights);
+
+    var actions = document.createElement("div");
+    actions.className = "mc-actions";
+
+    var sourceUrl = safeUrl(d.url);
+    if (sourceUrl) {
+      var a = document.createElement("a");
+      a.className = "mc-source";
+      a.href = sourceUrl;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = "View on PhillyHistory.org ↗";
+      actions.appendChild(a);
+    }
+
+    if (safeId(d.id)) {
+      var copy = document.createElement("button");
+      copy.className = "mc-copy";
+      copy.textContent = "🔗 Copy link";
+      copy.addEventListener("click", function () {
+        var link = photoPermalink(d.id);
+        var done = function () {
+          copy.textContent = "✓ Copied";
+          setTimeout(function () {
+            copy.textContent = "🔗 Copy link";
+          }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(link).then(done, done);
+        } else {
+          window.prompt("Copy this link:", link);
+        }
+      });
+      actions.appendChild(copy);
+    }
+    if (actions.childNodes.length) modalCaption.appendChild(actions);
   }
 
   document
@@ -516,7 +599,6 @@
           btn.title = [d.title, d.date].filter(Boolean).join(" · ");
           btn.addEventListener("click", function () {
             openModal(loadedRecs, recIdx);
-            if (locEntry) updateHash(locEntry, d.id);
           });
           grid.appendChild(btn);
           spy.observe(btn);
@@ -696,7 +778,9 @@
     }, 400);
   });
 
-  // --- Permalink via URL hash: #loc=lat,lon or #loc=lat,lon&photo=id ---
+  // --- Permalink via URL hash ---
+  //   #loc=lat,lon   → location sidebar
+  //   #photo=id      → focused on a single photo (opens modal)
   function updateHash(entry, photoId) {
     if (!entry) {
       history.replaceState(null, "", location.pathname + location.search);
@@ -707,6 +791,10 @@
     history.replaceState(null, "", "#" + h);
   }
 
+  function updatePhotoHash(photoId) {
+    history.replaceState(null, "", "#photo=" + photoId);
+  }
+
   function parseHash() {
     var h = location.hash.slice(1);
     if (!h) return null;
@@ -715,6 +803,7 @@
       var kv = p.split("=");
       if (kv.length === 2) params[kv[0]] = kv[1];
     });
+    if (params.photo) return { photoId: params.photo };
     if (!params.loc) return null;
     var ll = params.loc.split(",");
     if (ll.length !== 2) return null;
@@ -749,16 +838,19 @@
   var searchData = null;
   var searchLoading = false;
   var idToLoc = null; // id → [lat, lon, year]
+  var idToEntry = null; // id → spatialIndex entry (for permalinks)
 
   function buildIdToLoc() {
     if (idToLoc) return;
     idToLoc = Object.create(null);
+    idToEntry = Object.create(null);
     for (var i = 0; i < spatialIndex.length; i++) {
       var e = spatialIndex[i];
       var ids = e[2],
         years = e[3];
       for (var k = 0; k < ids.length; k++) {
         idToLoc[ids[k]] = [e[0], e[1], years ? years[k] : 0];
+        idToEntry[ids[k]] = e;
       }
     }
   }
@@ -978,7 +1070,28 @@
 
       // Restore from hash if present
       var parsed = parseHash();
-      if (parsed) {
+
+      // Single-photo deep-link: #photo=id
+      if (parsed && parsed.photoId && parsed.lat == null) {
+        var pid = safeId(parsed.photoId);
+        buildIdToLoc();
+        var pent = pid ? idToEntry[pid] : null;
+        if (pent) {
+          map.setView([pent[0], pent[1]], 16);
+          setTimeout(function () {
+            loadViewport();
+            updateZoomHint();
+            openSidebar(pent[2], { entry: pent });
+            fetchMultiple([pid], function (recs) {
+              var d = recs[pid];
+              if (d) openModal([d], 0, pent[2]);
+            });
+          }, 300);
+          return;
+        }
+      }
+
+      if (parsed && parsed.lat != null) {
         var targetLat = parsed.lat,
           targetLon = parsed.lon;
         // Find closest entry to hashed coords
