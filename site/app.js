@@ -10,21 +10,21 @@
   });
 
   // --- Map ---
-  const map = L.map("map", { zoomControl: false, preferCanvas: true }).setView(
+  const map = L.map("map", {
+    zoomControl: false,
+    preferCanvas: true,
+    maxZoom: 20,
+  }).setView(
     [39.9526, -75.1652],
     16,
   );
   L.control.zoom({ position: "bottomright" }).addTo(map);
 
-  L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-    {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: "abcd",
-      maxZoom: 20,
-    },
-  ).addTo(map);
+  // OpenFreeMap: free, open-source vector tiles with no API key.
+  // Positron is the open-source version of CARTO's light style.
+  L.maplibreGL({
+    style: "https://tiles.openfreemap.org/styles/positron",
+  }).addTo(map);
 
   // Disable Leaflet keyboard nav when sidebar or modal are active —
   // otherwise arrow keys pan the map while navigating photos.
