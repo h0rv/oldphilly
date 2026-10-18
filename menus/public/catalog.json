@@ -11593,17 +11593,30 @@
         "year": 1915
       },
       "location": {
-        "address": "Broad and Walnut Streets",
-        "basis": "Conflicting source identity; no geometry assigned.",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred. This is a representative building locator, not a rooftop survey or an individual dining room.",
         "review": {
-          "status": "conflict",
-          "reason": "Historical metadata retained; no reviewed geometry for this source-specific branch.",
+          "status": "verified",
+          "reason": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
           "citationIds": [
             "citation-618",
-            "citation-619"
+            "citation-619",
+            "citation-3"
           ]
         },
-        "precision": "unknown"
+        "precision": "exact",
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "bbox": [
+          -75.165,
+          39.94888888888889,
+          -75.165,
+          39.94888888888889
+        ],
+        "evidenceCitationIds": [
+          "citation-3"
+        ]
       },
       "pageIds": [
         "nypl-69200",

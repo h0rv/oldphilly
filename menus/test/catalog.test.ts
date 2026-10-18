@@ -118,6 +118,11 @@ await test("date precision and original values stay separate, with valid days an
   const early = menu("nypl-13759").date;
   assert.equal(early.precision, "year");
   assert.ok(early.sourceValues.some((s) => s.value === "1900-11-29"));
+  assert.equal(
+    menu("nypl-33270").location.precision,
+    "exact",
+    "A disputed date must not erase independently reviewed building evidence",
+  );
   const conflict = menu("nypl-33270").date;
   assert.equal(conflict.review.status, "conflict");
   assert.ok(conflict.sourceValues.some((s) => s.value === "1915-01-01"));

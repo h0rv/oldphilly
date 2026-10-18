@@ -4,6 +4,7 @@ export default defineConfig({
   testMatch: "live-scans.spec.ts",
   outputDir: "./test-results/live",
   workers: 1,
+  maxFailures: 1,
   use: {
     baseURL: "http://127.0.0.1:4173/menus/",
     colorScheme: "light",

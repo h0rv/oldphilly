@@ -1666,8 +1666,10 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
             ),
     });
     const point = source.location ?? pointById.get(source.id);
+    // The 1915 date conflict does not dispute its reviewed Bellevue building.
+    const identityConflict = source.id === "nypl-24827";
     let location: CatalogLocation;
-    if (point !== undefined && status !== "conflict") {
+    if (point !== undefined && !identityConflict) {
       const evidence = cite(
         point.evidence,
         "gazetteer",
@@ -1689,12 +1691,11 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
       location = {
         precision: "unknown",
         address: typeof address === "string" && address.length > 0 ? address : null,
-        basis:
-          status === "conflict"
-            ? "Conflicting source identity; no geometry assigned."
-            : source.locationNote,
+        basis: identityConflict
+          ? "Conflicting source identity; no geometry assigned."
+          : source.locationNote,
         review: reviewed(
-          status === "conflict" ? "conflict" : "unresolved",
+          identityConflict ? "conflict" : "unresolved",
           "Historical metadata retained; no reviewed geometry for this source-specific branch.",
           citationIds,
         ),
