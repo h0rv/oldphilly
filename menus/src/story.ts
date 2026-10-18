@@ -11,7 +11,7 @@ export const storySchema = z.readonly(
           anchor: z.string().check(z.regex(/^[a-z][a-z-]+$/u)),
           menuId: text,
           heading: text,
-          observation: text,
+          observation: z.string(),
           itemIds: z.readonly(z.array(text).check(z.minLength(1), z.maxLength(3))),
           image: z.nullable(
             z.readonly(

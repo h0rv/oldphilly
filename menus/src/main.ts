@@ -1,8 +1,10 @@
 import L from "leaflet";
 import { parseArchive } from "./model.ts";
-import type { Menu, MenuArchive } from "./model.ts";
+import type { MenuArchive } from "./model.ts";
 import { filterMenus, priceLabel } from "./filters.ts";
 import type { Filters } from "./filters.ts";
+import { parseCatalog } from "./catalog-model.ts";
+import type { Catalog } from "./catalog-model.ts";
 import { basePath } from "./base-path.ts";
 
 function element(id: string): HTMLElement {
@@ -72,7 +74,39 @@ const filterPanel = element("filter-panel");
 if (!(filterPanel instanceof HTMLDetailsElement)) throw new Error("Missing filter disclosure");
 filterPanel.open = matchMedia("(min-width: 901px)").matches;
 
-function initialize(archive: MenuArchive): void {
+function initialize(archive: MenuArchive, catalog: Catalog): void {
+  const assetBase = basePath(document.body.dataset["assetBase"]);
+  const menus = archive.menus.map((menu) => {
+    const normalized = catalog.menus.find((item) => item.id === menu.id);
+    const venue = catalog.venues.find((item) => item.id === normalized?.venueId);
+    const location = normalized?.location;
+    return {
+      ...menu,
+      name: venue?.name ?? menu.name,
+      date: normalized?.date ?? menu.date,
+      location:
+        location?.precision === "exact"
+          ? {
+              lat: location.lat,
+              lng: location.lng,
+              area: location.area,
+              address: location.address ?? menu.name,
+              basis: location.basis,
+              evidence:
+                catalog.citations.find(
+                  (citation) => citation.id === location.evidenceCitationIds[0],
+                )?.url ?? menu.url,
+            }
+          : null,
+    };
+  });
+  type MapMenu = (typeof menus)[number];
+  const searchText = new Map(
+    archive.menus.map((menu) => [
+      menu.id,
+      `${menu.name} ${catalog.menus.find((item) => item.id === menu.id)?.location.address ?? ""}`,
+    ]),
+  );
   const map = L.map("map", {
     scrollWheelZoom: false,
     crs: L.CRS.EPSG3857,
@@ -84,13 +118,13 @@ function initialize(archive: MenuArchive): void {
   }).setView([39.95, -75.158], 13);
   map.attributionControl.setPrefix(link("Leaflet", "https://leafletjs.com").outerHTML);
   const pins = L.layerGroup().addTo(map);
-  let shown = [...archive.menus];
-  let selected: Menu | null = null;
+  let shown = [...menus];
+  let selected: MapMenu | null = null;
   let tileErrors = 0;
   let loadedTiles = 0;
   const decades = [
     ...new Set(
-      archive.menus.flatMap((menu) =>
+      menus.flatMap((menu) =>
         menu.date.year === null ? [] : [Math.floor(menu.date.year / 10) * 10],
       ),
     ),
@@ -103,17 +137,12 @@ function initialize(archive: MenuArchive): void {
   addOptions(
     "area",
     [
-      ...new Set(
-        archive.menus.flatMap((menu) => (menu.location === null ? [] : [menu.location.area])),
-      ),
+      ...new Set(menus.flatMap((menu) => (menu.location === null ? [] : [menu.location.area]))),
     ].toSorted(),
   );
-  addOptions(
-    "cuisine",
-    [...new Set(archive.menus.flatMap((menu) => [...menu.cuisines]))].toSorted(),
-  );
-  addOptions("collection", [...new Set(archive.menus.map((menu) => menu.provider))].toSorted());
-  const located = archive.menus.flatMap((menu) =>
+  addOptions("cuisine", [...new Set(menus.flatMap((menu) => [...menu.cuisines]))].toSorted());
+  addOptions("collection", [...new Set(menus.map((menu) => menu.provider))].toSorted());
+  const located = menus.flatMap((menu) =>
     menu.location === null ? [] : [L.latLng(menu.location.lat, menu.location.lng)],
   );
   if (located.length > 0)
@@ -123,12 +152,10 @@ function initialize(archive: MenuArchive): void {
     const messages: string[] = [];
     if (tileErrors > 0)
       messages.push(
-        loadedTiles === 0
-          ? "Street tiles unavailable. Menu pins remain selectable."
-          : "Some street tiles are unavailable.",
+        loadedTiles === 0 ? "Street map unavailable." : "Some map tiles are unavailable.",
       );
     if (!shown.some((menu) => menu.location !== null))
-      messages.push("No verified locations among these menus.");
+      messages.push("No mapped menus in these results.");
     element("map-status").textContent = messages.join(" ");
   }
   // Browser-managed caching and referrers are required by the tile provider.
@@ -154,7 +181,7 @@ function initialize(archive: MenuArchive): void {
   function renderPins(): void {
     pins.clearLayers();
     mapStatus();
-    const groups = new Map<string, Menu[]>();
+    const groups = new Map<string, MapMenu[]>();
     for (const menu of shown) {
       if (menu.location === null) continue;
       const key = `${String(menu.location.lat)},${String(menu.location.lng)}`;
@@ -194,7 +221,7 @@ function initialize(archive: MenuArchive): void {
     }
   }
 
-  function showMenu(menu: Menu, focus: boolean): void {
+  function showMenu(menu: MapMenu, focus: boolean): void {
     selected = menu;
     select("menu-picker").value = "";
     const content = element("menu-content");
@@ -203,14 +230,48 @@ function initialize(archive: MenuArchive): void {
     const byline = node("div", "", "menu-byline");
     byline.append(
       node("span", menu.date.label),
-      node("span", menu.provider),
-      link(
-        menu.scanNote === null ? "Original scan" : "Catalog scans",
-        menu.pages[0]?.url ?? menu.url,
-      ),
+      link("Open menu", `${assetBase}menu/${menu.id}/`),
+      link(`${menu.provider} record`, menu.url),
     );
     content.replaceChildren(title, byline);
+    const previewPage = catalog.pages.find(
+      (item) => item.menuId === menu.id && item.image !== null,
+    );
+    if (previewPage?.image !== null && previewPage?.image !== undefined) {
+      const preview = link("", `${assetBase}menu/${menu.id}/`);
+      preview.className = "map-scan";
+      preview.setAttribute("aria-label", `Open ${menu.name} scan`);
+      const image = node("img");
+      image.src = previewPage.image.previewUrl;
+      image.alt = `${menu.name} scan`;
+      image.width = previewPage.image.width;
+      image.height = previewPage.image.height;
+      const failed = node("p", "Image unavailable.", "map-image-error");
+      failed.hidden = true;
+      image.addEventListener("error", () => {
+        preview.hidden = true;
+        failed.hidden = false;
+      });
+      preview.append(image);
+      content.append(preview, failed);
+    }
+    const transcription = node("details", "", "dish-details");
+    transcription.append(node("summary", "Transcribed dishes and prices"));
+    const dateReview = catalog.menus.find((item) => item.id === menu.id)?.date.review;
+    if (
+      dateReview?.status === "conflict" ||
+      (dateReview?.status === "unresolved" && menu.date.precision !== "unknown")
+    )
+      content.append(node("p", dateReview.reason, "source-caution"));
     if (menu.scanNote !== null) content.append(node("p", menu.scanNote, "source-caution"));
+    if (catalog.menus.find((item) => item.id === menu.id)?.priceReview.status === "conflict")
+      transcription.append(
+        node(
+          "p",
+          "Some source price ranges conflict. Original values are retained.",
+          "source-caution",
+        ),
+      );
     const transcriptPages = menu.pages.filter((page) => page.transcript !== "");
     if (transcriptPages.length > 0) {
       const transcript = node("p", transcriptPages[0]?.transcript ?? "", "transcript");
@@ -222,9 +283,9 @@ function initialize(archive: MenuArchive): void {
               transcript.textContent = page.transcript;
             }),
           );
-        content.append(tabs);
+        transcription.append(tabs);
       }
-      content.append(transcript);
+      transcription.append(transcript);
     } else if (menu.dishes.length > 0) {
       const table = node("table", "", "dishes");
       const header = node("thead");
@@ -246,48 +307,31 @@ function initialize(archive: MenuArchive): void {
         body.append(row);
       }
       table.append(body);
-      content.append(table);
-    } else content.append(node("p", "Read this menu at the holding library.", "empty"));
+      transcription.append(table);
+    }
+    if (menu.dishes.length > 0 || transcriptPages.length > 0) content.append(transcription);
     const details = node("details", "", "source-details");
-    details.append(node("summary", "Source & details"));
-    details.append(link("Library record", menu.url));
-    const metadataList = node("dl");
-    metadata(metadataList, "Collection", menu.collection);
-    metadata(metadataList, "Record", menu.recordId);
-    metadata(metadataList, "Date", `${menu.date.basis} · precision: ${menu.date.precision}`);
-    metadata(metadataList, "Original catalog date", menu.date.catalogValue || "Unrecorded");
-    metadata(
-      metadataList,
-      "Location",
-      menu.location === null
-        ? menu.locationNote
-        : `${menu.location.address}. ${menu.location.basis}`,
+    details.append(
+      node("summary", "Source"),
+      link(`${menu.provider} record ${menu.recordId}`, menu.url),
     );
-    if (menu.location !== null) details.append(link("Location evidence", menu.location.evidence));
-    metadata(metadataList, "Cuisine", menu.cuisineBasis);
-    metadata(metadataList, "Rights", menu.rights);
-    const snapshot = archive.snapshots.find((item) => item.id === menu.snapshotId);
-    if (snapshot !== undefined) {
-      metadata(metadataList, "Snapshot", `${snapshot.id} · ${snapshot.retrievedAt}`);
-      metadata(metadataList, "SHA-256", snapshot.sha256);
-      metadata(metadataList, "Provenance", snapshot.description);
-    }
-    details.append(metadataList);
-    for (const note of menu.notes) details.append(node("p", note));
-    if (menu.pages.length > 1) {
-      const pages = node("p");
-      for (const page of menu.pages) {
-        pages.append(link(page.label, page.url), document.createTextNode(" "));
-      }
-      details.append(pages);
-    }
-    const catalog = node("details");
-    catalog.append(node("summary", "Catalog fields"));
     const fields = node("dl");
-    for (const [key, value] of Object.entries(menu.catalog))
-      metadata(fields, key, typeof value === "string" ? value : JSON.stringify(value));
-    catalog.append(fields);
-    details.append(catalog);
+    const normalized = catalog.menus.find((item) => item.id === menu.id);
+    metadata(fields, "Address", normalized?.location.address ?? "Unrecorded");
+    metadata(
+      fields,
+      "Location",
+      normalized?.location.precision === "exact"
+        ? normalized.location.basis
+        : (normalized?.location.review.reason ?? menu.locationNote),
+    );
+    metadata(fields, "Rights", menu.rights);
+    details.append(
+      fields,
+      link("Catalog and review evidence", `${assetBase}catalog.json`),
+      document.createTextNode(" · "),
+      link("Original source fields", `${assetBase}menus.json`),
+    );
     content.append(details);
     history.replaceState(null, "", `#menu=${encodeURIComponent(menu.id)}`);
     renderPins();
@@ -300,14 +344,13 @@ function initialize(archive: MenuArchive): void {
 
   function render(): void {
     const state = filters();
-    shown = filterMenus(archive.menus, state);
+    shown = filterMenus(menus, state, searchText);
     const picker = select("menu-picker");
     const prompt = node("option", "Choose another menu");
     prompt.value = "";
     picker.replaceChildren(prompt);
     picker.disabled = shown.length === 0;
-    element("result-status").textContent =
-      `${String(shown.length)} menus match. Unlocated menus remain available here.`;
+    element("result-status").textContent = `${String(shown.length)} menus`;
     for (const menu of shown) {
       const option = node("option", `${menu.name} · ${menu.date.label}`);
       option.value = menu.id;
@@ -319,7 +362,7 @@ function initialize(archive: MenuArchive): void {
       shown.find(
         (menu) =>
           menu.location !== null &&
-          (menu.dishes.length > 0 || menu.pages.some((page) => page.transcript !== "")),
+          catalog.pages.some((page) => page.menuId === menu.id && page.image !== null),
       ) ??
       shown.find(
         (menu) => menu.dishes.length > 0 || menu.pages.some((page) => page.transcript !== ""),
@@ -333,8 +376,8 @@ function initialize(archive: MenuArchive): void {
         node(
           "p",
           state.from !== null && state.to !== null && state.from > state.to
-            ? "Start year comes after end year."
-            : "No menus match these filters.",
+            ? "Start year is after end year."
+            : "No menus match.",
         ),
         button("Reset filters", reset),
       );
@@ -366,16 +409,21 @@ function initialize(archive: MenuArchive): void {
     });
   }
   const requested = new URLSearchParams(location.hash.slice(1)).get("menu");
-  selected = archive.menus.find((menu) => menu.id === requested) ?? null;
+  selected = menus.find((menu) => menu.id === requested) ?? null;
   render();
 }
 
 async function start(): Promise<void> {
   const assetBase = basePath(document.body.dataset["assetBase"]);
-  const response = await fetch(`${assetBase}menus.json`);
-  if (!response.ok) throw new Error(`Menu data unavailable (HTTP ${String(response.status)})`);
+  const responses = await Promise.all([
+    fetch(`${assetBase}menus.json`),
+    fetch(`${assetBase}catalog.json`),
+  ]);
+  const [response, catalogResponse] = responses;
+  if (!response.ok || !catalogResponse.ok) throw new Error("Menu data unavailable");
   const value: unknown = await response.json();
-  initialize(parseArchive(value));
+  const catalogValue: unknown = await catalogResponse.json();
+  initialize(parseArchive(value), parseCatalog(catalogValue));
 }
 start().catch((error: unknown) => {
   element("menu-content").replaceChildren(

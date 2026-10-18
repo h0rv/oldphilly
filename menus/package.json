@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host 127.0.0.1 --port 4321",
-    "build": "node scripts/validate-data.ts && astro build",
+    "build": "node scripts/build-scans.ts && node scripts/build-catalog.ts && node scripts/validate-data.ts && astro build",
     "import": "node scripts/import.ts",
     "typecheck": "astro sync && node node_modules/typescript-native/bin/tsc --noEmit && astro check --tsconfig tsconfig.astro.json --minimumFailingSeverity warning",
     "lint": "oxlint --type-aware --type-check --deny-warnings",

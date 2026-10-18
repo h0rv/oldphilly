@@ -1,3 +1,5 @@
+> Historical PR #1 record. The reader follow-up is documented in [READER.md](READER.md); these earlier screenshots and UI findings are not acceptance evidence for it.
+
 # Receiver and source status
 
 The complete supplied selection is imported: **72 NYPL + 30 CIA = 102 source records**, **88 dated / 14 undated**, **435 display pages**, **3,469 item occurrences**, **1,488 priced rows** and **189 high-price rows**. Source records are not cross-library deduplicated. No complete or balanced city-coverage claim is made.

@@ -1,13 +1,19 @@
 ---
 import type { StoryEntry } from "../story.ts";
 import { priceLabel } from "../filters.ts";
+import ScanViewer from "./ScanViewer.astro";
+import { scansSchema } from "../scans.ts";
+import rawScans from "../../public/scans.json";
 interface Props {
   readonly entry: StoryEntry;
   readonly index: number;
 }
 const { entry, index } = Astro.props;
 const { menu } = entry;
-const mapUrl = `${import.meta.env.BASE_URL}map/#menu=${encodeURIComponent(menu.id)}`;
+const mapUrl = `${import.meta.env.BASE_URL}menu/${encodeURIComponent(menu.id)}/`;
+const scanPages = scansSchema.parse(rawScans).pages.filter((page) => page.menuId === menu.id);
+
+const labels = Object.fromEntries(menu.pages.map((page) => [page.id, page.label]));
 ---
 
 <section class="story-stop" id={entry.anchor} aria-labelledby={`${entry.anchor}-title`}>
@@ -17,23 +23,28 @@ const mapUrl = `${import.meta.env.BASE_URL}map/#menu=${encodeURIComponent(menu.i
   <div class="stop-copy">
     <p class="stop-date">{menu.date.label}</p>
     <h2 id={`${entry.anchor}-title`}>{entry.heading}</h2>
-    <p class="stop-venue">{menu.name}</p>
-    <p>{entry.observation}</p>
+    {entry.observation !== "" && <p>{entry.observation}</p>}
     <div class="story-links">
       <a class="read-menu" href={mapUrl}>
-        Read this menu
+        Full menu
       </a>
       <a href={menu.url}>NYPL record</a>
     </div>
+    <ul class="story-items" aria-label="From this menu">
+      {entry.dishes.map((dish) => (
+        <li>
+          <span>{dish.name}</span>
+          {dish.price !== null && (
+            <strong>{priceLabel(dish.price, dish.priceHigh, menu.currency)}</strong>
+          )}
+        </li>
+      ))}
+    </ul>
   </div>
-  <ul class="story-items" aria-label="From this menu">
-    {entry.dishes.map((dish) => (
-      <li>
-        <span>{dish.name}</span>
-        {dish.price !== null && (
-          <strong>{priceLabel(dish.price, dish.priceHigh, menu.currency)}</strong>
-        )}
-      </li>
-    ))}
-  </ul>
+  <ScanViewer
+    pages={scanPages}
+    initialPageId={entry.image?.pageId}
+    labels={labels}
+    name={menu.name}
+  />
 </section>

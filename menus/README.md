@@ -1,6 +1,6 @@
 # Old Philly Menus
 
-A static Astro/TypeScript app with a short chronological home and a freely explorable menu map. The home follows three real menus from 1914, 1940 and 1949; “Explore the map” is immediately available. On the map, date/decade, area, cuisine, collection and text filters lead to original transcriptions, recorded prices and library scan links. Unknown dates and locations remain available in the selector.
+A static Astro/TypeScript app for finding a restaurant, choosing a dated menu and reading its scan. The restaurant list, map and three-menu selection are separate routes. The scan reader supports page changes and enlargement; source records without cleared previews keep their library links. Unknown dates and locations remain available.
 
 **Old Philly Menus** lives in `menus/` inside [h0rv/oldphilly](https://github.com/h0rv/oldphilly). Its canonical destination is **https://oldphilly.org/menus/**. The existing photo site remains at `/`; its crawler, data generator, scripts and styling are unchanged. [Migration provenance](MIGRATION.md) identifies the rights-safe starting tree. [Publication status](review/PUBLICATION.md) records hosting and review boundaries.
 
@@ -12,7 +12,8 @@ Node 24.19+ and Python 3 for the combined preview; exact npm versions and lockfi
 npm ci --ignore-scripts
 ASTRO_TELEMETRY_DISABLED=1 npm run check
 ASTRO_TELEMETRY_DISABLED=1 npm run dev
-# http://127.0.0.1:4321/menus/ — story
+# http://127.0.0.1:4321/menus/ — restaurants
+# http://127.0.0.1:4321/menus/story/ — three menus
 # http://127.0.0.1:4321/menus/map/ — map
 ```
 
@@ -30,6 +31,8 @@ After `build:site`, run `CHROMIUM_PATH=/usr/bin/chromium npm run test:browser`; 
 
 ## Complete supplied data
 
+The [CIA coverage audit](snapshots/cia-coverage-audit.json) distinguishes 366 broad keyword objects from the 30 explicitly cataloged in Philadelphia. Another 299 name another city and 37 omit a city. Chain menus mentioning Philadelphia branches do not establish a Philadelphia-specific edition. The 30 retained records have 15 street-address fields and 16 dates (12 full dates, four years).
+
 | Provider | Source records | Dated | Undated | Display pages | Structured item occurrences |
 | -------- | -------------: | ----: | ------: | ------------: | --------------------------: |
 | NYPL     |             72 |    72 |       0 |           431 |                       3,469 |
@@ -42,7 +45,7 @@ All four selected NYPL CSVs are retained unchanged in [snapshots/nypl-selected](
 
 CIA's [released factual metadata](snapshots/cia-metadata.json) contains all 30 records and every original field except four full Transcript values, which are omitted because the source rights statement establishes no reuse license. The exact 70,874-byte original remains private in the earlier research checkout; it is not part of this monorepo. The release derivative is 56,824 bytes with SHA-256 38932b1b208c375a14f32f0dbf43b6ee2cd26173e3a91c8957d00b34441b9315. Four single-page source IDs/links remain; 26 compound parents have no child-page payload in this input. [Rights audit](review/RIGHTS.md), [machine-readable audit](snapshots/cia-rights-audit.json). Run node scripts/build-dataset.ts to reproduce the combined output offline with source hashes checked first.
 
-Printed-date audits determine exact precision where supplied. Unreviewed NYPL timestamps display only a year; original catalog dates remain intact. Menu 33270 displays the reviewed **January 2, 1915** correction and retains the original **1915-01-01**. Scans 49164 and 60473 have unrecorded page numbers; no number is assigned. Snapshot timestamps distinguish Library artifact creation from unknown original provider retrieval. The NYPL snapshot hash identifies the transfer manifest, rather than claiming an unavailable full-bulk-archive hash.
+Inherited printed-date audits determine exact precision where supplied. Other NYPL timestamps display a year unless machine-supported date evidence is retained with explicit unresolved visual review. Menu 33270 displays inherited **January 2, 1915**, flags the original **1915-01-01** conflict and preserves both. Menu 27457 now has a disputed date and withheld preview. Scans 49164 and 60473 have unrecorded page numbers; no number is assigned. Snapshot timestamps distinguish Library artifact creation from unknown original provider retrieval. [New evidence, machine-date candidates and limits](review/ENRICHMENT.md).
 
 **Source conflict:** menu 24827's bulk catalog names Philadelphia's Continental Hotel, but the current NYPL record for page 38725 / image 476920 names St. Nicholas Hotel with an uncertain New York location. A visible warning flags the discrepancy. Original rows and links remain; that image is withheld from the story.
 
@@ -52,7 +55,7 @@ These selected collections provide uneven city coverage. Source records have not
 
 [Story curation](snapshots/story.json) references exact menu/page/item IDs. Validation rejects missing, undated, out-of-order or disputed source material. The three stops describe recorded dishes and nominal prices; they make no citywide cultural or economic inference. Ordinary HTML anchors work without JavaScript. Earlier home-page menu hashes redirect to their exact map record.
 
-Sixteen records have reviewed locations at four representative building points: seven CIA and nine NYPL records. The latest address audit adds the Warwick (1701 Locust), two Benjamin Franklin Hotel menus (834 Chestnut) and Palm's explicit 200 South Broad address, with source-specific historical evidence and open gazetteer coordinates. Dates remain unchanged, including Palm's unknown date. Earlier Bellevue venues, sponsoring clubs and unresolved Horn & Hardart outlets receive no guessed pins. Old Original Bookbinder's at 125 Walnut remains separate from Bookbinders at 215 South 15th. [Annotations](snapshots/locations.json), [location review](review/LOCATIONS.md), [33-record address inventory](snapshots/location-candidates.json).
+Thirty-three records have reviewed locations at eight representative building points. The new evidence adds eight Bellevue-Stratford records, two Bourse records and one Masonic Temple record to the prior 22 locations. Eight more NYPL records retain historic textual addresses/corners without invented geometry. Each match retains source-specific identity and coordinate evidence. Earlier Bellevue venues, sponsoring clubs and unresolved outlets receive no guessed pins. Old Original Bookbinder’s at 125 Walnut remains separate from Bookbinders at 215 South 15th. [Runtime model and gaps](MODEL.md), [catalog](public/catalog.json), [new evidence](snapshots/venue-evidence.json).
 
 Leaflet uses EPSG:3857 and [OpenStreetMap Standard tiles](https://operations.osmfoundation.org/policies/tiles/) with visible contributor attribution. This is a no-key, best-effort service for modest interactive use. The browser handles normal caching/referrers; no proxy, bulk download, prefetch or tile archive is implemented. Automated browser tests abort all tile requests to respect the provider's prohibition on headless rendering traffic. Pins, filters and menu reading remain usable during a tile outage.
 
@@ -60,7 +63,11 @@ Licensed Abaca Labs / OpenDataPhilly reference polygons remain in snapshots for 
 
 ## Images and release limits
 
-The story's source-hosted 1914 Bellevue scan, image **4046889**, matches menu 33548 / page 70276. Its [official NYPL record](https://old-digitalcollections.nypl.org/items/c2e99748-bc89-4d90-e040-e00a18061570) identifies it as public domain under U.S. law and leaves other jurisdictions undetermined. Credit and a rights link accompany the image. No scan or photograph is copied into this repository or publicly rehosted.
+The [pinned NYPL public-domain metadata release](snapshots/nypl-public-domain.json) matches 429 of the 432 original page image IDs. Excluding the advertisement, two disputed Continental/St. Nicholas pages and the 27457 source-image conflict gives **425 source-hosted previews**. The three selected artifacts are Bellevue-Stratford (1912), Kugler’s (1949) and Old Original Bookbinder’s (1957). Each preview retains its full-image URL, dimensions, NYPL credit, item record and exact public-domain evidence line. No image bytes are copied into this repository or hosted by this app.
+
+Local image requests received HTTP 403 from the configured proxy. Local browser tests explicitly abort those requests or use a visible **TEST SCAN** interaction fixture. Neither proves real artifact rendering. The separate `scan-preview` CI job successfully decoded actual previews/full images and captured desktop/mobile journey screenshots at run 39173781406. Authorized artifact transfers returned HTTP 403; actual screenshot visual review remains pending, with no denied transfer retries.
+
+[MODEL.md](MODEL.md) describes the actual runtime schemas, their invariants and remaining gaps. `menus.json` is the immutable source-record layer; `catalog.json` separates reviewed venues, source-linked menus, pages and evidence. The map uses the catalog’s 33 located records at eight representative building points. All 15 CIA street-address fields remain available, including the 12 records still lacking supported geometry. No neighborhood centroid pins are used.
 
 CIA source rights remain **Copyright Not Evaluated**. Release output therefore omits full CIA transcripts and images, retaining factual metadata and source links. Import and release-schema checks prevent text leaking through page or raw catalog fields. The private originals are retained for research, outside this monorepo and its history. Other inspiration images and OldPhilly photos are not embedded without adequate rights.
 

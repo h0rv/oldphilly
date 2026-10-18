@@ -1,36 +1,65 @@
 [
   {
-    "anchor": "hotel-supper",
-    "menuId": "nypl-33548",
-    "heading": "At the hotel",
-    "observation": "A French-language supper at the Bellevue-Stratford pairs terrapin with a list that includes peaches Melba. The transcription records no individual prices for this menu.",
-    "itemIds": ["1159173", "1159163"],
+    "anchor": "bellevue",
+    "menuId": "nypl-34841",
+    "heading": "Bellevue-Stratford",
+    "observation": "",
+    "itemIds": [
+      "1318330",
+      "1318292"
+    ],
     "image": {
-      "pageId": "70276",
-      "imageId": "4046889",
-      "url": "https://images.nypl.org/index.php?id=4046889&t=w",
-      "recordUrl": "https://old-digitalcollections.nypl.org/items/c2e99748-bc89-4d90-e040-e00a18061570",
-      "width": 2039,
-      "height": 2479,
-      "alt": "The original Bellevue-Stratford supper menu, January 2, 1914",
-      "rights": "NYPL identifies this item as public domain under United States law; it does not determine rights elsewhere.",
-      "rightsEvidence": "https://old-digitalcollections.nypl.org/items/c2e99748-bc89-4d90-e040-e00a18061570"
+      "pageId": "74494",
+      "imageId": "5055386",
+      "url": "https://images.nypl.org/index.php?id=5055386&t=w",
+      "recordUrl": "https://old-digitalcollections.nypl.org/items/e04943d0-d2cb-0130-d46f-58d385a7bbd0",
+      "width": 3477,
+      "height": 4946,
+      "alt": "Bellevue-Stratford menu",
+      "rights": "Included in NYPL’s public-domain metadata release.",
+      "rightsEvidence": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_4.ndjson#L29472"
     }
   },
   {
-    "anchor": "coffee-counter",
-    "menuId": "nypl-30411",
-    "heading": "At the counter",
-    "observation": "At Horn & Hardart, a cup of coffee with cream appears alongside a frizzled-beef omelet. Philadelphia is printed on the menu; the particular outlet remains unknown.",
-    "itemIds": ["837605", "837597"],
-    "image": null
+    "anchor": "kuglers",
+    "menuId": "nypl-29916",
+    "heading": "Kugler's",
+    "observation": "",
+    "itemIds": [
+      "806393",
+      "806099"
+    ],
+    "image": {
+      "pageId": "58184",
+      "imageId": "3991700",
+      "url": "https://images.nypl.org/index.php?id=3991700&t=w",
+      "recordUrl": "https://old-digitalcollections.nypl.org/items/f7807230-c54f-012f-a777-58d385a7bc34",
+      "width": 3519,
+      "height": 5289,
+      "alt": "Kugler's menu",
+      "rights": "Included in NYPL’s public-domain metadata release.",
+      "rightsEvidence": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_2.ndjson#L9860"
+    }
   },
   {
-    "anchor": "chestnut-street",
-    "menuId": "nypl-29916",
-    "heading": "On Chestnut Street",
-    "observation": "Kugler’s in the Widener Building lists its own snapper soup and six prime oysters. This is the Chestnut Street restaurant; the Marine Grill has a separate menu and address.",
-    "itemIds": ["806099", "806055"],
-    "image": null
+    "anchor": "bookbinders",
+    "menuId": "nypl-28620",
+    "heading": "Old Original Bookbinder's",
+    "observation": "",
+    "itemIds": [
+      "657775",
+      "656652"
+    ],
+    "image": {
+      "pageId": "53307",
+      "imageId": "3963610",
+      "url": "https://images.nypl.org/index.php?id=3963610&t=w",
+      "recordUrl": "https://old-digitalcollections.nypl.org/items/3f92fd50-c551-012f-25cb-58d385a7bc34",
+      "width": 4300,
+      "height": 5564,
+      "alt": "Old Original Bookbinder's menu",
+      "rights": "Included in NYPL’s public-domain metadata release.",
+      "rightsEvidence": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_2.ndjson#L12014"
+    }
   }
 ]

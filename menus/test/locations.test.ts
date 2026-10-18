@@ -2,11 +2,13 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { parseArchive, locationSchema } from "../src/model.ts";
+import { parseCatalog } from "../src/catalog-model.ts";
 import { basemapSchema } from "../src/basemap.ts";
 
 const archive = parseArchive(
   JSON.parse(await readFile(new URL("../public/menus.json", import.meta.url), "utf8")),
 );
+const awaitedCatalog = await readFile(new URL("../public/catalog.json", import.meta.url), "utf8");
 const boundaries = basemapSchema.parse(
   JSON.parse(
     await readFile(
@@ -30,11 +32,12 @@ function inRing(lng: number, lat: number, ring: readonly (readonly [number, numb
 }
 
 await test("every published point belongs to its declared area in the licensed reference geometry", () => {
-  const located = archive.menus.filter((menu) => menu.location !== null);
+  const catalog = parseCatalog(JSON.parse(awaitedCatalog));
+  const located = catalog.menus.filter((menu) => menu.location.precision === "exact");
   assert.ok(located.length > 0);
   for (const menu of located) {
     const point = menu.location;
-    assert.ok(point);
+    assert.equal(point.precision, "exact");
     const area = boundaries.features.find((feature) => feature.properties.name === point.area);
     assert.ok(area, `${menu.id}: unknown area ${point.area}`);
     assert.ok(

@@ -13,13 +13,13 @@
         <span class="sr-only">Decade</span>
         <select id="decade">
           <option value="all">All dates</option>
-          <option value="undated">Undated</option>
+          <option value="undated">Undated / disputed</option>
         </select>
       </label>
       <label>
-        <span class="sr-only">Area</span>
+        <span class="sr-only">Neighborhood</span>
         <select id="area">
-          <option value="all">All areas</option>
+          <option value="all">All neighborhoods</option>
           <option value="unlocated">Unlocated</option>
         </select>
       </label>
@@ -48,11 +48,12 @@
             <input id="to" type="number" min="1600" max="2100" placeholder="Any year" />
           </label>
           <label class="check">
-            <input id="undated" type="checkbox" checked /> Include undated
+            <input id="undated" type="checkbox" checked /> Include undated / disputed
           </label>
         </div>
       </details>
       <button type="reset">Reset</button>
     </form>
+    <small>Dates include catalog records and machine readings awaiting visual review.</small>
   </details>
 </header>

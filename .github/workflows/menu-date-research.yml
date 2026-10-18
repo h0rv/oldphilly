@@ -1,0 +1,29 @@
+name: Read candidate dates from selected public-domain menus
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  date-evidence:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.19.0
+          cache: npm
+          cache-dependency-path: menus/package-lock.json
+      - name: Install pinned application dependencies
+        working-directory: menus
+        run: npm ci --ignore-scripts
+      - name: Use the distribution's free OCR engine
+        run: |
+          if ! command -v tesseract >/dev/null; then
+            sudo apt-get update
+            sudo apt-get install --yes --no-install-recommends tesseract-ocr tesseract-ocr-eng
+          fi
+          tesseract --version
+      - name: Extract bounded candidate date evidence
+        working-directory: menus
+        run: node scripts/research-dates.ts

@@ -30,7 +30,8 @@
     "scripts/**/*.ts",
     "test/**/*.ts",
     "browser/**/*.ts",
-    "playwright.config.ts"
+    "playwright.config.ts",
+    "playwright.live.config.ts"
   ],
   "exclude": ["dist", "node_modules", "raw"]
 }

@@ -3,6 +3,7 @@ import { basePath } from "./src/base-path.ts";
 const url = `http://127.0.0.1:4173${basePath(process.env["ASTRO_BASE_PATH"] ?? "/menus/")}`;
 export default defineConfig({
   testDir: "./browser",
+  testIgnore: "**/live-scans.spec.ts",
   outputDir: "./test-results",
   fullyParallel: true,
   workers: 1,

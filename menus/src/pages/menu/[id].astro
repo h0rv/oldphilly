@@ -1,0 +1,125 @@
+---
+import Page from "../../layouts/Page.astro";
+import ScanViewer from "../../components/ScanViewer.astro";
+import { parseCatalog } from "../../catalog-model.ts";
+import { parseArchive } from "../../model.ts";
+import { scansSchema } from "../../scans.ts";
+import { priceLabel } from "../../filters.ts";
+import { venueGroups } from "../../venue-groups.ts";
+import rawCatalog from "../../../public/catalog.json";
+import rawArchive from "../../../public/menus.json";
+import rawScans from "../../../public/scans.json";
+export function getStaticPaths() {
+  return parseCatalog(rawCatalog).menus.map((menu) => ({
+    params: { id: menu.id },
+    props: { menu },
+  }));
+}
+const { menu } = Astro.props;
+const catalog = parseCatalog(rawCatalog);
+const archive = parseArchive(rawArchive);
+const source = archive.menus.find((record) => record.id === menu.sourceRecordId);
+const venue = catalog.venues.find((item) => item.id === menu.venueId);
+if (source === undefined || venue === undefined)
+  throw new Error(`Menu references missing source or venue: ${menu.id}`);
+const group = venueGroups(catalog).find((item) => item.venueIds.includes(venue.id));
+const scans = scansSchema.parse(rawScans).pages.filter((page) => page.menuId === menu.id);
+const labels = Object.fromEntries(source.pages.map((page) => [page.id, page.label]));
+const base = import.meta.env.BASE_URL;
+---
+
+<Page title={`${venue.name} · ${menu.date.label} · Old Philly Menus`} pageType="reader">
+  <header class="browse-header">
+    <a
+      data-context-link
+      href={`${base}restaurants/${group?.venue.id ?? venue.id}/#menu-${menu.id}`}
+    >
+      Restaurant menus
+    </a>
+    <a href={`${base}map/#menu=${menu.id}`}>Map</a>
+  </header>
+  <main id="content" class="reader-content">
+    <h1>{venue.name}</h1>
+    <p class="reader-date">{menu.date.label}</p>
+    {(menu.date.review.status === "conflict" ||
+      (menu.date.review.status === "unresolved" && menu.date.precision !== "unknown")) && (
+      <p class="source-caution">{menu.date.review.reason}</p>
+    )}
+    {source.scanNote !== null && <p class="source-caution">{source.scanNote}</p>}
+    {scans.length > 0 ? (
+      <ScanViewer pages={scans} labels={labels} rememberPage name={venue.name} />
+    ) : (
+      <p class="scan-unavailable">
+        No scan preview is available here.{" "}
+        <a href={source.pages[0]?.url ?? source.url}>{source.provider} record</a>
+      </p>
+    )}
+    {source.dishes.length > 0 && (
+      <details class="dish-details">
+        <summary>Transcribed dishes and prices</summary>
+        {menu.priceReview.status === "conflict" && (
+          <p class="source-caution">
+            Some source price ranges conflict. Original values are retained.
+          </p>
+        )}
+        <table class="dishes">
+          <thead>
+            <tr>
+              <th>Dish</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {source.dishes.map((dish) => (
+              <tr>
+                <td>{dish.name}</td>
+                <td>{priceLabel(dish.price, dish.priceHigh, source.currency)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </details>
+    )}
+    <details class="source-details">
+      <summary>Source</summary>
+      <p>
+        <a href={source.url}>
+          {source.provider} record {source.recordId}
+        </a>
+      </p>
+      <dl>
+        <dt>Original title</dt>
+        <dd>{source.name}</dd>
+        <dt>Catalog date</dt>
+        <dd>{source.date.catalogValue || "Undated"}</dd>
+        <dt>Address</dt>
+        <dd>{menu.location.address ?? "Unrecorded"}</dd>
+        <dt>Location review</dt>
+        <dd>{menu.location.review.status}</dd>
+        <dt>Rights</dt>
+        <dd>{source.rights}</dd>
+      </dl>
+      <p>{menu.date.basis}</p>
+      <p>{menu.location.review.reason}</p>
+      <ul>
+        {catalog.citations
+          .filter(
+            (citation) =>
+              menu.date.review.citationIds.includes(citation.id) ||
+              menu.location.review.citationIds.includes(citation.id),
+          )
+          .map((citation) => (
+            <li>
+              <a href={citation.url}>{citation.label}</a>
+            </li>
+          ))}
+      </ul>
+      {menu.priceReview.status === "conflict" && <p>{menu.priceReview.reason}</p>}
+      <p>
+        <a href={`${base}catalog.json`}>Catalog and review evidence</a> ·{" "}
+        <a href={`${base}menus.json`}>Original source fields</a>
+      </p>
+    </details>
+  </main>
+</Page>
+<script src="../../browse.ts"></script>

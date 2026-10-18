@@ -5,65 +5,47 @@ test.beforeEach(async ({ page }) => {
   await page.route("https://images.nypl.org/**", (route) => route.abort());
 });
 
-test("chronological home offers an immediate map and honest source-image fallback", async ({
-  page,
-}, info) => {
-  await page.goto("./");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pull up a chair.");
-  const map = page.getByRole("link", { name: "Explore the map", exact: true });
-  await expect(map).toBeInViewport();
+test("three dated artifacts retain page identity and an honest image failure", async ({ page }) => {
+  await page.goto("./story/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Three menus.");
   await expect(page.locator(".story-stop")).toHaveCount(3);
-  await expect(page.locator(".stop-date")).toHaveText([
-    "January 2, 1914",
-    "August 3, 1940",
-    "February 1, 1949",
-  ]);
-  await expect(page.locator(".image-unavailable")).toBeVisible();
-  await expect(page.locator(".hero-scan img")).toHaveAttribute("src", /id=4046889/u);
-  await expect(
-    page.locator(".hero-scan").getByRole("link", { name: "Image & rights" }),
-  ).toHaveAttribute("href", /c2e99748-bc89-4d90-e040-e00a18061570/u);
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-  await page.screenshot({ path: `review/${info.project.name}-home.png`, fullPage: true });
-  await map.click();
-  await expect(page.locator("#menu-picker option[data-menu]")).toHaveCount(102);
-});
-
-test("each story stop opens its exact imported record and recorded prices", async ({ page }) => {
-  await page.goto("./#coffee-counter");
-  await page.locator("#coffee-counter").getByRole("link", { name: "Read this menu" }).click();
-  await expect(page.locator("#menu-content h2")).toHaveText("Horn & Hardart");
-  await expect(page.locator(".menu-byline")).toContainText("August 3, 1940");
-  const coffee = page.getByRole("row").filter({ hasText: "Gilt Edge Coffee with Pure Cream, Cup" });
-  await expect(coffee.getByRole("cell", { name: "$0.05", exact: true })).toBeVisible();
-  await expect(coffee.getByRole("link", { name: "source", exact: true })).toHaveAttribute(
-    "href",
-    /60238/u,
+  await expect(page.locator(".stop-date")).toHaveText(["1912", "February 1, 1949", "1957"]);
+  await expect(page.locator("#bellevue [data-scan-image]")).toHaveAttribute("src", /id=5055386/u);
+  await expect(page.locator("#kuglers [data-scan-image]")).toHaveAttribute("src", /id=3991700/u);
+  await expect(page.locator("#bookbinders [data-scan-image]")).toHaveAttribute(
+    "src",
+    /id=3963610/u,
   );
-  await expect(
-    page.getByText("Horn & Hardart", { exact: true }).filter({ visible: true }),
-  ).toHaveCount(1);
-  await expect(page.locator("#menu-picker")).toHaveValue("");
+  await expect(page.locator("#bookbinders [data-scan-error]")).toBeVisible();
+  await expect(page.locator("#bookbinders .story-items")).toContainText("$8.25");
+  await page.locator("#bookbinders").getByRole("link", { name: "Full menu", exact: true }).click();
+  await expect(page).toHaveURL(/\/menu\/nypl-28620\/$/u);
+  await expect(page.locator("[data-scan-page] option")).toHaveCount(3);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-test("earlier menu hashes redirect to the map and disputed scans are flagged", async ({ page }) => {
+test("old map hashes still select the exact source and disclose a disputed scan", async ({
+  page,
+}) => {
   await page.goto("./#menu=nypl-24827");
-  await expect(page.locator("#menu-content h2")).toHaveText("CONTINENTAL HOTEL, PHILADELPHIA, PA.");
   await expect(page.locator(".source-caution")).toContainText("St. Nicholas Hotel");
-  await expect(page.locator(".source-caution")).toContainText("location marked uncertain");
+  await expect(page.locator(".map-scan")).toHaveCount(0);
   await expect(
-    page.locator("#menu-content").getByRole("link", { name: "Catalog scans", exact: true }),
+    page.locator("#menu-content").getByRole("link", { name: "NYPL record", exact: true }),
   ).toBeVisible();
 });
 
-test.describe("ordinary static reading", () => {
+test.describe("static reading", () => {
   test.use({ javaScriptEnabled: false });
-  test("the story and anchor navigation work without JavaScript", async ({ page }) => {
-    await page.goto("./");
-    await expect(page.locator(".story-stop")).toHaveCount(3);
-    await page.getByRole("link", { name: "Start the short tour" }).click();
-    await expect(page).toHaveURL(/#hotel-supper$/u);
-    await expect(page.locator("#hotel-supper h2")).toBeInViewport();
-    await expect(page.locator("#coffee-counter .story-items")).toContainText("$0.05");
+  test("restaurant dates, scan and story links work without JavaScript", async ({ page }) => {
+    await page.goto("./story/");
+    await page.getByRole("link", { name: "1912–1957" }).click();
+    await expect(page.locator("#bellevue h2")).toBeInViewport();
+    await page
+      .locator("#bookbinders")
+      .getByRole("link", { name: "Full menu", exact: true })
+      .click();
+    await expect(page.locator("[data-scan-image]")).toHaveAttribute("src", /3963610/u);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Old Original Bookbinder's");
   });
 });

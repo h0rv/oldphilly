@@ -1,0 +1,60 @@
+---
+import Page from "../../layouts/Page.astro";
+import { parseCatalog } from "../../catalog-model.ts";
+import { venueGroups } from "../../venue-groups.ts";
+import raw from "../../../public/catalog.json";
+export function getStaticPaths() {
+  return parseCatalog(raw).venues.map((venue) => ({ params: { id: venue.id }, props: { venue } }));
+}
+const { venue } = Astro.props;
+const catalog = parseCatalog(raw);
+const group = venueGroups(catalog).find((item) => item.venueIds.includes(venue.id));
+if (group === undefined) throw new Error(`Missing venue group: ${venue.id}`);
+const menus = group.menus;
+const base = import.meta.env.BASE_URL;
+---
+
+<Page title={`${venue.name} · Old Philly Menus`} pageType="browse">
+  <header class="browse-header">
+    <a data-context-link href={`${base}#restaurant-${group.venue.id}`}>
+      Restaurants
+    </a>
+    <nav>
+      <a href={`${base}map/`}>Map</a>
+      <a href={`${base}story/`}>Three menus</a>
+    </nav>
+  </header>
+  <main id="content" class="browse-content">
+    <h1>{venue.name}</h1>
+
+    <ul class="dated-menus">
+      {menus.map((menu) => (
+        <li id={`menu-${menu.id}`}>
+          <a data-context-link href={`${base}menu/${menu.id}/`}>
+            <strong>{menu.date.label}</strong>
+            <span>{menu.id.startsWith("nypl-") ? "NYPL" : "Culinary Institute of America"}</span>
+          </a>
+          <p>
+            {menu.location.address ??
+              (group.venueIds.length > 1 ? "Branch unresolved" : "Address unrecorded")}
+          </p>
+        </li>
+      ))}
+    </ul>
+    <details>
+      <summary>Source</summary>
+      <p>{venue.review.reason}</p>
+      <ul>
+        {venue.review.citationIds.map((id) => {
+          const citation = catalog.citations.find((item) => item.id === id);
+          return citation === undefined ? null : (
+            <li>
+              <a href={citation.url}>{citation.label}</a>
+            </li>
+          );
+        })}
+      </ul>
+    </details>
+  </main>
+</Page>
+<script src="../../browse.ts"></script>
