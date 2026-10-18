@@ -64,13 +64,19 @@ test("photo home, about and menus remain connected on one static origin", async 
 }, info) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
+  const expandPhotoControls = async (): Promise<void> => {
+    if (info.project.name !== "mobile") return;
+    await expect(page.locator("#title-card")).toHaveClass(/collapsed/u);
+    await page.locator("#title-toggle").click();
+    await expect(page.locator("#title-body")).toHaveCSS("opacity", "1");
+  };
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "OldPhilly", exact: true })).toBeVisible();
-  if (info.project.name === "mobile") await page.locator("#title-toggle").click();
+  await expandPhotoControls();
   await page.getByRole("link", { name: "About", exact: true }).click();
   await expect(page).toHaveTitle("About - OldPhilly");
   await page.getByRole("link", { name: /Back to the map/u }).click();
-  if (info.project.name === "mobile") await page.locator("#title-toggle").click();
+  await expandPhotoControls();
   await page.getByRole("link", { name: "Menus", exact: true }).click();
   await expect(page).toHaveTitle("Old Philly Menus · Restaurants and menus");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(

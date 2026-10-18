@@ -12,7 +12,7 @@ Union League geometry remains unresolved because the accessible gazetteer coordi
 
 ## Machine-supported date candidates
 
-The optional research workflow uses the existing runner and its distribution Tesseract engine on already-cleared, source-hosted NYPL images. Each retained reading records source page/image IDs, image SHA-256, engine, short date context and run citation. Image bytes are deleted; there is no OCR service or added application dependency. Independent Luna comparison checks unchanged CSVs, capture-matched metadata, sponsor and calendar weekday. **No new reading has been visually verified.** These five normalized dates explicitly retain `review.status: unresolved` and a visible warning:
+The optional, manually triggered research workflow uses the existing runner and its distribution Tesseract engine on already-cleared, source-hosted NYPL images. It does not repeat source requests on ordinary PR updates. Each retained reading records source page/image IDs, image SHA-256, engine, short date context and run citation. Image bytes are deleted; there is no OCR service or added application dependency. Independent Luna comparison checks unchanged CSVs, capture-matched metadata, sponsor and calendar weekday. **No new reading has been visually verified.** These five normalized dates explicitly retain `review.status: unresolved` and a visible warning:
 
 | NYPL record | Normalized date | Evidence limit |
 | --- | --- | --- |

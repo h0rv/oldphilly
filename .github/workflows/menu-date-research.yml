@@ -1,10 +1,6 @@
 name: Read candidate dates from selected public-domain menus
 on:
-  pull_request:
-    paths:
-      - menus/scripts/research-dates.ts
-      - menus/snapshots/date-research-targets.json
-      - .github/workflows/menu-date-research.yml
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
