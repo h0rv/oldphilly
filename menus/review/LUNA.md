@@ -1,6 +1,6 @@
 # Independent Luna review
 
-The user-requested independent Luna agent reviewed source provenance, historical venue/address annotations, strict-check boundaries and desktop/mobile captures. The earlier follow-up covered the rights-safe 553b7738 source release; an OldPhilly monorepo integration follow-up is in progress. The reviewer made no edits and did not compete with active builds or browser servers.
+The user-requested independent Luna agent reviewed source provenance, historical venue/address annotations, strict-check boundaries and desktop/mobile captures. The earlier follow-up covered the rights-safe 553b7738 source release; the OldPhilly monorepo integration follow-up is now complete. The reviewer made no edits and did not compete with active builds or browser servers.
 
 **Final source/assets finding: no remaining implementation or rights issue in the reviewed release representation.** The reviewer confirmed that all six regenerated screenshots contain no old CIA transcript content: the map shows NYPL Warwick items/prices, the detail view shows Middle East catalog/rights metadata, and the home has the three NYPL story stops. Both current public/menus.json and rebuilt dist/menus.json have 102 records and zero nonempty CIA page/catalog transcript fields. The metadata derivative, import redaction and rejecting release-schema guards are present.
 
@@ -25,3 +25,11 @@ The reviewed tooling includes stable native TypeScript 7, explicit Astro templat
 The current name is **Old Philly Menus**, canonical **https://oldphilly.org/menus/** in the existing h0rv/oldphilly repository. The earlier standalone publication plan is superseded. Current integration/CI and hosting evidence is in [PUBLICATION.md](PUBLICATION.md); no merge, deployment or DNS change is authorized by this contribution.
 
 CIA CNE provides no reuse license, so the release retains factual metadata/source links and omits full transcripts/images; no unresolved CIA-text republication decision blocks this representation. No scan/photo bytes are copied or rehosted. The source-hosted NYPL image has its matched item-specific rights evidence. Automated OSM requests remain blocked under provider policy. A human live-image/tile preview remains outstanding and is not established by outage tests.
+
+## OldPhilly monorepo follow-up
+
+Luna independently reviewed the shared composite action, PR/deploy workflows, TypeScript composition script, Astro config/layout, built assets/canonicals, photo fixture/browser tests, root navigation diff and all six current screenshots. **No substantive integration blocker was found.** Composition fixes the production origin/base and replaces only site/menus/. PR checks have no deploy step; the existing deployment retains its project, branch and secrets. The root HTML diff adds only the menu link, while photo runtime/styling/About and data-generator bytes remain unchanged.
+
+The current public dataset contains all 102 records and all 30 CIA rows with zero nonempty CIA transcripts. No private parent export/raw files are tracked in menus/. The clean source tree was copied without research history. Story/map canonicals, emitted assets, menu JSON and navigation are scoped to /menus/. Current captures show the stated external-image/tile fallbacks and Old Philly Menus branding.
+
+The reviewer distinguished two limits from blockers: local Python serving checks the 404 file/noindex and missing-path status, rather than Cloudflare's custom 404 response body; the documented nearest-404 placement is correct. Local Hugging Face input HTTP 403 leaves the full photo-data build for CI. A live external-media preview and production approval remain outstanding. No deployment or DNS changes were made.

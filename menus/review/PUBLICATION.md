@@ -18,4 +18,4 @@ The local public photo Parquet download returned HTTP 403. It was not retried or
 
 Automated browser tests block OSM tiles under provider policy and source images for reproducible outage checks. They prove reading, filters, locations and navigation during failures, not successful live tiles or images. An ordinary browser preview with external access remains necessary before production approval. No menu URL is claimed live before deployment.
 
-PR and CI results will be recorded here after the review branch is pushed.
+Draft review PR: [h0rv/oldphilly #1](https://github.com/h0rv/oldphilly/pull/1), branch feat/old-philly-menus, initial source commit 6d0b653af3b0aa0e81586a23cf68a39492176d1e. [Combined CI run 39165311328](https://github.com/h0rv/oldphilly/actions/runs/39165311328) is in progress; a successful result is not yet claimed. Independent Luna integration review completed with no substantive blocker; see LUNA.md.
