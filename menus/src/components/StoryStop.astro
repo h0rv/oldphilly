@@ -1,0 +1,39 @@
+---
+import type { StoryEntry } from "../story.ts";
+import { priceLabel } from "../filters.ts";
+interface Props {
+  readonly entry: StoryEntry;
+  readonly index: number;
+}
+const { entry, index } = Astro.props;
+const { menu } = entry;
+const mapUrl = `${import.meta.env.BASE_URL}map/#menu=${encodeURIComponent(menu.id)}`;
+---
+
+<section class="story-stop" id={entry.anchor} aria-labelledby={`${entry.anchor}-title`}>
+  <div class="stop-number" aria-hidden="true">
+    0{index + 1}
+  </div>
+  <div class="stop-copy">
+    <p class="stop-date">{menu.date.label}</p>
+    <h2 id={`${entry.anchor}-title`}>{entry.heading}</h2>
+    <p class="stop-venue">{menu.name}</p>
+    <p>{entry.observation}</p>
+    <div class="story-links">
+      <a class="read-menu" href={mapUrl}>
+        Read this menu
+      </a>
+      <a href={menu.url}>NYPL record</a>
+    </div>
+  </div>
+  <ul class="story-items" aria-label="From this menu">
+    {entry.dishes.map((dish) => (
+      <li>
+        <span>{dish.name}</span>
+        {dish.price !== null && (
+          <strong>{priceLabel(dish.price, dish.priceHigh, menu.currency)}</strong>
+        )}
+      </li>
+    ))}
+  </ul>
+</section>

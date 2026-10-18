@@ -1,0 +1,36 @@
+[
+  {
+    "anchor": "hotel-supper",
+    "menuId": "nypl-33548",
+    "heading": "At the hotel",
+    "observation": "A French-language supper at the Bellevue-Stratford pairs terrapin with a list that includes peaches Melba. The transcription records no individual prices for this menu.",
+    "itemIds": ["1159173", "1159163"],
+    "image": {
+      "pageId": "70276",
+      "imageId": "4046889",
+      "url": "https://images.nypl.org/index.php?id=4046889&t=w",
+      "recordUrl": "https://old-digitalcollections.nypl.org/items/c2e99748-bc89-4d90-e040-e00a18061570",
+      "width": 2039,
+      "height": 2479,
+      "alt": "The original Bellevue-Stratford supper menu, January 2, 1914",
+      "rights": "NYPL identifies this item as public domain under United States law; it does not determine rights elsewhere.",
+      "rightsEvidence": "https://old-digitalcollections.nypl.org/items/c2e99748-bc89-4d90-e040-e00a18061570"
+    }
+  },
+  {
+    "anchor": "coffee-counter",
+    "menuId": "nypl-30411",
+    "heading": "At the counter",
+    "observation": "At Horn & Hardart, a cup of coffee with cream appears alongside a frizzled-beef omelet. Philadelphia is printed on the menu; the particular outlet remains unknown.",
+    "itemIds": ["837605", "837597"],
+    "image": null
+  },
+  {
+    "anchor": "chestnut-street",
+    "menuId": "nypl-29916",
+    "heading": "On Chestnut Street",
+    "observation": "Kugler’s in the Widener Building lists its own snapper soup and six prime oysters. This is the Chestnut Street restaurant; the Marine Grill has a separate menu and address.",
+    "itemIds": ["806099", "806055"],
+    "image": null
+  }
+]

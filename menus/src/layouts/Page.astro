@@ -1,0 +1,36 @@
+---
+import "../styles.css";
+interface Props {
+  readonly title: string;
+  readonly pageType?: "map" | "story";
+  readonly noindex?: boolean;
+}
+const { title, pageType = "map", noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://oldphilly.org");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8f5ed" />
+    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta
+      name="description"
+      content="Historical Philadelphia menus. Choose a place or menu; read the original transcription and visit the holding library."
+    />
+  </head>
+  <body class={`${pageType}-page`} data-asset-base={import.meta.env.BASE_URL}>
+    <a class="skip" href={pageType === "map" ? "#menu-panel" : "#story"}>
+      {pageType === "map" ? "Skip to menu" : "Skip to story"}
+    </a>
+    <slot />
+    <noscript>
+      JavaScript is needed for the map.{" "}
+      <a href={`${import.meta.env.BASE_URL}menus.json`}>Download menus and source links.</a>
+    </noscript>
+  </body>
+</html>

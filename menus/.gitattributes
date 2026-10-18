@@ -1,0 +1,2 @@
+# These are exact source artifacts: keep CRLF, whitespace and hashes unchanged.
+snapshots/nypl-selected/*.csv -text -whitespace

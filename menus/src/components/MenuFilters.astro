@@ -1,0 +1,58 @@
+<header>
+  <h1>
+    <a href={import.meta.env.BASE_URL}>Old Philly Menus</a>
+  </h1>
+  <details id="filter-panel" open>
+    <summary>Filters</summary>
+    <form id="filters" role="search" aria-label="Filter menus">
+      <label class="search">
+        <span class="sr-only">Search menus</span>
+        <input id="search" type="search" placeholder="Restaurant or dish" autocomplete="off" />
+      </label>
+      <label>
+        <span class="sr-only">Decade</span>
+        <select id="decade">
+          <option value="all">All dates</option>
+          <option value="undated">Undated</option>
+        </select>
+      </label>
+      <label>
+        <span class="sr-only">Area</span>
+        <select id="area">
+          <option value="all">All areas</option>
+          <option value="unlocated">Unlocated</option>
+        </select>
+      </label>
+      <label>
+        <span class="sr-only">Cuisine</span>
+        <select id="cuisine">
+          <option value="all">All cuisines</option>
+          <option value="unspecified">Unspecified</option>
+        </select>
+      </label>
+      <label>
+        <span class="sr-only">Collection</span>
+        <select id="collection">
+          <option value="all">All collections</option>
+        </select>
+      </label>
+      <details class="dates">
+        <summary>Dates</summary>
+        <div>
+          <label>
+            From
+            <input id="from" type="number" min="1600" max="2100" placeholder="Any year" />
+          </label>
+          <label>
+            To
+            <input id="to" type="number" min="1600" max="2100" placeholder="Any year" />
+          </label>
+          <label class="check">
+            <input id="undated" type="checkbox" checked /> Include undated
+          </label>
+        </div>
+      </details>
+      <button type="reset">Reset</button>
+    </form>
+  </details>
+</header>

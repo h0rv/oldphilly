@@ -1,0 +1,262 @@
+{
+  "format": "nypl-library-transfer-index-v1",
+  "manifestLibraryFileId": "libfile_d1d05fd5ccb8819182bd186203b098cd",
+  "tables": [
+    {
+      "file": "Menu.csv",
+      "parts": 2,
+      "rows": 72,
+      "bytes": 32235,
+      "sha256": "7916007f5160acfa61e2d760672f970a772d1c24d611fc2ce58c5ec71381f114"
+    },
+    {
+      "file": "MenuPage.csv",
+      "parts": 3,
+      "rows": 432,
+      "bytes": 31133,
+      "sha256": "0b45121dde01033f51da703cf7459a28683a9cd3dab3c59a99a1ab66e9a92382"
+    },
+    {
+      "file": "MenuItem.csv",
+      "parts": 18,
+      "rows": 3469,
+      "bytes": 309062,
+      "sha256": "8f00be4cfd20d88db6d907444239ad04b7c005d5c71b749c9937c46a9eab11d2"
+    },
+    {
+      "file": "Dish.csv",
+      "parts": 13,
+      "rows": 2534,
+      "bytes": 146577,
+      "sha256": "828814c877febd393410098aa16315053537703976566e8e67f12cd43d0be347"
+    }
+  ],
+  "totalRows": 6507,
+  "totalCsvBytes": 519007,
+  "totalParts": 36,
+  "validation": "Complete byte-identical local round trip, metadata, row counts, widths and hashes verified",
+  "files": [
+    {
+      "fileName": "manifest.json",
+      "libraryFileId": "libfile_d1d05fd5ccb8819182bd186203b098cd",
+      "fileBytes": 17737,
+      "fileSha256": "f0104d28ba834cfd576ff2dd6f4c6376cfdaa420626abc1ec0a43b9bf327bfb5"
+    },
+    {
+      "fileName": "Menu.part000.json",
+      "libraryFileId": "libfile_7d838b5e1dac8191a6f18180c888f231",
+      "fileBytes": 24288,
+      "fileSha256": "1511045f77a74fa659f1207b1110d36898d0d37c396f10376c11b113a3c25452"
+    },
+    {
+      "fileName": "Menu.part001.json",
+      "libraryFileId": "libfile_2d715f7342d08191a32d580f4739b5d3",
+      "fileBytes": 8769,
+      "fileSha256": "63ddf5f1715eabd7d3a9b2301a7da2824ff04579d2aa3486efde4a2eda4fbd69"
+    },
+    {
+      "fileName": "MenuPage.part000.json",
+      "libraryFileId": "libfile_48b7a3ede1ec8191ae07f2a9750a2557",
+      "fileBytes": 15221,
+      "fileSha256": "cce02ff231da2f9ef8d307259c138490c934a9158c741a4f2ac862e0a534cfb7"
+    },
+    {
+      "fileName": "MenuPage.part001.json",
+      "libraryFileId": "libfile_005516501a248191803bc7e91daec853",
+      "fileBytes": 14969,
+      "fileSha256": "6a91aac2808b06c53c78531388347d96babd79cf8689ef4219898e485756559c"
+    },
+    {
+      "fileName": "MenuPage.part002.json",
+      "libraryFileId": "libfile_2c363eb928f48191a6447700d6c0e1bd",
+      "fileBytes": 2560,
+      "fileSha256": "d6c953ecc977c7e0a3e779e28a6d1bb5e6f002b114be1bf0e5d73b7151faa617"
+    },
+    {
+      "fileName": "MenuItem.part000.json",
+      "libraryFileId": "libfile_4ab309f48b208191ba5572d079c30450",
+      "fileBytes": 17752,
+      "fileSha256": "9d2be7ca9fbb25b3773d52cca4ce0b755e7b4277e7b62d9fdb4276943cbafd24"
+    },
+    {
+      "fileName": "MenuItem.part001.json",
+      "libraryFileId": "libfile_31c0843bb5008191834034f958fd1210",
+      "fileBytes": 17991,
+      "fileSha256": "c737a4542ff8e064dadde0222ca72d15c7f4acaf5699d40b6e923d4bec9939c8"
+    },
+    {
+      "fileName": "MenuItem.part002.json",
+      "libraryFileId": "libfile_b33d663c521c81919e367996c4a5bd92",
+      "fileBytes": 17978,
+      "fileSha256": "daf0d145e6e3beefd2b4dc30e99388dc0422eb2946b59e082f58fa048d4bef20"
+    },
+    {
+      "fileName": "MenuItem.part003.json",
+      "libraryFileId": "libfile_b0f377ce359c8191b99e06d6b3ea4ae1",
+      "fileBytes": 18089,
+      "fileSha256": "632e3736c3d7babc6ef441a5e16bf217589c59a6ca1fb9de33903d73ea73d437"
+    },
+    {
+      "fileName": "MenuItem.part004.json",
+      "libraryFileId": "libfile_05da97703298819193afd1b6f2a29686",
+      "fileBytes": 17906,
+      "fileSha256": "402af2607ac24a5ca97df1f48a59bb1ae505c383c07c9a9ae9b403f35156fb1c"
+    },
+    {
+      "fileName": "MenuItem.part005.json",
+      "libraryFileId": "libfile_6c37218191d081919c81f513b0158102",
+      "fileBytes": 17979,
+      "fileSha256": "bbe569f135490da2432368e1b0cc9e58e8f8549244ac7d30cffcdaf348de6c20"
+    },
+    {
+      "fileName": "MenuItem.part006.json",
+      "libraryFileId": "libfile_9e15755c62e08191907b0f77949e86f6",
+      "fileBytes": 18072,
+      "fileSha256": "c0245b4c48e44da804c762d9af2862a763518a288abc1dfb3dbbec74c79afad9"
+    },
+    {
+      "fileName": "MenuItem.part007.json",
+      "libraryFileId": "libfile_9cb8c01ea51481918a8894548fdcf2c9",
+      "fileBytes": 19093,
+      "fileSha256": "9d8f7d2d8045c1e33410ac35d4fd62e7e2edce09b3ea3ca239a733071ae31357"
+    },
+    {
+      "fileName": "MenuItem.part008.json",
+      "libraryFileId": "libfile_4ca3560a23088191b175af0b669ac9b8",
+      "fileBytes": 18816,
+      "fileSha256": "779daa1756d60b50f4edac42124d5736f5bb4c2ac1ebc36c1dc6c5a9cb8bf270"
+    },
+    {
+      "fileName": "MenuItem.part009.json",
+      "libraryFileId": "libfile_e264a15436708191977794f1d2cda796",
+      "fileBytes": 18898,
+      "fileSha256": "0885f808b56defdb9c1d99f7d22ca6f1bbe5abdc133fd85cf3c973a6ca97a85c"
+    },
+    {
+      "fileName": "MenuItem.part010.json",
+      "libraryFileId": "libfile_e34e29b4edb48191ab406c926ddcbbf5",
+      "fileBytes": 18951,
+      "fileSha256": "2d98dcc3e16742c215557af1ccee040d4ca8c413d05c0b76a85981418bd9849e"
+    },
+    {
+      "fileName": "MenuItem.part011.json",
+      "libraryFileId": "libfile_aa1c08e6be548191a4bc8312f2504440",
+      "fileBytes": 18730,
+      "fileSha256": "181f5fe757f95eac910338aaeca086a98ad8df82e51e0c56115675370843bd97"
+    },
+    {
+      "fileName": "MenuItem.part012.json",
+      "libraryFileId": "libfile_9145ee10ebf08191b56f1e2a89d68649",
+      "fileBytes": 18764,
+      "fileSha256": "87be7d050a55fb27fbfb492aa04774b006fe981dfb1a2ba2149b524dc375f679"
+    },
+    {
+      "fileName": "MenuItem.part013.json",
+      "libraryFileId": "libfile_e04a2127c9fc8191af6c3e0d2f536044",
+      "fileBytes": 18645,
+      "fileSha256": "17726664343b887ad556d142d3812e33461545bf2fda8c91d87b7a4037826f9d"
+    },
+    {
+      "fileName": "MenuItem.part014.json",
+      "libraryFileId": "libfile_46ab2bdf7f8c8191901fc8a03b39587e",
+      "fileBytes": 18666,
+      "fileSha256": "031591b419d9384a185cc37171685fe0ec887245318bb1522caf05116f6b2ca8"
+    },
+    {
+      "fileName": "MenuItem.part015.json",
+      "libraryFileId": "libfile_a3b9a07d43dc8191853b354fe1a1b644",
+      "fileBytes": 18567,
+      "fileSha256": "d69aa1399466614c8eaa31f726d0a1849035ac40918b8da228a0595fac8d2be2"
+    },
+    {
+      "fileName": "MenuItem.part016.json",
+      "libraryFileId": "libfile_4ed0ef5141c88191aca8647e93571117",
+      "fileBytes": 19043,
+      "fileSha256": "3518b4eb5469bd772c79eb5dd50f8de5bdb5024ecf7cc7213652e99e7e5d953c"
+    },
+    {
+      "fileName": "MenuItem.part017.json",
+      "libraryFileId": "libfile_2b9046805dd481919262fb0a5df3730c",
+      "fileBytes": 6641,
+      "fileSha256": "e0e195c05c5f4ec700127f1268bc5132fa3d875ec04a6056e7235b611227f54c"
+    },
+    {
+      "fileName": "Dish.part000.json",
+      "libraryFileId": "libfile_207ffad27e0c8191bcef9b289796d65c",
+      "fileBytes": 9960,
+      "fileSha256": "86997b6d36603cfc8b0741e684956b66a2b4b1e467c6176a127b047cde2ab268"
+    },
+    {
+      "fileName": "Dish.part001.json",
+      "libraryFileId": "libfile_e979a4e659c4819190c02d9c92b4d2ef",
+      "fileBytes": 10270,
+      "fileSha256": "3eb6731b625afe6ce5ec61c488a2772227bf3ad59035db6d48f0995751f29d44"
+    },
+    {
+      "fileName": "Dish.part002.json",
+      "libraryFileId": "libfile_0b80534d0e648191a81892f3a55e5a5d",
+      "fileBytes": 10593,
+      "fileSha256": "1bd5c2248945f4a5b8dec89d4208a56761ea072ba8b1d11870113b279f2c9897"
+    },
+    {
+      "fileName": "Dish.part003.json",
+      "libraryFileId": "libfile_59567c0c2e9c8191bc66ac7c3bada60c",
+      "fileBytes": 10773,
+      "fileSha256": "0cd5b378f90311cd3959dfa9d89b07538872370e09090e7ec925b4d4fc2287b9"
+    },
+    {
+      "fileName": "Dish.part004.json",
+      "libraryFileId": "libfile_3766d4bff5fc81918f4323190e208179",
+      "fileBytes": 11067,
+      "fileSha256": "7a548be15863c9ff6f14524bfe8b7c3d92481e8071bf4d3ecb2e98e9dc2592aa"
+    },
+    {
+      "fileName": "Dish.part005.json",
+      "libraryFileId": "libfile_9c8a9c57c81c8191a24ed7fc9b4028c6",
+      "fileBytes": 11792,
+      "fileSha256": "825a296070703cff48c54f16610852c243ed90353a17f5c5511da15c33b1001b"
+    },
+    {
+      "fileName": "Dish.part006.json",
+      "libraryFileId": "libfile_da362044fd6081918dfa29aa3f102e15",
+      "fileBytes": 12945,
+      "fileSha256": "399b154c0f3e1256d3cdcf070fc002c50ce741a86abee4118ac977089c580fa2"
+    },
+    {
+      "fileName": "Dish.part007.json",
+      "libraryFileId": "libfile_7ebeb87f0a988191a402d953ae88da0c",
+      "fileBytes": 13858,
+      "fileSha256": "06c690f206b7d4e2da15d20ca1af4d5b2d79959deac84480785aa90c32bc059c"
+    },
+    {
+      "fileName": "Dish.part008.json",
+      "libraryFileId": "libfile_c588a0c3d3148191b15cd60f8b96198a",
+      "fileBytes": 12929,
+      "fileSha256": "060efb394cdec90f7d185404b8a3ccdf6f480a67fd71d5b1f079efe0b3eee9cc"
+    },
+    {
+      "fileName": "Dish.part009.json",
+      "libraryFileId": "libfile_978c83a3e5f8819184a1be78de542744",
+      "fileBytes": 15770,
+      "fileSha256": "a127f3caf2c0fa4e541110fc9ba7988cbc806836c8117704056dd17a0080300e"
+    },
+    {
+      "fileName": "Dish.part010.json",
+      "libraryFileId": "libfile_9cd9141ee3bc8191a74fd70f69a32dcd",
+      "fileBytes": 13577,
+      "fileSha256": "a6be8aac2db933b1b914c7379a63efee0843a37735baa09e1592dbb334e87afc"
+    },
+    {
+      "fileName": "Dish.part011.json",
+      "libraryFileId": "libfile_2c119905344881919b83b7287b181140",
+      "fileBytes": 12351,
+      "fileSha256": "f72ff8b20c785a051eac94d82600abac66141c3d8198b420c3670d2655629a7f"
+    },
+    {
+      "fileName": "Dish.part012.json",
+      "libraryFileId": "libfile_55f150a55d2c81918799be414f93b656",
+      "fileBytes": 10038,
+      "fileSha256": "d3f9b7ebdf0fac83876772aa1a403199641d99934465faf999a15b1b488a8d39"
+    }
+  ]
+}

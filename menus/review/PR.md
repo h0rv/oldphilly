@@ -1,0 +1,11 @@
+# Add Old Philly Menus under /menus/
+
+Add a static Astro/TypeScript menu story and map to the OldPhilly monorepo, canonical https://oldphilly.org/menus/. Readers can follow three real dated menus or explore all 102 NYPL/CIA source records with date, decade, area, cuisine, collection and text filters. Unknown dates/locations remain selectable. Details retain original names, prices, scan links and provenance.
+
+The photo site stays at `/`; its runtime, styling, generator and data paths are unchanged. One title-card link connects the sites. `menus/scripts/build-site.ts` replaces only generated `site/menus/`. A shared CI action checks both projects, builds the existing full photo data and menu output, then tests both routes. The existing Cloudflare deployment keeps its project, branch and secrets. PR checks never deploy.
+
+The clean 553b7738 source tree was copied without research history/private originals. Four exact NYPL CSVs, hashes and transfer receipts are retained. CIA factual metadata/source links remain while full transcripts/images are omitted at importer and schema boundaries. Sixteen source-specific venue matches use four reviewed building points; sponsoring clubs and unresolved outlets receive no guessed pins. No inflation series or coverage/deduplication claim is added. No source image is copied or rehosted.
+
+Pinned tooling includes stable native TypeScript 7, the supported TypeScript 6 API for explicit Astro diagnostics, type-aware Oxlint and Oxfmt including Astro. Local validation: 30 data/schema/filter/location/rights tests, 34 desktop/mobile combined browser checks, zero Astro diagnostics on 10 files, root 14 pytest checks/Ruff/ty. YAML parses. Screenshots and independent Luna review are in `menus/review/`.
+
+The local full-photo Parquet download returned HTTP 403; CI must verify that unchanged input route. Photo browser tests use the existing fixture plus actual pinned CDN-package bytes because the executor could not load those CDN URLs. Automated menu tiles/images are blocked, and screenshots show honest outage states; live media needs human preview before production approval. Optional menus.oldphilly.org is absent and unconfigured; no DNS, hosting or credential changes were made. No merge/deploy is requested. h0rv/philly PR #10 is untouched.

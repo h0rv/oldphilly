@@ -1,0 +1,6 @@
+[
+  { "table": "Menu", "fileName": "Menu.csv", "libraryFileId": "libfile_4b952981a6488191901bde9b5504b52c", "byteLength": 32235, "rowCount": 72, "sha256": "7916007f5160acfa61e2d760672f970a772d1c24d611fc2ce58c5ec71381f114" },
+  { "table": "MenuPage", "fileName": "MenuPage.csv", "libraryFileId": "libfile_40c070472f288191b1f239bc26f2552e", "byteLength": 31133, "rowCount": 432, "sha256": "0b45121dde01033f51da703cf7459a28683a9cd3dab3c59a99a1ab66e9a92382" },
+  { "table": "MenuItem", "fileName": "MenuItem.csv", "libraryFileId": "libfile_62acf95702188191b0c7ac8aea76ce07", "byteLength": 309062, "rowCount": 3469, "sha256": "8f00be4cfd20d88db6d907444239ad04b7c005d5c71b749c9937c46a9eab11d2" },
+  { "table": "Dish", "fileName": "Dish.csv", "libraryFileId": "libfile_91f432b7ae548191b0017efb45084ccb", "byteLength": 146577, "rowCount": 2534, "sha256": "828814c877febd393410098aa16315053537703976566e8e67f12cd43d0be347" }
+]

@@ -1,0 +1,57 @@
+{
+  "reviewedAt": "2026-10-18",
+  "decision": "Publish factual catalog metadata and library links; omit full CIA transcripts and images because no reuse permission is established.",
+  "rightsStatement": "Copyright Not Evaluated",
+  "rightsStatementUrl": "https://rightsstatements.org/vocab/CNE/1.0/",
+  "providerGuide": "https://library.culinary.edu/c.php?g=592165&p=4095052",
+  "basis": "All 30 supplied source records have the CNE/1.0 rights statement. The provider guide describes full-text search and access, not a license for republication. The current record viewer could not be fetched; no permission is inferred from access or age.",
+  "original": {
+    "libraryFileId": "libfile_d319ffc09b188191b8e065f02d4ad702",
+    "bytes": 70874,
+    "sha256": "3abe44636acac88ecccd8d04f6570c952e53829eafd496c9c008c8508322aafb",
+    "privateLocalPath": "raw/rights/cia-all30-parent-export.json",
+    "privateScope": "Earlier private research checkout, outside the OldPhilly monorepo; not a release input."
+  },
+  "releasedMetadata": {
+    "path": "snapshots/cia-metadata.json",
+    "bytes": 56824,
+    "sha256": "38932b1b208c375a14f32f0dbf43b6ee2cd26173e3a91c8957d00b34441b9315",
+    "records": 30,
+    "rule": "Replace the four nonempty transc values with empty strings. Preserve all other catalog keys and values, including original rights, dates, addresses, IDs and collection provenance."
+  },
+  "omittedTranscripts": [
+    {
+      "recordId": "2535",
+      "url": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/2535",
+      "originalCharacters": 1611,
+      "originalUtf8Bytes": 1611,
+      "originalTextSha256": "01195328fde8eb71e7c0cdfd586f3c2eadb0c4a0fb7b19585175d8bd680e78d3",
+      "originalRights": "Copyright Not Evaluated; http://rightsstatements.org/vocab/CNE/1.0/ "
+    },
+    {
+      "recordId": "2537",
+      "url": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/2537",
+      "originalCharacters": 4509,
+      "originalUtf8Bytes": 4509,
+      "originalTextSha256": "32c947f79671d75dcc773efcd314a62879cc89c0f9721314e02cd42aebac93ce",
+      "originalRights": "Copyright Not Evaluated; http://rightsstatements.org/vocab/CNE/1.0/ "
+    },
+    {
+      "recordId": "2548",
+      "url": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/2548",
+      "originalCharacters": 4420,
+      "originalUtf8Bytes": 4420,
+      "originalTextSha256": "696f6e4f4f7ce05dedbc71b6e460b72c7adf37887722360b7be40fff1f37ebd4",
+      "originalRights": "Copyright Not Evaluated; http://rightsstatements.org/vocab/CNE/1.0/ "
+    },
+    {
+      "recordId": "18438",
+      "url": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/18438",
+      "originalCharacters": 3223,
+      "originalUtf8Bytes": 3223,
+      "originalTextSha256": "daf802a31bd05807a63741843bcb3a06e7a40dac248ef34a9657f811d9da5b37",
+      "originalRights": "Copyright Not Evaluated; http://rightsstatements.org/vocab/CNE/1.0/ "
+    }
+  ],
+  "publicationHistory": "Earlier local development commits and older private review bundles contain the research transcripts. OldPhilly imports only the clean source tree from 553b7738c3851f1ff588eda0ff74b3ae84401c9c as files; do not graft development history or include private originals."
+}
