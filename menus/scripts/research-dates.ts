@@ -30,6 +30,12 @@ try {
     const menuId = page.menuId;
     // Only already cleared, source-hosted NYPL images; no CIA transcript/image output.
     const response = await fetch(page.fullUrl, { signal: AbortSignal.timeout(30000) });
+    if (response.status === 404) {
+      process.stdout.write(
+        `MENU_DATE_UNAVAILABLE ${JSON.stringify({ menuId, pageId: page.pageId, imageId: page.imageId, url: page.fullUrl, status: 404 })}\n`,
+      );
+      return;
+    }
     if (!response.ok)
       throw new Error(
         `Source request denied or unavailable: ${page.fullUrl}, HTTP ${String(response.status)}. Stop; no retry.`,
