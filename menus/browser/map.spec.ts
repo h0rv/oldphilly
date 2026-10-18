@@ -13,6 +13,29 @@ test.beforeEach(async ({ page }) => {
   await page.route("https://tile.openstreetmap.org/**", (route) => route.abort());
   await page.route("https://images.nypl.org/**", (route) => route.abort());
 });
+test("map discloses machine date uncertainty and withholds conflicting scan associations", async ({
+  page,
+}) => {
+  await page.goto("./map/");
+  await page
+    .getByRole("combobox", { name: "Choose a menu", exact: true })
+    .selectOption("nypl-21050");
+  await expect(page.locator("#menu-content .source-caution")).toContainText(
+    "not visually verified",
+  );
+  const disclosure = page.getByText(
+    "Dates include catalog records and machine readings awaiting visual review.",
+  );
+  if (!(await disclosure.isVisible())) await page.getByText("Filters", { exact: true }).click();
+  await expect(disclosure).toBeVisible();
+  await page
+    .getByRole("combobox", { name: "Choose a menu", exact: true })
+    .selectOption("nypl-27457");
+  await expect(page.locator("#menu-content .source-caution")).toContainText(
+    "PENNSYLVANIA RAILROAD",
+  );
+  await expect(page.locator(".map-scan")).toHaveCount(0);
+});
 test("map retains all records and accessible pins during a tile and image outage", async ({
   page,
 }) => {
@@ -20,7 +43,15 @@ test("map retains all records and accessible pins during a tile and image outage
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("./map/");
   await expect(page.locator("#menu-picker option[data-menu]")).toHaveCount(102);
-  await expect(page.locator(".menu-pin")).toHaveCount(6);
+  await expect(page.locator(".menu-pin")).toHaveCount(
+    new Set(
+      catalog.menus.flatMap((menu) =>
+        menu.location.precision === "exact"
+          ? [`${String(menu.location.lat)},${String(menu.location.lng)}`]
+          : [],
+      ),
+    ).size,
+  );
   await expect(page.locator("#map-status")).toContainText("Street map unavailable.");
   const pin = page.locator(".menu-pin").first();
   await pin.focus();
@@ -46,7 +77,9 @@ test("date, neighborhood, cuisine and collection filters compose with unknown st
   await expect(page.locator("#menu-picker option[data-menu]")).toHaveCount(102);
   if (info.project.name === "mobile") await page.locator("#filter-panel > summary").click();
   await page.getByRole("combobox", { name: "Decade", exact: true }).selectOption("undated");
-  await expect(page.locator("#menu-picker option[data-menu]")).toHaveCount(14);
+  await expect(page.locator("#menu-picker option[data-menu]")).toHaveCount(
+    catalog.menus.filter((menu) => menu.date.year === null).length,
+  );
   await page.getByRole("combobox", { name: "Neighborhood", exact: true }).selectOption("unlocated");
   await expect(page.locator("#menu-picker option[data-menu]")).toHaveCount(
     catalog.menus.filter((menu) => menu.date.year === null && menu.location.precision === "unknown")

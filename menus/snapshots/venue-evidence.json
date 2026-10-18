@@ -1,0 +1,954 @@
+{
+  "reviewedAt": "2026-10-18",
+  "method": "Source-specific catalog and historical venue review; no scan pixels inspected. Coordinate sources are representative building locators, not restaurant entrances. All 30 CIA released records and all 72 selected NYPL identities were reviewed in bounded independent passes. Five NYPL machine-transcribed date candidates are corroborated by source metadata but remain visually unresolved. No source image bytes or full CIA transcripts are included.",
+  "points": [
+    {
+      "menuId": "nypl-14406",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "These eight capture-matched NYPL public-domain catalog titles explicitly identify Bellevue-Stratford Hotel, Philadelphia, after [at], separately from each sponsor. All catalog years are1905–1907, after the current hotel opened in1904. NPS77001182 confirms200SouthBroadStreet. Reuse the previously reviewed CC0 Wikidata Q7716429 representative building point. No scan inspection, exact dining-room position, or printed-day verification is claimed.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      },
+      "metadataTitle": "2ND ANNUAL DINNER TO HON. RICHARD L. ASHHURST, POSTMASTER AND MR. GEORGE W. KNOWLES, ASSISTANT POSTMASTER [held by] SUPERINTENDENTS OF DIVISIONS AND STATIONS OF THE PHILADELPHIA POST OFFICE [at] \"HOTEL BELLEVUE-STRATFORD, PHILADELPHIA, PA\" (HOTEL;)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "gazetteer",
+          "label": "Bellevue-Stratford Hotel coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/214edf70-c542-012f-9bd2-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L35836",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/77001182",
+          "kind": "historical",
+          "label": "Historical Bellevue-Stratford building at200SouthBroadStreet; current supplied point independently reviewed in existing locations snapshot."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-21050",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "These eight capture-matched NYPL public-domain catalog titles explicitly identify Bellevue-Stratford Hotel, Philadelphia, after [at], separately from each sponsor. All catalog years are1905–1907, after the current hotel opened in1904. NPS77001182 confirms200SouthBroadStreet. Reuse the previously reviewed CC0 Wikidata Q7716429 representative building point. No scan inspection, exact dining-room position, or printed-day verification is claimed.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      },
+      "metadataTitle": "SEVENTH ANNUAL BANQUET [held by] GROCERS' AND IMPORTERS' EXCHANGE [at] \"THE BELLEVUE-STRATFORD, PHILADELPHIA, PA\" (HOTEL;)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "gazetteer",
+          "label": "Bellevue-Stratford Hotel coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/cf1dbfd0-c540-012f-38d9-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L33658",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/77001182",
+          "kind": "historical",
+          "label": "Historical Bellevue-Stratford building at200SouthBroadStreet; current supplied point independently reviewed in existing locations snapshot."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-21582",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "These eight capture-matched NYPL public-domain catalog titles explicitly identify Bellevue-Stratford Hotel, Philadelphia, after [at], separately from each sponsor. All catalog years are1905–1907, after the current hotel opened in1904. NPS77001182 confirms200SouthBroadStreet. Reuse the previously reviewed CC0 Wikidata Q7716429 representative building point. No scan inspection, exact dining-room position, or printed-day verification is claimed.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      },
+      "metadataTitle": "25TH ANNIVERSARY DINNER [held by] THE CLOVER CLUB [at] \"BELLEVUE-STRATFORD, PHILADELPHIA, PA\" (HOTEL;)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "gazetteer",
+          "label": "Bellevue-Stratford Hotel coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/d52abe80-c540-012f-f0c0-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L33700",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/77001182",
+          "kind": "historical",
+          "label": "Historical Bellevue-Stratford building at200SouthBroadStreet; current supplied point independently reviewed in existing locations snapshot."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-22759",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "These eight capture-matched NYPL public-domain catalog titles explicitly identify Bellevue-Stratford Hotel, Philadelphia, after [at], separately from each sponsor. All catalog years are1905–1907, after the current hotel opened in1904. NPS77001182 confirms200SouthBroadStreet. Reuse the previously reviewed CC0 Wikidata Q7716429 representative building point. No scan inspection, exact dining-room position, or printed-day verification is claimed.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      },
+      "metadataTitle": "SIXTH ANNUAL BANQUET [held by] GROCERS' AND IMPORTERS' EXCHANGE [at] \"THE BELLEVUE-STRATFORD, PHILADELPHIA, PA\" (HOTEL;)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "gazetteer",
+          "label": "Bellevue-Stratford Hotel coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/303d0a60-c53f-012f-4b64-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L30819",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/77001182",
+          "kind": "historical",
+          "label": "Historical Bellevue-Stratford building at200SouthBroadStreet; current supplied point independently reviewed in existing locations snapshot."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-22780",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "These eight capture-matched NYPL public-domain catalog titles explicitly identify Bellevue-Stratford Hotel, Philadelphia, after [at], separately from each sponsor. All catalog years are1905–1907, after the current hotel opened in1904. NPS77001182 confirms200SouthBroadStreet. Reuse the previously reviewed CC0 Wikidata Q7716429 representative building point. No scan inspection, exact dining-room position, or printed-day verification is claimed.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      },
+      "metadataTitle": "DINNER TO MR. R. R. BRINGHURST [held by] SELECT COUNCIL CITY OF PHILADELPHIA [at] \"BELLEVUE-STRATFORD HOTEL, PHILADELPHIA, PA\" (HOTEL;)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "gazetteer",
+          "label": "Bellevue-Stratford Hotel coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/84ae0a50-c540-012f-00a3-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L33115",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/77001182",
+          "kind": "historical",
+          "label": "Historical Bellevue-Stratford building at200SouthBroadStreet; current supplied point independently reviewed in existing locations snapshot."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-23128",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "These eight capture-matched NYPL public-domain catalog titles explicitly identify Bellevue-Stratford Hotel, Philadelphia, after [at], separately from each sponsor. All catalog years are1905–1907, after the current hotel opened in1904. NPS77001182 confirms200SouthBroadStreet. Reuse the previously reviewed CC0 Wikidata Q7716429 representative building point. No scan inspection, exact dining-room position, or printed-day verification is claimed.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      },
+      "metadataTitle": "ANNUAL DINNER [held by] ASSOCIATED STUDENTS OF CARROLL BREWSTER [at] \"THE BELLEVUE-STRATFORD, PHILADELPHIA, PA\" (HOTEL;)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "gazetteer",
+          "label": "Bellevue-Stratford Hotel coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/39a17030-c53f-012f-b845-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L30887",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/77001182",
+          "kind": "historical",
+          "label": "Historical Bellevue-Stratford building at200SouthBroadStreet; current supplied point independently reviewed in existing locations snapshot."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-23277",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "These eight capture-matched NYPL public-domain catalog titles explicitly identify Bellevue-Stratford Hotel, Philadelphia, after [at], separately from each sponsor. All catalog years are1905–1907, after the current hotel opened in1904. NPS77001182 confirms200SouthBroadStreet. Reuse the previously reviewed CC0 Wikidata Q7716429 representative building point. No scan inspection, exact dining-room position, or printed-day verification is claimed.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      },
+      "metadataTitle": "ANNUAL BANQUET [held by] AMERICAN STREET RAILWAY ASSOCIATION [at] \"THE BELLEVUE-STRATFORD, PHILADELPHIA, PA\" (HOTEL;)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "gazetteer",
+          "label": "Bellevue-Stratford Hotel coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/a164f5b0-c53e-012f-764d-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L29883",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/77001182",
+          "kind": "historical",
+          "label": "Historical Bellevue-Stratford building at200SouthBroadStreet; current supplied point independently reviewed in existing locations snapshot."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-26300",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "These eight capture-matched NYPL public-domain catalog titles explicitly identify Bellevue-Stratford Hotel, Philadelphia, after [at], separately from each sponsor. All catalog years are1905–1907, after the current hotel opened in1904. NPS77001182 confirms200SouthBroadStreet. Reuse the previously reviewed CC0 Wikidata Q7716429 representative building point. No scan inspection, exact dining-room position, or printed-day verification is claimed.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      },
+      "metadataTitle": "THIRD ANNUAL CONVENTION [held by] PENNSYLVANIA STATE HOTEL ASSOCIATION [at] \"BELLEVUE-STRATFORD HOTEL, PHILADELPHIA, PA\" (HOTEL;)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "gazetteer",
+          "label": "Bellevue-Stratford Hotel coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/2bc31410-c540-012f-7199-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L32500",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/77001182",
+          "kind": "historical",
+          "label": "Historical Bellevue-Stratford building at200SouthBroadStreet; current supplied point independently reviewed in existing locations snapshot."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-21701",
+      "location": {
+        "lat": 39.94972222222222,
+        "lng": -75.14833333333334,
+        "area": "Old City",
+        "address": "11–21 South Fifth Street · Philadelphia Bourse (current address111SouthIndependenceMallEast)",
+        "basis": "Both primary NYPL catalog titles explicitly locate the meal at Philadelphia Bourse in1895/1897. The HABS building record identifies the historic structure at11–21SouthFifthStreet; the present building operator identifies the surviving Philadelphia Bourse at111SouthIndependenceMallEast. Wikidata Q7182634 P625 supplies a representative building point, not a particular dining room.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7182634&oldid=2541850260"
+      },
+      "metadataTitle": "DINNER TO DELEGATES OF THE PENNSYLVANIA BANKERS' ASSOCIATION [held by] THE CLEARING HOUSE ASSOCIATION OF THE BANKS OF PHILADELPHIA [at] PHILADELPHIA BOURSE",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7182634&oldid=2541850260",
+          "kind": "gazetteer",
+          "label": "Philadelphia Bourse coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/22b16a70-c532-012f-de25-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L6964",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:GROUND_STORY_ENTRANCE,_EAST_ELEVATION_-_Philadelphia_Bourse,_11-21_South_Fifth_Street,_Philadelphia,_Philadelphia_County,_PA_HABS_PA,51-PHILA,651-5.tif",
+          "kind": "historical",
+          "label": "Primary HABS PA51-PHILA651-5 title identifies Philadelphia Bourse at11–21SouthFifthStreet; file metadata revision1030150708. Photograph viewpoint coordinates were explicitly not reused."
+        },
+        {
+          "url": "https://theboursephilly.com/about/",
+          "kind": "historical",
+          "label": "Current building operator identifies historic Philadelphia Bourse and present111SouthIndependenceMallEast address."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-22519",
+      "location": {
+        "lat": 39.94972222222222,
+        "lng": -75.14833333333334,
+        "area": "Old City",
+        "address": "11–21 South Fifth Street · Philadelphia Bourse (current address111SouthIndependenceMallEast)",
+        "basis": "Both primary NYPL catalog titles explicitly locate the meal at Philadelphia Bourse in1895/1897. The HABS building record identifies the historic structure at11–21SouthFifthStreet; the present building operator identifies the surviving Philadelphia Bourse at111SouthIndependenceMallEast. Wikidata Q7182634 P625 supplies a representative building point, not a particular dining room.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7182634&oldid=2541850260"
+      },
+      "metadataTitle": "DINNER [held by] CITY EDITOR'S ASSOCIATION OF PHILADELPHIA [at] \"THE BOURSE,(PHILADELPHIA,PA)\"",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7182634&oldid=2541850260",
+          "kind": "gazetteer",
+          "label": "Philadelphia Bourse coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/8b79ec20-c532-012f-f4d0-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L7730",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:GROUND_STORY_ENTRANCE,_EAST_ELEVATION_-_Philadelphia_Bourse,_11-21_South_Fifth_Street,_Philadelphia,_Philadelphia_County,_PA_HABS_PA,51-PHILA,651-5.tif",
+          "kind": "historical",
+          "label": "Primary HABS PA51-PHILA651-5 title identifies Philadelphia Bourse at11–21SouthFifthStreet; file metadata revision1030150708. Photograph viewpoint coordinates were explicitly not reused."
+        },
+        {
+          "url": "https://theboursephilly.com/about/",
+          "kind": "historical",
+          "label": "Current building operator identifies historic Philadelphia Bourse and present111SouthIndependenceMallEast address."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-25999",
+      "location": {
+        "lat": 39.95388888888889,
+        "lng": -75.16305555555556,
+        "area": "Center City East",
+        "address": "1 North Broad Street · Masonic Temple",
+        "basis": "The1897NYPL primary catalog explicitly locates the meal at MasonicTemple,Philadelphia. The NPS1984nomination identifies the original1873building at1NorthBroad,NEcornerBroad/Filbert, on the east side of Broad between Filbert/Cuthbert extending to Juniper. Wikidata Q6783748 supplies a representative building point. No specific room position is inferred.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q6783748&oldid=2254353942"
+      },
+      "metadataTitle": "CENTENNIAL ANNIVERSARY [held by] FREE & ACCEPTED MASONS LODGE NO. 72 [at] \"MASONIC TEMPLE, PHILADELPHIA, PA\" (OTHER (TEMPLE);)",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q6783748&oldid=2254353942",
+          "kind": "gazetteer",
+          "label": "Masonic Temple (Philadelphia) coordinate"
+        },
+        {
+          "url": "http://digitalcollections.nypl.org/items/82262a90-c532-012f-5f0a-58d385a7bc34",
+          "kind": "catalog",
+          "label": "Capture-matched NYPL venue metadata"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L7664",
+          "kind": "dataset",
+          "label": "Pinned NYPL metadata record"
+        },
+        {
+          "url": "https://npgallery.nps.gov/AssetDetail/NRIS/71000727",
+          "kind": "historical",
+          "label": "Primary National Register metadata identifies MasonicTemple,1NorthBroadStreet, significant1873."
+        },
+        {
+          "url": "https://npgallery.nps.gov/GetAsset/7afbe6ec-6f2d-4041-990b-ad1c17417a28",
+          "kind": "historical",
+          "label": "NPS nomination prepared by CarolynPitts,HistoryDivision,August10,1984: page1address; page3completion1873; page4originalsite,150ftBroadfrontageand250ftdeptheasttoJuniperbetweenFilbert/Cuthbert."
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/Category:Masonic_Temple_(Philadelphia,_Pennsylvania)",
+          "kind": "historical",
+          "label": "Category revision795188869 infobox gives39°57′13″N75°09′47″W; documented one-second latitude variation against Wikidata, not silently averaged."
+        }
+      ]
+    }
+  ],
+  "addresses": [
+    {
+      "menuId": "cia-17865",
+      "address": "935 Ellsworth Street",
+      "assessment": "catalog-address-only",
+      "basis": "CIA parent metadata supplies Middle East Restaurant at 935 Ellsworth Street; no independent historical building/venue source found in this pass. It is undated; no move date inferred from later reported addresses.",
+      "citations": []
+    },
+    {
+      "menuId": "cia-17581",
+      "address": "215 South 15th Street",
+      "assessment": "corroborated-venue-address",
+      "basis": "Bookbinder’s 15th Street Seafood House at 215 South 15th Street; distinct site from Old Original Bookbinder’s at 125 Walnut.",
+      "citations": [
+        {
+          "url": "https://explorepahistory.com/attraction.php?id=1-B-1528.html",
+          "kind": "historical",
+          "label": "Names Bookbinder’s 15th Street Seafood House and gives 215 South 15th Street."
+        },
+        {
+          "url": "https://hiddencityphila.org/2015/01/rebooting-bookies-garces-group-awakens-the-spirit-of-an-old-original-legend/",
+          "kind": "historical",
+          "label": "Distinguishes 15th Street Seafood House from the Walnut Street Old Original restaurant."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-17072",
+      "address": "215 South 15th Street",
+      "assessment": "corroborated-venue-address",
+      "basis": "Bookbinder’s 15th Street Seafood House at 215 South 15th Street; distinct site from Old Original Bookbinder’s at 125 Walnut.",
+      "citations": [
+        {
+          "url": "https://explorepahistory.com/attraction.php?id=1-B-1528.html",
+          "kind": "historical",
+          "label": "Names Bookbinder’s 15th Street Seafood House and gives 215 South 15th Street."
+        },
+        {
+          "url": "https://hiddencityphila.org/2015/01/rebooting-bookies-garces-group-awakens-the-spirit-of-an-old-original-legend/",
+          "kind": "historical",
+          "label": "Distinguishes 15th Street Seafood House from the Walnut Street Old Original restaurant."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-7530",
+      "address": "1302-04 Drury Lane",
+      "assessment": "address-conflict",
+      "basis": "CIA catalog says 1302-04 Drury Lane; a 1986 historical report describes Cafe Lafitte at 1302 Drury Street. Venue is plausible, exact street form remains unresolved.",
+      "citations": [
+        {
+          "url": "https://pchrlgbt.wordpress.com/wp-content/uploads/2017/01/coalition-on-lesbian-gay-bar-policies-report-1986-1.pdf",
+          "kind": "historical",
+          "label": "Uses Drury Street address, conflicting with catalog spelling."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-14244",
+      "address": "1609 Pine Street",
+      "assessment": "weak-secondary-corroboration",
+      "basis": "CIA supplies 1609 Pine Street. A collectible listing for a Bistro Deja Vu matchbook also shows 1609 Pine, but is weak evidence and does not independently establish a precise building point.",
+      "citations": [
+        {
+          "url": "https://www.ebay.com/itm/277333292388",
+          "kind": "historical",
+          "label": "Matchbook listing displays Bistro Deja Vu and 1609 Pine Street; weak corroboration only."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-8074",
+      "address": "7312 Castor Avenue",
+      "assessment": "catalog-address-only",
+      "basis": "CIA parent metadata supplies Fisher’s Seafood Restaurant at 7312 Castor Avenue, dated 1967-07-22. No independent historical building/venue source found in this pass.",
+      "citations": []
+    },
+    {
+      "menuId": "cia-20281",
+      "address": "1617 Spruce Street",
+      "assessment": "building-match-venue-match-partial",
+      "basis": "Historical account identifies the townhouse at 1617 Spruce Street as the Philadelphia Musical Academy and later describes the same address as locally known as “the Garden.” This supports building/block match; menu-date occupancy in 1977 is not independently confirmed by that account.",
+      "citations": [
+        {
+          "url": "https://hiddencityphila.org/2017/01/on-spruce-street-a-symphony-of-fading-history/",
+          "kind": "historical",
+          "label": "Identifies townhouse at 1617 Spruce and history of the building; search-indexed account notes Garden restaurant was a later identity."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-13733",
+      "address": "1602 Locust Street",
+      "assessment": "corroborated-venue-address",
+      "basis": "Local history identifies La Panetière’s larger location as 1602 Locust Street. CIA record is undated, so this does not assign an opening date or place the separate 1972, no-address menu here.",
+      "citations": [
+        {
+          "url": "https://billypenn.com/2019/11/17/vetri-le-bec-fin-la-panetiere-the-illustrious-culinary-history-of-1312-spruce-street/",
+          "kind": "historical",
+          "label": "States La Panetière moved to a larger space at 1602 Locust Street."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-13777",
+      "address": "1602 Locust Street",
+      "assessment": "corroborated-venue-address",
+      "basis": "Local history identifies La Panetière’s larger location as 1602 Locust Street. CIA record is undated, so this does not assign an opening date or place the separate 1972, no-address menu here.",
+      "citations": [
+        {
+          "url": "https://billypenn.com/2019/11/17/vetri-le-bec-fin-la-panetiere-the-illustrious-culinary-history-of-1312-spruce-street/",
+          "kind": "historical",
+          "label": "States La Panetière moved to a larger space at 1602 Locust Street."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-12094",
+      "address": "125 Walnut Street",
+      "assessment": "reviewed-representative-building-point",
+      "basis": "Old Original Bookbinder’s at 125 Walnut Street. This is a separate venue from the Bookbinders Sea Food House at 215 South 15th Street.",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7084674&oldid=1867758754",
+          "kind": "historical",
+          "label": "Representative locator point for the 125 Walnut Old Original Bookbinder’s site."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-8063",
+      "address": "125 Walnut Street",
+      "assessment": "reviewed-representative-building-point",
+      "basis": "Old Original Bookbinder’s at 125 Walnut Street. This is a separate venue from the Bookbinders Sea Food House at 215 South 15th Street.",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7084674&oldid=1867758754",
+          "kind": "historical",
+          "label": "Representative locator point for the 125 Walnut Old Original Bookbinder’s site."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-19268",
+      "address": "200 South Broad",
+      "assessment": "reviewed-representative-building-point",
+      "basis": "Palm Restaurant catalog address is 200 South Broad, the Bellevue-Stratford building. This associates the Palm record with the host building only; CIA date is unknown and no opening date/restaurant continuity is inferred.",
+      "citations": [
+        {
+          "url": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715",
+          "kind": "historical",
+          "label": "Representative Bellevue-Stratford building point."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-12273",
+      "address": "727 Walnut Street",
+      "assessment": "catalog-address-only",
+      "basis": "CIA parent metadata supplies Ristorante da Gaetano at 727 Walnut Street; no independent venue/address confirmation found in this pass.",
+      "citations": []
+    },
+    {
+      "menuId": "cia-20356",
+      "address": "412 Arch Street",
+      "assessment": "institutional-photo-address-match",
+      "basis": "Free Library photo record identifies Shoyer’s Restaurant at historic address 412 Arch Street. Its published point coordinates are not reused because a coordinate reuse license was not established in the prior review.",
+      "citations": [
+        {
+          "url": "https://libwww.freelibrary.org/digital/index.cfm/item/9699",
+          "kind": "historical",
+          "label": "Historic Street Address 412 Arch Street; notes Shoyer’s Restaurant at that address."
+        }
+      ]
+    },
+    {
+      "menuId": "cia-8285",
+      "address": "1626 Chestnut Street",
+      "assessment": "venue-conflict",
+      "basis": "CIA classifies Whitman’s as a restaurant at 1626 Chestnut Street. Philadelphia building inventory identifies Whitman & Son Retail Store at the same address; relationship between the restaurant record and retail property remains unresolved.",
+      "citations": [
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/view_street.cfm/22820?PJ_GRID_BlockNumber=16",
+          "kind": "historical",
+          "label": "Identifies Whitman & Son Retail Store at 1626 Chestnut; does not resolve CIA venue type."
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-21962",
+      "address": "1201–1211 North Broad Street, southeast corner of Broad and Stiles Streets.",
+      "assessment": "Source-specific venue and historic textual location corroborated; geometry unresolved.",
+      "basis": "The NYPL catalog identifies Majestic Hotel (Philadelphia) as the event location. Philadelphia Historical Commission project record identifies Majestic Hotel at this range/corner; the NYPL records identify Majestic Hotel as the event location in 1907. The historical project record supplies building location; no restaurant room or interior coordinate inferred. Metadata and historical-text review only; no scan visual review.",
+      "citations": [
+        {
+          "url": "http://digitalcollections.nypl.org/items/cf21ec10-c541-012f-35dc-58d385a7bc34",
+          "kind": "catalog",
+          "label": "NYPL menu-specific venue metadata"
+        },
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/pj_display.cfm/83274",
+          "kind": "historical",
+          "label": "Historical location of Majestic Hotel (Philadelphia)"
+        },
+        {
+          "url": "https://phillyhistory.org/PhotoArchive/Search.aspx?action=link&address=1201+N+BROAD+ST&type=address",
+          "kind": "historical",
+          "label": "Historical location of Majestic Hotel (Philadelphia)"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-22295",
+      "address": "Broad Street between Spruce and Locust Streets; municipal architectural inventory identifies the former Horticultural Hall at 250 South Broad Street.",
+      "assessment": "Source-specific venue and historic textual location corroborated; geometry unresolved.",
+      "basis": "The NYPL catalog identifies Horticultural Hall as the event location. Free Library catalog states the Hall was built in 1894 and demolished in 1917; NYPL catalog records place menu events at Horticultural Hall in 1897 and 1907. The sources identify the Hall and its historic block; no coordinate or parcel point inferred. Metadata and historical-text review only; no scan visual review.",
+      "citations": [
+        {
+          "url": "http://digitalcollections.nypl.org/items/f2466aa0-c532-012f-f1be-58d385a7bc34",
+          "kind": "catalog",
+          "label": "NYPL menu-specific venue metadata"
+        },
+        {
+          "url": "https://libwww.freelibrary.org/digital/item/39269",
+          "kind": "historical",
+          "label": "Historical location of Horticultural Hall"
+        },
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/ho_display_map.cfm/162644",
+          "kind": "historical",
+          "label": "Historical location of Horticultural Hall"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-22779",
+      "address": "Broad Street between Spruce and Locust Streets; municipal architectural inventory identifies the former Horticultural Hall at 250 South Broad Street.",
+      "assessment": "Source-specific venue and historic textual location corroborated; geometry unresolved.",
+      "basis": "The NYPL catalog identifies Horticultural Hall as the event location. Free Library catalog states the Hall was built in 1894 and demolished in 1917; NYPL catalog records place menu events at Horticultural Hall in 1897 and 1907. The sources identify the Hall and its historic block; no coordinate or parcel point inferred. Metadata and historical-text review only; no scan visual review.",
+      "citations": [
+        {
+          "url": "http://digitalcollections.nypl.org/items/195b3130-c542-012f-1e97-58d385a7bc34",
+          "kind": "catalog",
+          "label": "NYPL menu-specific venue metadata"
+        },
+        {
+          "url": "https://libwww.freelibrary.org/digital/item/39269",
+          "kind": "historical",
+          "label": "Historical location of Horticultural Hall"
+        },
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/ho_display_map.cfm/162644",
+          "kind": "historical",
+          "label": "Historical location of Horticultural Hall"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-23209",
+      "address": "Northeast corner of South Broad and Spruce Streets; South Broad Street 200 block.",
+      "assessment": "Source-specific venue and historic textual location corroborated; geometry unresolved.",
+      "basis": "The NYPL catalog identifies Hotel Stenton as the event location. Philadelphia Historical Commission gallery includes an 1899 directory image naming Hotel Stenton and 1927/1929 archival descriptions of the northeast corner; City history states photos date to the 1890s. NYPL record year is 1896. No exact street number supported. Building-level venue only. Metadata and historical-text review only; no scan visual review.",
+      "citations": [
+        {
+          "url": "http://digitalcollections.nypl.org/items/44de7c60-c532-012f-d23b-58d385a7bc34",
+          "kind": "catalog",
+          "label": "NYPL menu-specific venue metadata"
+        },
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/image_gallery.cfm/83286",
+          "kind": "historical",
+          "label": "Historical location of Hotel Stenton"
+        },
+        {
+          "url": "https://blog.phillyhistory.org/index.php/2009/02/staying-in-philadelphia-the-hotel-stenton-and-hotel-walton/",
+          "kind": "historical",
+          "label": "Historical location of Hotel Stenton"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-23436",
+      "address": "Same hotel site later occupied by Hotel Walton: southeast corner of Broad and Locust Streets; 233–247 South Broad Street.",
+      "assessment": "Source-specific venue and historic textual location corroborated; geometry unresolved.",
+      "basis": "The NYPL catalog identifies Hotel Metropole as the event location. City historical source describes Metropole as an earlier establishment at the same site, incorporated into the Walton which opened in February 1896; NYPL catalog dates the Metropole menu to 1895. The catalog’s “at Hotel Metropole” is a menu-specific venue match. The evidence supports the same site, not the later Hotel Walton identity for the 1895 record. Metadata and historical-text review only; no scan visual review.",
+      "citations": [
+        {
+          "url": "http://digitalcollections.nypl.org/items/e03affc0-c531-012f-c779-58d385a7bc34",
+          "kind": "catalog",
+          "label": "NYPL menu-specific venue metadata"
+        },
+        {
+          "url": "https://blog.phillyhistory.org/index.php/2009/02/staying-in-philadelphia-the-hotel-stenton-and-hotel-walton/",
+          "kind": "historical",
+          "label": "Historical location of Hotel Metropole"
+        },
+        {
+          "url": "https://libwww.freelibrary.org/digital/item/2819",
+          "kind": "historical",
+          "label": "Historical location of Hotel Metropole"
+        },
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/co_display.cfm/484669",
+          "kind": "historical",
+          "label": "Historical location of Hotel Metropole"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-24054",
+      "address": "1201–1211 North Broad Street, southeast corner of Broad and Stiles Streets.",
+      "assessment": "Source-specific venue and historic textual location corroborated; geometry unresolved.",
+      "basis": "The NYPL catalog identifies Majestic Hotel (Philadelphia) as the event location. Philadelphia Historical Commission project record identifies Majestic Hotel at this range/corner; the NYPL records identify Majestic Hotel as the event location in 1907. The historical project record supplies building location; no restaurant room or interior coordinate inferred. Metadata and historical-text review only; no scan visual review.",
+      "citations": [
+        {
+          "url": "http://digitalcollections.nypl.org/items/f7af73a0-c541-012f-f4b5-58d385a7bc34",
+          "kind": "catalog",
+          "label": "NYPL menu-specific venue metadata"
+        },
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/pj_display.cfm/83274",
+          "kind": "historical",
+          "label": "Historical location of Majestic Hotel (Philadelphia)"
+        },
+        {
+          "url": "https://phillyhistory.org/PhotoArchive/Search.aspx?action=link&address=1201+N+BROAD+ST&type=address",
+          "kind": "historical",
+          "label": "Historical location of Majestic Hotel (Philadelphia)"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-24606",
+      "address": "233–247 South Broad Street",
+      "assessment": "Historical building address corroborated; geometry unresolved.",
+      "basis": "The PAB building record names Hotel Walton among the aliases for the Walton Hotel and lists this address. Supports a building address for both 1896 menu records; no dining-room entrance identified. Catalog venue match only; no scan visual review.",
+      "citations": [
+        {
+          "url": "https://menus.nypl.org/menus/24606",
+          "kind": "catalog",
+          "label": "NYPL menu-specific venue metadata"
+        },
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/pj_display.cfm/31712",
+          "kind": "historical",
+          "label": "Hotel Walton alias and 233–247 S Broad Street"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-25775",
+      "address": "233–247 South Broad Street",
+      "assessment": "Historical building address corroborated; geometry unresolved.",
+      "basis": "The PAB building record names Hotel Walton among the aliases for the Walton Hotel and lists this address. Supports a building address for both 1896 menu records; no dining-room entrance identified. Catalog venue match only; no scan visual review.",
+      "citations": [
+        {
+          "url": "https://menus.nypl.org/menus/25775",
+          "kind": "catalog",
+          "label": "NYPL menu-specific venue metadata"
+        },
+        {
+          "url": "https://www.philadelphiabuildings.org/pab/app/pj_display.cfm/31712",
+          "kind": "historical",
+          "label": "Hotel Walton alias and 233–247 S Broad Street"
+        }
+      ]
+    }
+  ],
+  "dateConflicts": [
+    {
+      "menuId": "nypl-27457",
+      "label": "1910 / 1930 (disputed)",
+      "reason": "The capture-matched NYPL record dates this Kindergarten Club menu December 16, 1910; the bulk CSV gives November 3, 1930 and names Pennsylvania Railroad as location. Neither date is selected without further evidence. Machine OCR of capture 3886679 reads “PENNSYLVANIA RAILROAD”, conflicting with the Kindergarten Club sponsor and capture-matched catalog title. No date was transcribed. Preview withheld pending image-to-record review; scan pixels were not visually reviewed.",
+      "metadataTitle": "Dinner held by The Kindergarten Club Of The Union League at Philadelphia, PA",
+      "citations": [
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L38272",
+          "kind": "dataset",
+          "label": "Capture-matched NYPL metadata date and venue"
+        },
+        {
+          "url": "https://github.com/h0rv/oldphilly/blob/7c9d237db440d79c58082c0062445f11dccf02b0/menus/snapshots/nypl-selected/Menu.csv",
+          "kind": "dataset",
+          "label": "Unchanged source Menu.csv"
+        },
+        {
+          "url": "https://github.com/h0rv/oldphilly/actions/runs/39174635257",
+          "kind": "dataset",
+          "label": "Machine-transcription run documenting the source-image conflict"
+        }
+      ],
+      "metadataDates": [
+        "1910",
+        "1910-12-16"
+      ],
+      "withholdPreview": true,
+      "pageId": "49164",
+      "imageId": "3886679",
+      "imageSha256": "bb3cc5fff757dec15c479410aaea8ca62db6e2bf00133b944d60d95a9cb4585d"
+    }
+  ],
+  "dateReadings": [
+    {
+      "menuId": "nypl-21050",
+      "date": {
+        "precision": "day",
+        "value": "1907-01-16"
+      },
+      "basis": "Machine OCR date matches the unchanged CSV date, catalog year, sponsor, Bellevue-Stratford reference and calendar weekday. Machine-supported date; not visually verified.",
+      "pageId": "24581",
+      "imageId": "473997",
+      "imageSha256": "e41e906e61ea99db6af1ca2d9962dd5249995c02b499fc204fdc6f0b8dd68b18",
+      "engine": "tesseract 5.3.4",
+      "context": "THE | OCERS’ AND IMPORTERS’ EXCHANGE | WEDNESDAY EVENING, JANUARY 16, 1907 | THE BELLEVUE-STRATFORD | ze \\ ade\\ P hy =, ten VSL.",
+      "citations": [
+        {
+          "url": "https://images.nypl.org/index.php?id=473997&t=g",
+          "kind": "scan",
+          "label": "Source image used for machine transcription"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L33658",
+          "kind": "dataset",
+          "label": "Capture-matched NYPL public-domain metadata"
+        },
+        {
+          "url": "https://github.com/h0rv/oldphilly/actions/runs/39174635257",
+          "kind": "dataset",
+          "label": "Reproducible machine-transcription run; no visual verification"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-21582",
+      "date": {
+        "precision": "day",
+        "value": "1907-01-17"
+      },
+      "basis": "Machine OCR date matches the unchanged CSV date, catalog year, sponsor, Bellevue-Stratford reference and calendar weekday. Machine-supported date; not visually verified.",
+      "pageId": "26495",
+      "imageId": "4000019842",
+      "imageSha256": "6a2e2523c591160572e6c0b26d3e77009eee0eb661faebdc2122efb67500890c",
+      "engine": "tesseract 5.3.4",
+      "context": "THE | BELLEVUE-STRATFORD | Thursday, January 17, 1907 | Dinner Committee | J",
+      "citations": [
+        {
+          "url": "https://images.nypl.org/index.php?id=4000019842&t=g",
+          "kind": "scan",
+          "label": "Source image used for machine transcription"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L33700",
+          "kind": "dataset",
+          "label": "Capture-matched NYPL public-domain metadata"
+        },
+        {
+          "url": "https://github.com/h0rv/oldphilly/actions/runs/39174635257",
+          "kind": "dataset",
+          "label": "Reproducible machine-transcription run; no visual verification"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-22759",
+      "date": {
+        "precision": "day",
+        "value": "1906-01-17"
+      },
+      "basis": "Machine OCR date matches the unchanged CSV date, catalog year, sponsor, Bellevue-Stratford reference and calendar weekday. Machine-supported date; not visually verified.",
+      "pageId": "30853",
+      "imageId": "472424",
+      "imageSha256": "aa636279a34bc5000a36362577842867d3082c487fef355e3e0eb3aeddbcaec0",
+      "engine": "tesseract 5.3.4",
+      "context": "D IMPORTERS’ EXCHANGE | § | WEDNESDAY EVENING, JANUARY 17, 1906 | THE BELLEVUE-STRATFORD | Philadelphia, Tenna",
+      "citations": [
+        {
+          "url": "https://images.nypl.org/index.php?id=472424&t=g",
+          "kind": "scan",
+          "label": "Source image used for machine transcription"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L30819",
+          "kind": "dataset",
+          "label": "Capture-matched NYPL public-domain metadata"
+        },
+        {
+          "url": "https://github.com/h0rv/oldphilly/actions/runs/39174635257",
+          "kind": "dataset",
+          "label": "Reproducible machine-transcription run; no visual verification"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-23128",
+      "date": {
+        "precision": "day",
+        "value": "1906-01-20"
+      },
+      "basis": "Machine OCR date matches the unchanged CSV date, catalog year, sponsor, Bellevue-Stratford reference and calendar weekday. Machine-supported date; not visually verified.",
+      "pageId": "32253",
+      "imageId": "472441",
+      "imageSha256": "4fc78707e4019d6d1bb043eab04cf1d60c1c7c937625a493487e0590dcd4e3b0",
+      "engine": "tesseract 5.3.4",
+      "context": "CIGARETTES | THE BELLEVUE-STRATFORD | SATURDAY, JAN. 20. | 1906. | THE BELLEVUE-STRATFORD | SATURDAY, JAN. 20. | 1906.",
+      "citations": [
+        {
+          "url": "https://images.nypl.org/index.php?id=472441&t=g",
+          "kind": "scan",
+          "label": "Source image used for machine transcription"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L30887",
+          "kind": "dataset",
+          "label": "Capture-matched NYPL public-domain metadata"
+        },
+        {
+          "url": "https://github.com/h0rv/oldphilly/actions/runs/39174949361",
+          "kind": "dataset",
+          "label": "Reproducible machine-transcription run; no visual verification"
+        }
+      ]
+    },
+    {
+      "menuId": "nypl-26300",
+      "date": {
+        "precision": "range",
+        "start": "1906-10-08",
+        "end": "1906-10-09"
+      },
+      "basis": "Machine OCR reads October 8th and 9th; the catalog supplies 1906 and the unchanged CSV notes describe an October 8 luncheon and October 9 banquet. The year is from catalog metadata, not the ambiguous OCR Roman numeral. Two-day event range; not visually verified.",
+      "pageId": "44244",
+      "imageId": "473679",
+      "imageSha256": "f9cdbfe3199777238d8cac62afb65684bdf0e9f702fd7ad8516d4013c20293b0",
+      "engine": "tesseract 5.3.4",
+      "context": "BELLEVUE-STRATFORD | PHILADELPHIA | October 8th and 9th | 4 PUBLIO LIB | SQ), McMVI",
+      "citations": [
+        {
+          "url": "https://images.nypl.org/index.php?id=473679&t=g",
+          "kind": "scan",
+          "label": "Source image used for machine transcription"
+        },
+        {
+          "url": "https://github.com/NYPL-publicdomain/data-and-utilities/blob/cb1332fcdc58b7a06917d013de63a4b915629530/items/pd_items_1.ndjson#L32500",
+          "kind": "dataset",
+          "label": "Capture-matched NYPL public-domain metadata"
+        },
+        {
+          "url": "https://github.com/h0rv/oldphilly/actions/runs/39174949361",
+          "kind": "dataset",
+          "label": "Reproducible machine-transcription run; no visual verification"
+        }
+      ]
+    }
+  ]
+}

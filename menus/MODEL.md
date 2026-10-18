@@ -32,6 +32,8 @@ The schemas reject duplicate identities, orphan references, unresolved citations
 
 `build-scans.ts` joins original page/image IDs to the pinned NYPL public-domain release. `build-catalog.ts` applies the documented source review annotations and validates joins. New unannotated source records enter as `not-reviewed`; annotation code is not required to retain them. Build regeneration uses only committed data.
 
+The additional `snapshots/venue-evidence.json` boundary records source-specific historical addresses, building-point evidence, machine-transcribed date candidates and explicit date/image conflicts. Machine dates require an exact page/image join and preserve image hashes and original date values. Their status stays `unresolved` until visual review. Conflict 27457 withholds the associated preview and uses unknown/disputed date filtering. [Evidence and unresolved gaps](review/ENRICHMENT.md).
+
 A shared exact reviewed name is used to group navigation, without merging venue IDs. The dated list shows each menu’s own branch/address; the unresolved 1953/1957 Bookbinder’s records do not inherit the later CIA 125 Walnut address.
 
 ## Remaining gaps

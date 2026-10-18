@@ -43,7 +43,15 @@ export function dateSummary(menus: readonly CatalogMenu[]): string {
     last = years.at(-1);
   const dated =
     first === undefined ? "" : first === last ? String(first) : `${String(first)}–${String(last)}`;
-  return [dated, menus.some((menu) => menu.date.year === null) ? "Undated" : ""]
+  return [
+    dated,
+    menus.some((menu) => menu.date.year === null && menu.date.review.status !== "conflict")
+      ? "Undated"
+      : "",
+    menus.some((menu) => menu.date.year === null && menu.date.review.status === "conflict")
+      ? "Date disputed"
+      : "",
+  ]
     .filter((text) => text !== "")
     .join(" · ");
 }

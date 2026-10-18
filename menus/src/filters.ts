@@ -22,11 +22,13 @@ export const defaults: Filters = {
   collection: "all",
 };
 
-export function filterMenus(
-  menus: readonly Menu[],
+type FilterableMenu = Omit<Menu, "date"> & { readonly date: { readonly year: number | null } };
+
+export function filterMenus<T extends FilterableMenu>(
+  menus: readonly T[],
   filters: Filters,
   additionalText: ReadonlyMap<string, string> = new Map(),
-): Menu[] {
+): T[] {
   const query = filters.search.trim().toLocaleLowerCase("en-US");
   return menus.filter((menu) => {
     const year = menu.date.year;

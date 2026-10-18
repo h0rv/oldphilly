@@ -97,3 +97,18 @@ test("restaurant search supports addresses, empty states and preserves branch se
   await search.fill("Bookbinder");
   expect(await page.locator("[data-restaurant]:visible").count()).toBeGreaterThan(1);
 });
+test("source conflicts withhold previews and machine dates visibly retain their uncertainty", async ({
+  page,
+}) => {
+  await page.goto("./menu/nypl-27457/");
+  await expect(page.locator(".reader-date")).toContainText("disputed");
+  await expect(page.locator(".source-caution")).toContainText("PENNSYLVANIA RAILROAD");
+  await expect(page.locator("[data-scan-viewer]")).toHaveCount(0);
+  await page.goto("./menu/nypl-26300/");
+  await expect(page.locator(".reader-date")).toHaveText("1906-10-08 – 1906-10-09");
+  await expect(page.locator(".source-caution")).toContainText("not visually verified");
+  await page.getByText("Source", { exact: true }).click();
+  await expect(
+    page.getByRole("link", { name: "Source image used for machine transcription" }),
+  ).toBeVisible();
+});

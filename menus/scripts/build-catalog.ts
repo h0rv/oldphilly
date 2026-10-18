@@ -3,6 +3,9 @@ import { pathToFileURL } from "node:url";
 import * as z from "zod/mini";
 import { parseArchive, locationSchema } from "../src/model.ts";
 import type { MenuArchive, Menu } from "../src/model.ts";
+import { enrichmentSchema } from "../src/enrichment.ts";
+import rawEnrichment from "../snapshots/venue-evidence.json" with { type: "json" };
+const enrichment = enrichmentSchema.parse(rawEnrichment);
 import { scansSchema } from "../src/scans.ts";
 import {
   parseCatalog,
@@ -1586,8 +1589,19 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
     const menu = archive.menus.find((m) => m.id === scan.menuId);
     if (menu === undefined || !menu.pages.some((page) => page.id === scan.pageId))
       throw new Error(`Orphan scan: ${scan.pageId}`);
-    if (scan.menuId === "nypl-24827" || scan.pageId === "58186")
+    if (
+      scan.menuId === "nypl-24827" ||
+      scan.pageId === "58186" ||
+      enrichment.dateConflicts.some(
+        (record) => record.menuId === scan.menuId && record.withholdPreview,
+      )
+    )
       throw new Error("Disputed scan must remain source-only");
+  }
+  for (const reading of enrichment.dateReadings) {
+    const scan = scanByPage.get(`${reading.menuId}:${reading.pageId}`);
+    if (scan?.imageId !== reading.imageId)
+      throw new Error(`Machine date has no exact source-image join: ${reading.menuId}`);
   }
   const citations: Citation[] = [];
   const citationByUrl = new Map<string, string>();
@@ -1603,6 +1617,16 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
     pages: CatalogPage[] = [];
   const venues = new Map<string, CatalogVenue>();
   for (const source of archive.menus) {
+    const pointEvidence = enrichment.points.find((item) => item.menuId === source.id);
+    const addressEvidence = enrichment.addresses.find((item) => item.menuId === source.id);
+    const dateConflict = enrichment.dateConflicts.find((item) => item.menuId === source.id);
+    const dateReading = enrichment.dateReadings.find((item) => item.menuId === source.id);
+    const extraCitations = [
+      ...(pointEvidence?.citations ?? []),
+      ...(addressEvidence?.citations ?? []),
+      ...(dateConflict?.citations ?? []),
+      ...(dateReading?.citations ?? []),
+    ];
     const candidateName = source.catalog["curated_venue"] ?? source.catalog["restau"];
     const decision =
       decisionById.get(source.id) ??
@@ -1629,6 +1653,7 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
     const citationIds = [
       ...new Set([
         sourceCitationId,
+        ...extraCitations.map((evidence) => cite(evidence.url, evidence.kind, evidence.label)),
         ...urls.map((u) =>
           cite(
             u,
@@ -1645,7 +1670,12 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
       (venueName === null || status === "not-reviewed"
         ? `venue-unresolved-${source.id}`
         : `venue-${slug(venueName + (branch === null ? "" : ` ${branch}`))}`);
-    const review = reviewed(status, reason, citationIds);
+    const review = reviewed(
+      dateConflict === undefined ? status : "conflict",
+      dateConflict?.reason ?? reason,
+      citationIds,
+    );
+    const identityReview = reviewed(status, reason, citationIds);
     const prior = venues.get(venueId);
     venues.set(venueId, {
       id: venueId,
@@ -1654,7 +1684,7 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
       branch,
       review:
         prior === undefined
-          ? review
+          ? identityReview
           : reviewed(
               prior.review.status === "unresolved" || status === "unresolved"
                 ? "unresolved"
@@ -1665,7 +1695,7 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
               [...prior.review.citationIds, ...citationIds],
             ),
     });
-    const point = source.location ?? pointById.get(source.id);
+    const point = source.location ?? pointEvidence?.location ?? pointById.get(source.id);
     // The 1915 date conflict does not dispute its reviewed Bellevue building.
     const identityConflict = source.id === "nypl-24827";
     let location: CatalogLocation;
@@ -1687,7 +1717,11 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
         review: reviewed("verified", point.basis, [...citationIds, evidence]),
       });
     } else {
-      const address = source.catalog["curated_address"] ?? source.catalog["addres"];
+      const address = [
+        source.catalog["curated_address"],
+        source.catalog["addres"],
+        addressEvidence?.address,
+      ].find((value) => typeof value === "string" && value.length > 0);
       location = {
         precision: "unknown",
         address: typeof address === "string" && address.length > 0 ? address : null,
@@ -1696,7 +1730,9 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
           : source.locationNote,
         review: reviewed(
           identityConflict ? "conflict" : "unresolved",
-          "Historical metadata retained; no reviewed geometry for this source-specific branch.",
+          addressEvidence === undefined
+            ? "Historical metadata retained; no reviewed geometry for this source-specific branch."
+            : `${addressEvidence.basis} Street address evidence does not establish coordinates.`,
           citationIds,
         ),
       };
@@ -1727,7 +1763,8 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
               pageCitation,
               cite(image.evidence, "dataset", "Official NYPL public-domain metadata capture match"),
             ];
-      const conflict = source.id === "nypl-24827" || page.id === "58186";
+      const conflict =
+        source.id === "nypl-24827" || page.id === "58186" || dateConflict?.withholdPreview === true;
       pages.push({
         id,
         menuId: source.id,
@@ -1737,9 +1774,11 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
         review: reviewed(
           conflict ? "conflict" : "source-unavailable",
           conflict
-            ? page.id === "58186"
-              ? "Attached page is a Rosoff’s New York advertisement; retained as a source-only artifact page."
-              : "Capture-matched catalog identity conflicts with the selected Philadelphia record; preview withheld."
+            ? dateConflict?.withholdPreview === true
+              ? dateConflict.reason
+              : page.id === "58186"
+                ? "Attached page is a Rosoff’s New York advertisement; retained as a source-only artifact page."
+                : "Capture-matched catalog identity conflicts with the selected Philadelphia record; preview withheld."
             : image === null
               ? "No source-specific public-domain image match; scan pixels were not reviewed."
               : "Official NYPL public-domain metadata matches this capture. Image host returned HTTP 403 during research; scan pixels and printed contents were not reviewed.",
@@ -1762,7 +1801,52 @@ export function buildCatalog(archive: MenuArchive, scansValue: unknown): Catalog
       sourceRecordId: source.id,
       name: source.name,
       venueId,
-      date: normalizedDate(source, dateValue, precision, citationIds, status === "not-reviewed"),
+      date:
+        dateConflict === undefined
+          ? dateReading === undefined
+            ? normalizedDate(source, dateValue, precision, citationIds, status === "not-reviewed")
+            : catalogDateSchema.parse({
+                ...dateReading.date,
+                year: Number(
+                  (dateReading.date.precision === "day"
+                    ? dateReading.date.value
+                    : dateReading.date.start
+                  ).slice(0, 4),
+                ),
+                label:
+                  dateReading.date.precision === "day"
+                    ? dateReading.date.value
+                    : `${dateReading.date.start} – ${dateReading.date.end}`,
+                basis: dateReading.basis,
+                review: reviewed("unresolved", dateReading.basis, citationIds),
+                sourceValues: [
+                  { name: "catalog date", value: source.date.catalogValue },
+                  { name: "source archive date", value: source.date.value ?? "" },
+                  {
+                    name: "machine-transcribed date context (not visually verified)",
+                    value: dateReading.context,
+                  },
+                  { name: "source image SHA-256", value: dateReading.imageSha256 },
+                  { name: "OCR engine", value: dateReading.engine },
+                ],
+              })
+          : catalogDateSchema.parse({
+              precision: "unknown",
+              value: null,
+              year: null,
+              label: dateConflict.label,
+              basis: dateConflict.reason,
+              review: reviewed("conflict", dateConflict.reason, citationIds),
+              sourceValues: [
+                { name: "catalog date", value: source.date.catalogValue },
+                { name: "source archive date", value: source.date.value ?? "" },
+                {
+                  name: "capture-matched NYPL metadata dates",
+                  value: dateConflict.metadataDates.join("; "),
+                },
+                { name: "disputed source image SHA-256", value: dateConflict.imageSha256 },
+              ],
+            }),
       location,
       pageIds,
       sourceCitationId,

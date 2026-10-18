@@ -2,6 +2,9 @@ import { readFile, writeFile } from "node:fs/promises";
 import { parse } from "csv-parse/sync";
 import { z } from "zod";
 import { parseArchive } from "../src/model.ts";
+import { enrichmentSchema } from "../src/enrichment.ts";
+import rawEnrichment from "../snapshots/venue-evidence.json" with { type: "json" };
+const enrichment = enrichmentSchema.parse(rawEnrichment);
 
 const source = z
   .object({
@@ -50,6 +53,10 @@ const captures = new Map(
 );
 const pages = archive.menus.flatMap((menu) => {
   if (menu.provider !== "NYPL" || menu.scanNote !== null) return [];
+  if (
+    enrichment.dateConflicts.some((record) => record.menuId === menu.id && record.withholdPreview)
+  )
+    return [];
   return menu.pages.flatMap((page) => {
     const row = rows.find((item) => item.id === page.id && `nypl-${item.menu_id}` === menu.id);
     const capture = row === undefined ? undefined : captures.get(row.image_id);

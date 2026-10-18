@@ -1,6 +1,6 @@
 import L from "leaflet";
 import { parseArchive } from "./model.ts";
-import type { Menu, MenuArchive } from "./model.ts";
+import type { MenuArchive } from "./model.ts";
 import { filterMenus, priceLabel } from "./filters.ts";
 import type { Filters } from "./filters.ts";
 import { parseCatalog } from "./catalog-model.ts";
@@ -83,7 +83,7 @@ function initialize(archive: MenuArchive, catalog: Catalog): void {
     return {
       ...menu,
       name: venue?.name ?? menu.name,
-      date: { ...menu.date, label: normalized?.date.label ?? menu.date.label },
+      date: normalized?.date ?? menu.date,
       location:
         location?.precision === "exact"
           ? {
@@ -100,6 +100,7 @@ function initialize(archive: MenuArchive, catalog: Catalog): void {
           : null,
     };
   });
+  type MapMenu = (typeof menus)[number];
   const searchText = new Map(
     archive.menus.map((menu) => [
       menu.id,
@@ -118,7 +119,7 @@ function initialize(archive: MenuArchive, catalog: Catalog): void {
   map.attributionControl.setPrefix(link("Leaflet", "https://leafletjs.com").outerHTML);
   const pins = L.layerGroup().addTo(map);
   let shown = [...menus];
-  let selected: Menu | null = null;
+  let selected: MapMenu | null = null;
   let tileErrors = 0;
   let loadedTiles = 0;
   const decades = [
@@ -180,7 +181,7 @@ function initialize(archive: MenuArchive, catalog: Catalog): void {
   function renderPins(): void {
     pins.clearLayers();
     mapStatus();
-    const groups = new Map<string, Menu[]>();
+    const groups = new Map<string, MapMenu[]>();
     for (const menu of shown) {
       if (menu.location === null) continue;
       const key = `${String(menu.location.lat)},${String(menu.location.lng)}`;
@@ -220,7 +221,7 @@ function initialize(archive: MenuArchive, catalog: Catalog): void {
     }
   }
 
-  function showMenu(menu: Menu, focus: boolean): void {
+  function showMenu(menu: MapMenu, focus: boolean): void {
     selected = menu;
     select("menu-picker").value = "";
     const content = element("menu-content");
@@ -256,6 +257,12 @@ function initialize(archive: MenuArchive, catalog: Catalog): void {
     }
     const transcription = node("details", "", "dish-details");
     transcription.append(node("summary", "Transcribed dishes and prices"));
+    const dateReview = catalog.menus.find((item) => item.id === menu.id)?.date.review;
+    if (
+      dateReview?.status === "conflict" ||
+      (dateReview?.status === "unresolved" && menu.date.precision !== "unknown")
+    )
+      content.append(node("p", dateReview.reason, "source-caution"));
     if (menu.scanNote !== null) content.append(node("p", menu.scanNote, "source-caution"));
     if (catalog.menus.find((item) => item.id === menu.id)?.priceReview.status === "conflict")
       transcription.append(

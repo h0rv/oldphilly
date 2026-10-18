@@ -27,8 +27,8 @@ const archive = parseArchive(
   JSON.parse(await readFile(new URL("../public/menus.json", import.meta.url), "utf8")),
 );
 await test("each released preview joins a source page to its exact public-domain capture and evidence line", () => {
-  assert.equal(scans.pages.length, 426);
-  assert.equal(new Set(scans.pages.map((page) => page.pageId)).size, 426);
+  assert.equal(scans.pages.length, 425);
+  assert.equal(new Set(scans.pages.map((page) => page.pageId)).size, 425);
   for (const page of scans.pages) {
     const source = archive.menus.find((menu) => menu.id === page.menuId);
     assert.ok(source);
@@ -52,5 +52,10 @@ await test("each released preview joins a source page to its exact public-domain
       `${scans.source.repo}/blob/${evidence.source.commit}/${record.sourceFile}#L${String(record.sourceLine)}`,
     );
   }
-  assert.ok(!scans.pages.some((page) => page.pageId === "58186" || page.menuId === "nypl-24827"));
+  assert.ok(
+    !scans.pages.some(
+      (page) =>
+        page.pageId === "58186" || page.menuId === "nypl-24827" || page.menuId === "nypl-27457",
+    ),
+  );
 });
