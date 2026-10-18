@@ -3,6 +3,8 @@
     "dist/**",
     "raw/**",
     "public/menus.json",
+    "public/scans.json",
+    "public/catalog.json",
     "snapshots/**",
     "review/**",
     "package-lock.json",

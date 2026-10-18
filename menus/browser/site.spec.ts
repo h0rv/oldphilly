@@ -72,12 +72,12 @@ test("photo home, about and menus remain connected on one static origin", async 
   await page.getByRole("link", { name: /Back to the map/u }).click();
   if (info.project.name === "mobile") await page.locator("#title-toggle").click();
   await page.getByRole("link", { name: "Menus", exact: true }).click();
-  await expect(page).toHaveTitle("Old Philly Menus · Historical menus");
+  await expect(page).toHaveTitle("Old Philly Menus · Restaurants and menus");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://oldphilly.org/menus/",
   );
-  await page.getByRole("link", { name: "Explore OldPhilly’s photo map", exact: true }).click();
+  await page.getByRole("link", { name: "Photo map", exact: true }).click();
   await expect(page.locator("#photo-search")).toBeAttached();
   expect(errors).toEqual([]);
 });
@@ -136,10 +136,11 @@ test("compiled menu assets and data use /menus/ while photo files retain root pa
 
 test("menu 404 output is isolated and marked noindex", async ({ page }) => {
   await page.goto("./404.html");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("That page isn’t on the menu.");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Page not found");
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex");
-  await expect(
-    page.getByRole("link", { name: "Return to Old Philly Menus", exact: true }),
-  ).toHaveAttribute("href", "/menus/");
+  await expect(page.getByRole("link", { name: "Old Philly Menus", exact: true })).toHaveAttribute(
+    "href",
+    "/menus/",
+  );
   expect((await page.request.get("/menus/__missing_page__")).status()).toBe(404);
 });

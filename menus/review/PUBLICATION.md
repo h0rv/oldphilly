@@ -1,3 +1,5 @@
+> Historical PR #1 record. The reader follow-up is documented in [READER.md](READER.md); these earlier screenshots and UI findings are not acceptance evidence for it.
+
 # Old Philly Menus integration and hosting
 
 The approved destination is **h0rv/oldphilly**, canonical **https://oldphilly.org/menus/**. The previous standalone-repository plan is superseded. This change prepares a reviewable PR and verifies CI; it does not authorize merging or publishing before preview review. h0rv/philly PR #10 is untouched.

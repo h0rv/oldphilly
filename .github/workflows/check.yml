@@ -17,3 +17,34 @@ jobs:
           path: |
             menus/review/*.png
             menus/test-results/
+
+  scan-preview:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.19.0
+          cache: npm
+          cache-dependency-path: menus/package-lock.json
+      - name: Install pinned menu dependencies
+        working-directory: menus
+        run: npm ci --ignore-scripts
+      - name: Build menu preview
+        working-directory: menus
+        env:
+          ASTRO_TELEMETRY_DISABLED: "1"
+        run: npm run build:site
+      - name: Install browser
+        working-directory: menus
+        run: npx playwright install --with-deps chromium
+      - name: Verify real NYPL scans without image fixtures
+        working-directory: menus
+        run: npx playwright test --config playwright.live.config.ts
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        if: always()
+        with:
+          name: oldphilly-real-scan-preview
+          path: |
+            menus/review/after/
+            menus/test-results/live/

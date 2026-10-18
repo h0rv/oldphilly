@@ -1,3 +1,5 @@
+> Historical PR #1 record. The reader follow-up is documented in [READER.md](READER.md); these earlier screenshots and UI findings are not acceptance evidence for it.
+
 # Independent Luna review
 
 The user-requested independent Luna agent reviewed source provenance, historical venue/address annotations, strict-check boundaries and desktop/mobile captures. The earlier follow-up covered the rights-safe 553b7738 source release; the OldPhilly monorepo integration follow-up is now complete. The reviewer made no edits and did not compete with active builds or browser servers.

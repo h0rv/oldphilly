@@ -2,7 +2,7 @@
 import "../styles.css";
 interface Props {
   readonly title: string;
-  readonly pageType?: "map" | "story";
+  readonly pageType?: "map" | "story" | "browse" | "reader";
   readonly noindex?: boolean;
 }
 const { title, pageType = "map", noindex = false } = Astro.props;
@@ -20,17 +20,21 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://oldphilly.o
     {noindex && <meta name="robots" content="noindex" />}
     <meta
       name="description"
-      content="Historical Philadelphia menus. Choose a place or menu; read the original transcription and visit the holding library."
+      content="Philadelphia menus from NYPL and the Culinary Institute of America, with scans, transcribed dishes and prices."
     />
   </head>
   <body class={`${pageType}-page`} data-asset-base={import.meta.env.BASE_URL}>
-    <a class="skip" href={pageType === "map" ? "#menu-panel" : "#story"}>
-      {pageType === "map" ? "Skip to menu" : "Skip to story"}
+    <a
+      class="skip"
+      href={pageType === "map" ? "#menu-panel" : pageType === "story" ? "#story" : "#content"}
+    >
+      {pageType === "map" ? "Skip to menu" : "Skip to content"}
     </a>
     <slot />
-    <noscript>
-      JavaScript is needed for the map.{" "}
-      <a href={`${import.meta.env.BASE_URL}menus.json`}>Download menus and source links.</a>
-    </noscript>
+    {pageType === "map" && (
+      <noscript>
+        The map requires JavaScript. <a href={`${import.meta.env.BASE_URL}menus.json`}>Menu data</a>
+      </noscript>
+    )}
   </body>
 </html>

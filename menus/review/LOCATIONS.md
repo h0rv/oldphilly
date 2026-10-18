@@ -1,3 +1,5 @@
+> Historical PR #1 record. The reader follow-up is documented in [READER.md](READER.md); these earlier screenshots and UI findings are not acceptance evidence for it.
+
 # Historical address review
 
 All 102 supplied source records remain in the app. **16 records now have reviewed locations at four representative building points; 86 remain unlocated.** Dataset completeness and geolocation completeness are separate. No contemporary restaurant-name geocoder was used.

@@ -1,68 +1,90 @@
 ---
 import Page from "../layouts/Page.astro";
-import StoryStop from "../components/StoryStop.astro";
-import SourceImage from "../components/SourceImage.astro";
-import { parseArchive } from "../model.ts";
-import { resolveStory } from "../story.ts";
-import rawArchive from "../../public/menus.json";
-import rawStory from "../../snapshots/story.json";
-const archive = parseArchive(rawArchive);
-const stops = resolveStory(archive, rawStory);
-const image = stops[0]?.image;
+import { parseCatalog } from "../catalog-model.ts";
+import { venueGroups, dateSummary } from "../venue-groups.ts";
+import raw from "../../public/catalog.json";
+const catalog = parseCatalog(raw);
 const base = import.meta.env.BASE_URL;
+const groups = venueGroups(catalog);
+const restaurants = groups.filter(
+  (group) => group.venue.kind === "restaurant" || group.venue.kind === "hotel",
+);
+const other = groups.filter(
+  (group) => group.venue.kind !== "restaurant" && group.venue.kind !== "hotel",
+);
 ---
 
-<Page title="Old Philly Menus · Historical menus" pageType="story">
-  <header class="story-header">
-    <a class="wordmark" href={base}>
-      Old Philly Menus
-    </a>
-    <a class="map-link" href={`${base}map/`}>
-      Explore the map
-    </a>
+<Page title="Old Philly Menus · Restaurants and menus" pageType="browse">
+  <header class="browse-header">
+    <h1>
+      <a href={base}>Old Philly Menus</a>
+    </h1>
+    <nav aria-label="Menus">
+      <a href={`${base}map/`}>Map</a>
+      <a href={`${base}story/`}>Three menus</a>
+    </nav>
   </header>
-  <main id="story" class="story" tabindex="-1">
-    <section class="story-intro" aria-labelledby="story-title">
-      <p class="eyebrow">A few meals from the city’s past</p>
-      <h1 id="story-title">
-        Pull up <br />a chair<span>.</span>
-      </h1>
-      <div class="intro-copy">
-        <p>Hotel suppers. Five-cent coffee. Snapper soup on Chestnut Street.</p>
-        <p>Follow three Philadelphia menus, then find your own table.</p>
-        <a href="#hotel-supper" class="tour-link">
-          Start the short tour
-        </a>
+  <main id="content" class="browse-content">
+    <h2>Restaurants and hotels</h2>
+    <label class="restaurant-search">
+      Find a restaurant
+      <input
+        id="restaurant-search"
+        type="search"
+        placeholder="Name or address"
+        autocomplete="off"
+      />
+    </label>
+    <p id="browse-count" role="status"></p>
+    <div class="restaurant-list">
+      {restaurants.map(({ venue, menus, venueIds }) => (
+        <article
+          class="restaurant-card"
+          id={`restaurant-${venue.id}`}
+          data-restaurant
+          data-search={`${venue.name} ${venue.branch ?? ""} ${menus.map((menu) => `${menu.name} ${menu.location.address ?? ""} ${menu.date.label}`).join(" ")}`.toLowerCase()}
+        >
+          <h3>
+            <a data-context-link href={`${base}restaurants/${venue.id}/`}>
+              {venue.name}
+            </a>
+          </h3>
+          {venueIds.length === 1 && venue.branch !== null && <p>{venue.branch}</p>}
+          <p>
+            {menus.length} {menus.length === 1 ? "menu" : "menus"} · {dateSummary(menus)}
+          </p>
+        </article>
+      ))}
+    </div>
+    <details class="other-menus" open>
+      <summary>Other menus</summary>
+      <div class="restaurant-list">
+        {other.map(({ venue, menus }) => (
+          <article
+            class="restaurant-card"
+            id={`restaurant-${venue.id}`}
+            data-restaurant
+            data-search={`${venue.name} ${menus.map((menu) => menu.name).join(" ")}`.toLowerCase()}
+          >
+            <h3>
+              <a data-context-link href={`${base}restaurants/${venue.id}/`}>
+                {venue.name}
+              </a>
+            </h3>
+            <p>
+              {menus.length} {menus.length === 1 ? "menu" : "menus"} · {dateSummary(menus)}
+            </p>
+          </article>
+        ))}
       </div>
-      {image !== undefined && image !== null && <SourceImage image={image} />}
-    </section>
-    {stops.map((entry, index) => (
-      <StoryStop entry={entry} index={index} />
-    ))}
-    <section class="story-outro" aria-labelledby="archive-title">
-      <p class="eyebrow">Keep browsing</p>
-      <h2 id="archive-title">There’s more on the menu.</h2>
-      <p>
-        {archive.menus.length} source records from NYPL and the Culinary Institute of America.
-        Dated, undated, and still to be placed.
-      </p>
-      <a class="map-link" href={`${base}map/`}>
-        Explore all menus
-      </a>
-    </section>
+    </details>
+    <p id="browse-empty" hidden>
+      No restaurants or menus match.
+    </p>
+    <footer>
+      <a href={`${base}catalog.json`}>Catalog and review status</a> · <a href="/">Photo map</a>
+    </footer>
   </main>
-  <footer class="story-footer">
-    <p>
-      <a href="/">Explore OldPhilly’s photo map</a>
-    </p>
-    <p>
-      These selected collections offer uneven coverage of city life. Original prices are shown in
-      their recorded currency.
-    </p>
-    <p>
-      Scans remain at their holding libraries.{" "}
-      <a href={`${base}menus.json`}>Data &amp; provenance</a>
-    </p>
-  </footer>
 </Page>
+<script src="../browse.ts"></script>
 <script src="../story-view.ts"></script>

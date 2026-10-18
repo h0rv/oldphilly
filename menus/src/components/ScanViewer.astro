@@ -1,0 +1,115 @@
+---
+import type { ScanPage } from "../scans.ts";
+interface Props {
+  readonly pages: readonly ScanPage[];
+  readonly name: string;
+  readonly labels?: Readonly<Record<string, string>>;
+  readonly initialPageId?: string | undefined;
+  readonly rememberPage?: boolean;
+}
+const { pages, name, labels = {}, initialPageId, rememberPage = false } = Astro.props;
+const first = pages.find((page) => page.pageId === initialPageId) ?? pages[0];
+const initialIndex = pages.findIndex((page) => page === first);
+---
+
+{first !== undefined && (
+  <figure
+    class="scan-viewer"
+    data-scan-viewer
+    data-menu-name={name}
+    data-remember-page={rememberPage ? "true" : "false"}
+  >
+    <div class="scan-controls">
+      <button type="button" data-previous aria-label="Previous page" disabled={initialIndex === 0}>
+        ←
+      </button>
+      <label>
+        <span class="sr-only">Scan page</span>
+        <select data-scan-page>
+          {pages.map((page, index) => (
+            <option
+              value={page.pageId}
+              selected={page === first}
+              data-preview={page.previewUrl}
+              data-full={page.fullUrl}
+              data-record={page.recordUrl}
+              data-width={page.width}
+              data-height={page.height}
+            >
+              {labels[page.pageId] ?? `Page ${String(index + 1)}`}
+            </option>
+          ))}
+        </select>
+      </label>
+      <button
+        type="button"
+        data-next
+        aria-label="Next page"
+        disabled={initialIndex === pages.length - 1}
+      >
+        →
+      </button>
+    </div>
+    <button type="button" class="scan-open" data-scan-open aria-label={`Enlarge ${name}`}>
+      <span class="scan-enlarge" aria-hidden="true">
+        Enlarge
+      </span>
+      <img
+        data-scan-image
+        src={first.previewUrl}
+        alt={`${name}, ${labels[first.pageId] ?? "Page 1"}`}
+        width={first.width}
+        height={first.height}
+        loading="eager"
+        decoding="async"
+      />
+    </button>
+    <p class="scan-error" data-scan-error role="status" hidden>
+      Image unavailable. <a href={first.recordUrl}>NYPL scan</a>
+    </p>
+    <figcaption>
+      <a data-scan-record href={first.recordUrl}>
+        From The New York Public Library
+      </a>
+    </figcaption>
+    <dialog class="scan-dialog" aria-label={`${name} scan`}>
+      <div class="scan-dialog-controls">
+        <button
+          type="button"
+          data-previous
+          aria-label="Previous page"
+          disabled={initialIndex === 0}
+        >
+          ←
+        </button>
+        <span data-current-page aria-live="polite">
+          {labels[first.pageId] ?? "Page 1"}
+        </span>
+        <button
+          type="button"
+          data-next
+          aria-label="Next page"
+          disabled={initialIndex === pages.length - 1}
+        >
+          →
+        </button>
+        <button type="button" data-zoom-out aria-label="Zoom out">
+          −
+        </button>
+        <button type="button" data-zoom-in aria-label="Zoom in">
+          +
+        </button>
+        <button type="button" data-scan-close>
+          Close
+        </button>
+      </div>
+      <div class="scan-zoom-scroll">
+        <img data-scan-full alt={`${name} scan`} />
+      </div>
+      <p data-full-error role="status" hidden>
+        Image unavailable. <a href={first.recordUrl}>NYPL scan</a>
+      </p>
+    </dialog>
+  </figure>
+)}
+<script src="../scan-viewer.ts"></script>

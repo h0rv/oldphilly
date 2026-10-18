@@ -1,3 +1,5 @@
+> Historical PR #1 record. The reader follow-up is documented in [READER.md](READER.md); these earlier screenshots and UI findings are not acceptance evidence for it.
+
 # Local validation
 
 2026-10-18; Node 24.19.0, npm 11.9.0, system Chromium. A clean `npm ci --ignore-scripts` completed from the pinned lockfile. Astro telemetry was disabled for all local checks.

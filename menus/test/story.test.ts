@@ -18,11 +18,11 @@ await test("chronological stops resolve real records and occurrence IDs from the
   assert.equal(stops.length, 3);
   assert.deepEqual(
     stops.map((stop) => stop.menu.date.year),
-    [1914, 1940, 1949],
+    [1912, 1949, 1957],
   );
   assert.deepEqual(
     stops.flatMap((stop) => stop.dishes.map((dish) => dish.price)),
-    [null, null, 0.05, 0.25, 0.35, 0.6],
+    [0.9, 1.25, 1.5, 0.35, 8.25, 0.65],
   );
   const csv: unknown = parse(
     await readFile(new URL("../snapshots/nypl-selected/MenuPage.csv", import.meta.url)),
@@ -37,7 +37,7 @@ await test("chronological stops resolve real records and occurrence IDs from the
     assert.ok(page);
     assert.equal(page.image_id, stop.image.imageId);
     assert.equal(new URL(stop.image.url).searchParams.get("id"), page.image_id);
-    assert.ok(stop.image.recordUrl.endsWith(page.uuid));
+    assert.match(stop.image.rightsEvidence, /NYPL-publicdomain/u);
   }
 });
 
