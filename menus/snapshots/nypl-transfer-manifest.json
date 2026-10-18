@@ -1,0 +1,514 @@
+{
+  "format": "nypl-csv-manifest-v1",
+  "encoding": "utf-8",
+  "maxPartBytes": 24576,
+  "maxPartRows": 200,
+  "tables": [
+    {
+      "source": {
+        "table": "Menu",
+        "fileName": "Menu.csv",
+        "libraryFileId": "libfile_4b952981a6488191901bde9b5504b52c",
+        "byteLength": 32235,
+        "rowCount": 72,
+        "sha256": "7916007f5160acfa61e2d760672f970a772d1c24d611fc2ce58c5ec71381f114"
+      },
+      "columns": [
+        "id",
+        "name",
+        "sponsor",
+        "event",
+        "venue",
+        "place",
+        "physical_description",
+        "occasion",
+        "notes",
+        "call_number",
+        "keywords",
+        "language",
+        "date",
+        "location",
+        "location_type",
+        "currency",
+        "currency_symbol",
+        "status",
+        "page_count",
+        "dish_count",
+        "catalogue_date_original",
+        "audit_batch",
+        "date_verification",
+        "confirmed_city",
+        "curated_venue",
+        "curated_address",
+        "cuisine_analytical_label",
+        "image_evidence_urls",
+        "quality_notes"
+      ],
+      "parts": [
+        {
+          "fileName": "Menu.part000.json",
+          "index": 0,
+          "firstDataRow": 1,
+          "rowCount": 57,
+          "startByte": 0,
+          "byteLength": 23752,
+          "sha256": "e7d0bf6c0acb30b45d678470ba4069dc865fe9d1aeddc1539402d6256c908be3",
+          "fileBytes": 24288,
+          "fileSha256": "1511045f77a74fa659f1207b1110d36898d0d37c396f10376c11b113a3c25452"
+        },
+        {
+          "fileName": "Menu.part001.json",
+          "index": 1,
+          "firstDataRow": 58,
+          "rowCount": 15,
+          "startByte": 23752,
+          "byteLength": 8483,
+          "sha256": "d9fe6089ee4deb71f5c1a3ab494c4b38185f9d764ca503ef9da4d5e5db83c4d9",
+          "fileBytes": 8769,
+          "fileSha256": "63ddf5f1715eabd7d3a9b2301a7da2824ff04579d2aa3486efde4a2eda4fbd69"
+        }
+      ]
+    },
+    {
+      "source": {
+        "table": "MenuPage",
+        "fileName": "MenuPage.csv",
+        "libraryFileId": "libfile_40c070472f288191b1f239bc26f2552e",
+        "byteLength": 31133,
+        "rowCount": 432,
+        "sha256": "0b45121dde01033f51da703cf7459a28683a9cd3dab3c59a99a1ab66e9a92382"
+      },
+      "columns": [
+        "id",
+        "menu_id",
+        "page_number",
+        "image_id",
+        "full_height",
+        "full_width",
+        "uuid"
+      ],
+      "parts": [
+        {
+          "fileName": "MenuPage.part000.json",
+          "index": 0,
+          "firstDataRow": 1,
+          "rowCount": 200,
+          "startByte": 0,
+          "byteLength": 14572,
+          "sha256": "3c92e95d82e26e83c9a95867ae7334b5fede151269394da372b5d6da9001a4c6",
+          "fileBytes": 15221,
+          "fileSha256": "cce02ff231da2f9ef8d307259c138490c934a9158c741a4f2ac862e0a534cfb7"
+        },
+        {
+          "fileName": "MenuPage.part001.json",
+          "index": 1,
+          "firstDataRow": 201,
+          "rowCount": 200,
+          "startByte": 14572,
+          "byteLength": 14316,
+          "sha256": "98bf3129d68a810f76a2d340d610fd067341b00acb2d0df9f6393f1b4a6ee5e1",
+          "fileBytes": 14969,
+          "fileSha256": "6a91aac2808b06c53c78531388347d96babd79cf8689ef4219898e485756559c"
+        },
+        {
+          "fileName": "MenuPage.part002.json",
+          "index": 2,
+          "firstDataRow": 401,
+          "rowCount": 32,
+          "startByte": 28888,
+          "byteLength": 2245,
+          "sha256": "dc6cac1e504841623921abf9b0568d0ec025d61a0237bdb8761f09834056914d",
+          "fileBytes": 2560,
+          "fileSha256": "d6c953ecc977c7e0a3e779e28a6d1bb5e6f002b114be1bf0e5d73b7151faa617"
+        }
+      ]
+    },
+    {
+      "source": {
+        "table": "MenuItem",
+        "fileName": "MenuItem.csv",
+        "libraryFileId": "libfile_62acf95702188191b0c7ac8aea76ce07",
+        "byteLength": 309062,
+        "rowCount": 3469,
+        "sha256": "8f00be4cfd20d88db6d907444239ad04b7c005d5c71b749c9937c46a9eab11d2"
+      },
+      "columns": [
+        "id",
+        "menu_page_id",
+        "price",
+        "high_price",
+        "dish_id",
+        "created_at",
+        "updated_at",
+        "xpos",
+        "ypos"
+      ],
+      "parts": [
+        {
+          "fileName": "MenuItem.part000.json",
+          "index": 0,
+          "firstDataRow": 1,
+          "rowCount": 200,
+          "startByte": 0,
+          "byteLength": 17103,
+          "sha256": "2618ff71c14dcd509ac7a7998b9f2c7d5c860356adcfcc230c089df40852c398",
+          "fileBytes": 17752,
+          "fileSha256": "9d2be7ca9fbb25b3773d52cca4ce0b755e7b4277e7b62d9fdb4276943cbafd24"
+        },
+        {
+          "fileName": "MenuItem.part001.json",
+          "index": 1,
+          "firstDataRow": 201,
+          "rowCount": 200,
+          "startByte": 17103,
+          "byteLength": 17338,
+          "sha256": "35d2cce861cd971a3b1cfa440f81b25ba50ea322d35c8b550329b1257a3e605a",
+          "fileBytes": 17991,
+          "fileSha256": "c737a4542ff8e064dadde0222ca72d15c7f4acaf5699d40b6e923d4bec9939c8"
+        },
+        {
+          "fileName": "MenuItem.part002.json",
+          "index": 2,
+          "firstDataRow": 401,
+          "rowCount": 200,
+          "startByte": 34441,
+          "byteLength": 17325,
+          "sha256": "3af2db4cab53114b9bbd6e218c6c0a36b3a54de4dcc2c6e70fdba4c8bffc3535",
+          "fileBytes": 17978,
+          "fileSha256": "daf0d145e6e3beefd2b4dc30e99388dc0422eb2946b59e082f58fa048d4bef20"
+        },
+        {
+          "fileName": "MenuItem.part003.json",
+          "index": 3,
+          "firstDataRow": 601,
+          "rowCount": 200,
+          "startByte": 51766,
+          "byteLength": 17436,
+          "sha256": "24548e941e27ef663fcd93beb76e6e1cf20d6d41b250bd57f7eec87c63b2dc91",
+          "fileBytes": 18089,
+          "fileSha256": "632e3736c3d7babc6ef441a5e16bf217589c59a6ca1fb9de33903d73ea73d437"
+        },
+        {
+          "fileName": "MenuItem.part004.json",
+          "index": 4,
+          "firstDataRow": 801,
+          "rowCount": 200,
+          "startByte": 69202,
+          "byteLength": 17253,
+          "sha256": "ad85153c13c17590822f5c364af4b2d84998f74a83c8d536891137d74a7ccd90",
+          "fileBytes": 17906,
+          "fileSha256": "402af2607ac24a5ca97df1f48a59bb1ae505c383c07c9a9ae9b403f35156fb1c"
+        },
+        {
+          "fileName": "MenuItem.part005.json",
+          "index": 5,
+          "firstDataRow": 1001,
+          "rowCount": 200,
+          "startByte": 86455,
+          "byteLength": 17325,
+          "sha256": "217d1fb65df3d6bd4b83a642d32e897bc1340621b9239d8d6b44c265db129c99",
+          "fileBytes": 17979,
+          "fileSha256": "bbe569f135490da2432368e1b0cc9e58e8f8549244ac7d30cffcdaf348de6c20"
+        },
+        {
+          "fileName": "MenuItem.part006.json",
+          "index": 6,
+          "firstDataRow": 1201,
+          "rowCount": 200,
+          "startByte": 103780,
+          "byteLength": 17417,
+          "sha256": "ebef27437b33c91cd33fd18dc9dcbe605c17368fa0a7271ac497ffd065a1a717",
+          "fileBytes": 18072,
+          "fileSha256": "c0245b4c48e44da804c762d9af2862a763518a288abc1dfb3dbbec74c79afad9"
+        },
+        {
+          "fileName": "MenuItem.part007.json",
+          "index": 7,
+          "firstDataRow": 1401,
+          "rowCount": 200,
+          "startByte": 121197,
+          "byteLength": 18438,
+          "sha256": "6ca5cc1eaf530dcf0c4121afdebd95754592591b87595443ada52edef77b6278",
+          "fileBytes": 19093,
+          "fileSha256": "9d8f7d2d8045c1e33410ac35d4fd62e7e2edce09b3ea3ca239a733071ae31357"
+        },
+        {
+          "fileName": "MenuItem.part008.json",
+          "index": 8,
+          "firstDataRow": 1601,
+          "rowCount": 200,
+          "startByte": 139635,
+          "byteLength": 18161,
+          "sha256": "3e5b3d383f4b5cb2d4bbc211469c42356aa9dc3abc68201843159b05f4ad894f",
+          "fileBytes": 18816,
+          "fileSha256": "779daa1756d60b50f4edac42124d5736f5bb4c2ac1ebc36c1dc6c5a9cb8bf270"
+        },
+        {
+          "fileName": "MenuItem.part009.json",
+          "index": 9,
+          "firstDataRow": 1801,
+          "rowCount": 200,
+          "startByte": 157796,
+          "byteLength": 18243,
+          "sha256": "eb00f8020f8cf3226da909d55d631a0707fe9761824e3ade45d870ccb655e849",
+          "fileBytes": 18898,
+          "fileSha256": "0885f808b56defdb9c1d99f7d22ca6f1bbe5abdc133fd85cf3c973a6ca97a85c"
+        },
+        {
+          "fileName": "MenuItem.part010.json",
+          "index": 10,
+          "firstDataRow": 2001,
+          "rowCount": 200,
+          "startByte": 176039,
+          "byteLength": 18295,
+          "sha256": "1613eafa8570f942acca4a51b520b99615b29f121b5449af2f6937c1950fddcc",
+          "fileBytes": 18951,
+          "fileSha256": "2d98dcc3e16742c215557af1ccee040d4ca8c413d05c0b76a85981418bd9849e"
+        },
+        {
+          "fileName": "MenuItem.part011.json",
+          "index": 11,
+          "firstDataRow": 2201,
+          "rowCount": 200,
+          "startByte": 194334,
+          "byteLength": 18074,
+          "sha256": "a4bed40ac408fe5297b36e8f7cd6ff35e8f46a3a57fd62788dfe562ee430a375",
+          "fileBytes": 18730,
+          "fileSha256": "181f5fe757f95eac910338aaeca086a98ad8df82e51e0c56115675370843bd97"
+        },
+        {
+          "fileName": "MenuItem.part012.json",
+          "index": 12,
+          "firstDataRow": 2401,
+          "rowCount": 200,
+          "startByte": 212408,
+          "byteLength": 18108,
+          "sha256": "68ccd702bb8b1a6b5e222de3d414cf88785dce0c1c89e1b386d2350e125db607",
+          "fileBytes": 18764,
+          "fileSha256": "87be7d050a55fb27fbfb492aa04774b006fe981dfb1a2ba2149b524dc375f679"
+        },
+        {
+          "fileName": "MenuItem.part013.json",
+          "index": 13,
+          "firstDataRow": 2601,
+          "rowCount": 200,
+          "startByte": 230516,
+          "byteLength": 17989,
+          "sha256": "5cdc448cbdf64a9b0ac3948b8a2542809f83e23186869c1c47ec2658250ac3ad",
+          "fileBytes": 18645,
+          "fileSha256": "17726664343b887ad556d142d3812e33461545bf2fda8c91d87b7a4037826f9d"
+        },
+        {
+          "fileName": "MenuItem.part014.json",
+          "index": 14,
+          "firstDataRow": 2801,
+          "rowCount": 200,
+          "startByte": 248505,
+          "byteLength": 18010,
+          "sha256": "4f45a5acfd8a3e307f2eb709592883904565e05dc237fec1986cbb58ac495b60",
+          "fileBytes": 18666,
+          "fileSha256": "031591b419d9384a185cc37171685fe0ec887245318bb1522caf05116f6b2ca8"
+        },
+        {
+          "fileName": "MenuItem.part015.json",
+          "index": 15,
+          "firstDataRow": 3001,
+          "rowCount": 200,
+          "startByte": 266515,
+          "byteLength": 17911,
+          "sha256": "8ddb44d847de10636d368c1497ec05e63c4f000737cad652256abd8659bd665e",
+          "fileBytes": 18567,
+          "fileSha256": "d69aa1399466614c8eaa31f726d0a1849035ac40918b8da228a0595fac8d2be2"
+        },
+        {
+          "fileName": "MenuItem.part016.json",
+          "index": 16,
+          "firstDataRow": 3201,
+          "rowCount": 200,
+          "startByte": 284426,
+          "byteLength": 18387,
+          "sha256": "a52a03994c3f2fd5a0b6a7491dff42221200ba48f78bea0d7b39a448420c2371",
+          "fileBytes": 19043,
+          "fileSha256": "3518b4eb5469bd772c79eb5dd50f8de5bdb5024ecf7cc7213652e99e7e5d953c"
+        },
+        {
+          "fileName": "MenuItem.part017.json",
+          "index": 17,
+          "firstDataRow": 3401,
+          "rowCount": 69,
+          "startByte": 302813,
+          "byteLength": 6249,
+          "sha256": "d8566bfb51c0d1fda703f784136b4cbf83901f4a9025aebbbcb1c3d0368adece",
+          "fileBytes": 6641,
+          "fileSha256": "e0e195c05c5f4ec700127f1268bc5132fa3d875ec04a6056e7235b611227f54c"
+        }
+      ]
+    },
+    {
+      "source": {
+        "table": "Dish",
+        "fileName": "Dish.csv",
+        "libraryFileId": "libfile_91f432b7ae548191b0017efb45084ccb",
+        "byteLength": 146577,
+        "rowCount": 2534,
+        "sha256": "828814c877febd393410098aa16315053537703976566e8e67f12cd43d0be347"
+      },
+      "columns": [
+        "id",
+        "name",
+        "description",
+        "menus_appeared",
+        "times_appeared",
+        "first_appeared",
+        "last_appeared",
+        "lowest_price",
+        "highest_price"
+      ],
+      "parts": [
+        {
+          "fileName": "Dish.part000.json",
+          "index": 0,
+          "firstDataRow": 1,
+          "rowCount": 200,
+          "startByte": 0,
+          "byteLength": 9308,
+          "sha256": "1fd261e373b58cd7258ec5ed66a514d4eb43c9d4cf431f0804ba10bc730236e1",
+          "fileBytes": 9960,
+          "fileSha256": "86997b6d36603cfc8b0741e684956b66a2b4b1e467c6176a127b047cde2ab268"
+        },
+        {
+          "fileName": "Dish.part001.json",
+          "index": 1,
+          "firstDataRow": 201,
+          "rowCount": 200,
+          "startByte": 9308,
+          "byteLength": 9613,
+          "sha256": "99b2cb4bed8a7e63e17b160f6bbb8cdc90e631e65433dc8fe752ee18a4e1b813",
+          "fileBytes": 10270,
+          "fileSha256": "3eb6731b625afe6ce5ec61c488a2772227bf3ad59035db6d48f0995751f29d44"
+        },
+        {
+          "fileName": "Dish.part002.json",
+          "index": 2,
+          "firstDataRow": 401,
+          "rowCount": 200,
+          "startByte": 18921,
+          "byteLength": 9911,
+          "sha256": "57be52c379fddb96c60314e90e44adb9a0c7d642893988f7aedc253b11a0ccac",
+          "fileBytes": 10593,
+          "fileSha256": "1bd5c2248945f4a5b8dec89d4208a56761ea072ba8b1d11870113b279f2c9897"
+        },
+        {
+          "fileName": "Dish.part003.json",
+          "index": 3,
+          "firstDataRow": 601,
+          "rowCount": 200,
+          "startByte": 28832,
+          "byteLength": 10082,
+          "sha256": "c74b472c066cc65edd0e109b626f70eb77603d46de264c7c46adcccaf11521a3",
+          "fileBytes": 10773,
+          "fileSha256": "0cd5b378f90311cd3959dfa9d89b07538872370e09090e7ec925b4d4fc2287b9"
+        },
+        {
+          "fileName": "Dish.part004.json",
+          "index": 4,
+          "firstDataRow": 801,
+          "rowCount": 200,
+          "startByte": 38914,
+          "byteLength": 10368,
+          "sha256": "f37b5b42df5c8485d70f62237277ee93a899e327ddb47802dc8abb0e30ad926d",
+          "fileBytes": 11067,
+          "fileSha256": "7a548be15863c9ff6f14524bfe8b7c3d92481e8071bf4d3ecb2e98e9dc2592aa"
+        },
+        {
+          "fileName": "Dish.part005.json",
+          "index": 5,
+          "firstDataRow": 1001,
+          "rowCount": 200,
+          "startByte": 49282,
+          "byteLength": 11054,
+          "sha256": "34ac0e731f84a1719af4044534efef79b878590da5cb13c7e5e093b3c3494d3b",
+          "fileBytes": 11792,
+          "fileSha256": "825a296070703cff48c54f16610852c243ed90353a17f5c5511da15c33b1001b"
+        },
+        {
+          "fileName": "Dish.part006.json",
+          "index": 6,
+          "firstDataRow": 1201,
+          "rowCount": 200,
+          "startByte": 60336,
+          "byteLength": 12211,
+          "sha256": "e5726709484d9d05c3189c10f48f3d43b4246096a536027c778e39225506bde6",
+          "fileBytes": 12945,
+          "fileSha256": "399b154c0f3e1256d3cdcf070fc002c50ce741a86abee4118ac977089c580fa2"
+        },
+        {
+          "fileName": "Dish.part007.json",
+          "index": 7,
+          "firstDataRow": 1401,
+          "rowCount": 200,
+          "startByte": 72547,
+          "byteLength": 13090,
+          "sha256": "563e2a822d2dc92db8f92213414cd23390361209776d953db5c14038cad39053",
+          "fileBytes": 13858,
+          "fileSha256": "06c690f206b7d4e2da15d20ca1af4d5b2d79959deac84480785aa90c32bc059c"
+        },
+        {
+          "fileName": "Dish.part008.json",
+          "index": 8,
+          "firstDataRow": 1601,
+          "rowCount": 200,
+          "startByte": 85637,
+          "byteLength": 12189,
+          "sha256": "6f79445a7351357a4b63b3a158647afa43e6b1f6592c548d2c22269eec637dcc",
+          "fileBytes": 12929,
+          "fileSha256": "060efb394cdec90f7d185404b8a3ccdf6f480a67fd71d5b1f079efe0b3eee9cc"
+        },
+        {
+          "fileName": "Dish.part009.json",
+          "index": 9,
+          "firstDataRow": 1801,
+          "rowCount": 200,
+          "startByte": 97826,
+          "byteLength": 14968,
+          "sha256": "600db3184a5f39a8a470d7f70145aecb1e4147c4586c01f6478931d21e85a858",
+          "fileBytes": 15770,
+          "fileSha256": "a127f3caf2c0fa4e541110fc9ba7988cbc806836c8117704056dd17a0080300e"
+        },
+        {
+          "fileName": "Dish.part010.json",
+          "index": 10,
+          "firstDataRow": 2001,
+          "rowCount": 200,
+          "startByte": 112794,
+          "byteLength": 12819,
+          "sha256": "f85987cdc8a319edbd43eadca2881c06c98cd58c23fa14224465fa252d79892f",
+          "fileBytes": 13577,
+          "fileSha256": "a6be8aac2db933b1b914c7379a63efee0843a37735baa09e1592dbb334e87afc"
+        },
+        {
+          "fileName": "Dish.part011.json",
+          "index": 11,
+          "firstDataRow": 2201,
+          "rowCount": 200,
+          "startByte": 125613,
+          "byteLength": 11597,
+          "sha256": "333ab17a09ddbcd1622f76cd8f59a824ee047c5d9c6919b9deced9df9b1cea8f",
+          "fileBytes": 12351,
+          "fileSha256": "f72ff8b20c785a051eac94d82600abac66141c3d8198b420c3670d2655629a7f"
+        },
+        {
+          "fileName": "Dish.part012.json",
+          "index": 12,
+          "firstDataRow": 2401,
+          "rowCount": 134,
+          "startByte": 137210,
+          "byteLength": 9367,
+          "sha256": "f03818b5161ce46704d1ae90ccbe96e4e79814d45acc4b09b76748d71bc7c5ca",
+          "fileBytes": 10038,
+          "fileSha256": "d3f9b7ebdf0fac83876772aa1a403199641d99934465faf999a15b1b488a8d39"
+        }
+      ]
+    }
+  ]
+}

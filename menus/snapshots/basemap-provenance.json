@@ -1,0 +1,8 @@
+{
+  "provider": "Abaca Labs / OpenDataPhilly",
+  "license": "CC BY 4.0",
+  "source": "https://github.com/opendataphilly/odp-data-storage/blob/5c4538b5f4d2a26a81b7fab2d0006d327a39e3d0/philadelphia-neighborhoods/philadelphia-neighborhoods.geojson",
+  "sha256": "69c189df692a95d21385e13515c514bebd9e2d3c32ef8a265159d3be7f3f6bab",
+  "features": 159,
+  "changes": "Keep original geometry and MAPNAME as name; remove unused attribute fields. These are reference neighborhoods, not historical street or venue boundaries."
+}

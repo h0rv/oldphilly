@@ -109,8 +109,15 @@ serve-site:
     python -m http.server 8080 --directory site --bind 127.0.0.1
 
 # Build then serve
-build-site: build-site-data serve-site
+build-site: build-site-data build-menus serve-site
+
+# Historical menu app; its compiler/lint dependencies stay isolated under menus/.
+menus-check:
+    cd menus && npm run check
+
+build-menus:
+    cd menus && npm run build:site
 
 # Deploy site to Cloudflare Pages (requires wrangler login)
-deploy: build-site-data
+deploy: build-site-data build-menus
     wrangler pages deploy site --project-name=oldphilly --branch=deploy --commit-dirty=true

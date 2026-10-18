@@ -1,0 +1,19 @@
+# Historical address review
+
+All 102 supplied source records remain in the app. **16 records now have reviewed locations at four representative building points; 86 remain unlocated.** Dataset completeness and geolocation completeness are separate. No contemporary restaurant-name geocoder was used.
+
+`node scripts/audit-location-candidates.ts` inventories existing CIA `addres` and NYPL `curated_address` fields into `snapshots/location-candidates.json`. It currently records **33 existing-address records**, their original source addresses/dates/URLs, supplied printed-image evidence, review notes, decisions and location evidence. This is a reproducible candidate inventory, not automatic permission to assign coordinates.
+
+| Newly located source records | Historical venue/address evidence | Representative point evidence |
+| --- | --- | --- |
+| NYPL 27260, May 12, 1959 | Supplied printed-menu audit: Warwick Hotel, 1701 Locust Street. [NPS 78002460](https://npgallery.nps.gov/AssetDetail/NRIS/78002460) independently records that hotel/address and significant years 1925/1928. | [Wikidata Q7773621 revision 2350025107](https://www.wikidata.org/w/index.php?title=Q7773621&oldid=2350025107), 39°56′56″N, 75°10′12″W. Rittenhouse reference polygon. |
+| NYPL 29996 (1948), 30777 (1934) | Supplied printed-menu audits identify Benjamin Franklin Hotel, 834 Chestnut Street. [NPS 82003808](https://npgallery.nps.gov/AssetDetail/NRIS/82003808) identifies the historical hotel at 822–840 Chestnut Street, significant year 1925; 834 falls inside that range. | [Wikidata Q4885674 revision 2541012720](https://www.wikidata.org/w/index.php?title=Q4885674&oldid=2541012720), 39°57′0″N, 75°9′18″W. Washington Square West reference polygon. |
+| CIA 19268, undated | Palm's actual catalog `addres` is 200 South Broad. It uses the already reviewed point for that building, supported by [NPS 77001182](https://npgallery.nps.gov/AssetDetail/NRIS/77001182). No opening date or restaurant continuity is inferred. | Existing [Q7716429 revision 2541938715](https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715) building point. Rittenhouse reference polygon. |
+
+Dates remain at their original reviewed precision. Menu 30777's Poe House illustration at 530 North Seventh Street is explicitly excluded as a dinner address. CIA Benjamin Franklin record 6425 lacks an address in this export and remains unlocated; the two dated NYPL records do not silently supply its missing evidence.
+
+Hotel Adelphia's five NYPL records have an audited 1229–1237 Chestnut Street address, corroborated by the [Philadelphia Architects and Buildings record](https://www.philadelphiabuildings.org/pab/app/pj_display.cfm/69318). The inspected PAB map explicitly identifies its coordinate source as Google Maps and provides no open coordinate-reuse grant. That point was not copied into the app; these remain candidates pending suitable coordinate evidence. Kugler's Marine Grill and Widener Building restaurant stay distinct. The Horn & Hardart outlet remains unresolved; 2601 Parkway's historical restaurant is not identified as its present tenant. Explicit CIA addresses such as 935 Ellsworth Street are retained without guessed points.
+
+Tests check exact new menu IDs, audited venue/address/date fields, published DMS coordinates, representative point identity and containment in licensed reference polygons. The Bellevue whitelist remains exactly six print-audited NYPL records, and Bookbinders at 215 South 15th remains separate from 125 Walnut. Browser tests calculate the initial fit from all reviewed points and viewport dimensions, then independently verify Web Mercator spacing, zoom scaling and panning.
+
+The referenced neighborhood polygons are contemporary reference geography, not historical restaurant boundaries. No point locates an individual dining room or implies continuous operation.

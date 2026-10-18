@@ -1,0 +1,68 @@
+---
+import Page from "../layouts/Page.astro";
+import StoryStop from "../components/StoryStop.astro";
+import SourceImage from "../components/SourceImage.astro";
+import { parseArchive } from "../model.ts";
+import { resolveStory } from "../story.ts";
+import rawArchive from "../../public/menus.json";
+import rawStory from "../../snapshots/story.json";
+const archive = parseArchive(rawArchive);
+const stops = resolveStory(archive, rawStory);
+const image = stops[0]?.image;
+const base = import.meta.env.BASE_URL;
+---
+
+<Page title="Old Philly Menus · Historical menus" pageType="story">
+  <header class="story-header">
+    <a class="wordmark" href={base}>
+      Old Philly Menus
+    </a>
+    <a class="map-link" href={`${base}map/`}>
+      Explore the map
+    </a>
+  </header>
+  <main id="story" class="story" tabindex="-1">
+    <section class="story-intro" aria-labelledby="story-title">
+      <p class="eyebrow">A few meals from the city’s past</p>
+      <h1 id="story-title">
+        Pull up <br />a chair<span>.</span>
+      </h1>
+      <div class="intro-copy">
+        <p>Hotel suppers. Five-cent coffee. Snapper soup on Chestnut Street.</p>
+        <p>Follow three Philadelphia menus, then find your own table.</p>
+        <a href="#hotel-supper" class="tour-link">
+          Start the short tour
+        </a>
+      </div>
+      {image !== undefined && image !== null && <SourceImage image={image} />}
+    </section>
+    {stops.map((entry, index) => (
+      <StoryStop entry={entry} index={index} />
+    ))}
+    <section class="story-outro" aria-labelledby="archive-title">
+      <p class="eyebrow">Keep browsing</p>
+      <h2 id="archive-title">There’s more on the menu.</h2>
+      <p>
+        {archive.menus.length} source records from NYPL and the Culinary Institute of America.
+        Dated, undated, and still to be placed.
+      </p>
+      <a class="map-link" href={`${base}map/`}>
+        Explore all menus
+      </a>
+    </section>
+  </main>
+  <footer class="story-footer">
+    <p>
+      <a href="/">Explore OldPhilly’s photo map</a>
+    </p>
+    <p>
+      These selected collections offer uneven coverage of city life. Original prices are shown in
+      their recorded currency.
+    </p>
+    <p>
+      Scans remain at their holding libraries.{" "}
+      <a href={`${base}menus.json`}>Data &amp; provenance</a>
+    </p>
+  </footer>
+</Page>
+<script src="../story-view.ts"></script>

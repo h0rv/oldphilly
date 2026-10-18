@@ -1,0 +1,803 @@
+{
+  "reviewedAt": "2026-10-18",
+  "method": "Inventory existing CIA addres and NYPL curated_address fields. Candidate completeness is separate from coordinate verification and city coverage.",
+  "locatedRecords": 16,
+  "distinctPoints": 4,
+  "candidates": [
+    {
+      "menuId": "cia-17865",
+      "name": "Middle East Restaurant",
+      "date": {
+        "label": "Undated",
+        "basis": "No date in the CIA catalog",
+        "catalogValue": "",
+        "precision": "unknown",
+        "year": null,
+        "value": null
+      },
+      "sourceAddress": "935 Ellsworth Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/17865",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-17581",
+      "name": "Bookbinders Sea Food House Inc.",
+      "date": {
+        "label": "October 16, 1950",
+        "basis": "CIA catalog date; no additional printed precision inferred",
+        "catalogValue": "1950-10-16",
+        "precision": "day",
+        "year": 1950,
+        "value": "1950-10-16"
+      },
+      "sourceAddress": "215 South 15th Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/17581",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-17072",
+      "name": "Bookbinders",
+      "date": {
+        "label": "February 27, 1964",
+        "basis": "CIA catalog date; no additional printed precision inferred",
+        "catalogValue": "1964-02-27",
+        "precision": "day",
+        "year": 1964,
+        "value": "1964-02-27"
+      },
+      "sourceAddress": "215 South 15th Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/17072",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-7530",
+      "name": "Cafe Lafitte",
+      "date": {
+        "label": "Undated",
+        "basis": "No date in the CIA catalog",
+        "catalogValue": "",
+        "precision": "unknown",
+        "year": null,
+        "value": null
+      },
+      "sourceAddress": "1302-04 Drury Lane",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/7530",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-14244",
+      "name": "Deja Vu",
+      "date": {
+        "label": "Undated",
+        "basis": "No date in the CIA catalog",
+        "catalogValue": "",
+        "precision": "unknown",
+        "year": null,
+        "value": null
+      },
+      "sourceAddress": "1609 Pine Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/14244",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-8074",
+      "name": "Fisher's Seafood Restaurant",
+      "date": {
+        "label": "July 22, 1967",
+        "basis": "CIA catalog date; no additional printed precision inferred",
+        "catalogValue": "1967-07-22",
+        "precision": "day",
+        "year": 1967,
+        "value": "1967-07-22"
+      },
+      "sourceAddress": "7312 Castor Avenue",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/8074",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-20281",
+      "name": "Garden",
+      "date": {
+        "label": "1977",
+        "basis": "CIA catalog date; no additional printed precision inferred",
+        "catalogValue": "1977",
+        "precision": "year",
+        "year": 1977,
+        "value": "1977"
+      },
+      "sourceAddress": "1617 Spruce Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/20281",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-13777",
+      "name": "La Panetiere",
+      "date": {
+        "label": "Undated",
+        "basis": "No date in the CIA catalog",
+        "catalogValue": "",
+        "precision": "unknown",
+        "year": null,
+        "value": null
+      },
+      "sourceAddress": "1602 Locust Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/13777",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-13733",
+      "name": "La Panetiere",
+      "date": {
+        "label": "Undated",
+        "basis": "No date in the CIA catalog",
+        "catalogValue": "",
+        "precision": "unknown",
+        "year": null,
+        "value": null
+      },
+      "sourceAddress": "1602 Locust Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/13733",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-12094",
+      "name": "Old Original Bookbinder's",
+      "date": {
+        "label": "November 20, 1978",
+        "basis": "CIA catalog date; no additional printed precision inferred",
+        "catalogValue": "1978-11-20",
+        "precision": "day",
+        "year": 1978,
+        "value": "1978-11-20"
+      },
+      "sourceAddress": "125 Walnut Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/12094",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "reviewed representative point",
+      "reason": "CIA catalog address 125 Walnut Street matched to Old Original Bookbinder's, Wikidata Q7084674. P625 is a representative locator point, not a surveyed building outline. This is separate from Bookbinders at 215 South 15th Street.",
+      "location": {
+        "lat": 39.94688888888889,
+        "lng": -75.1438888888889,
+        "area": "Old City",
+        "address": "125 Walnut Street",
+        "basis": "CIA catalog address 125 Walnut Street matched to Old Original Bookbinder's, Wikidata Q7084674. P625 is a representative locator point, not a surveyed building outline. This is separate from Bookbinders at 215 South 15th Street.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7084674&oldid=1867758754"
+      }
+    },
+    {
+      "menuId": "cia-8063",
+      "name": "Old Original Bookbinder's",
+      "date": {
+        "label": "February 15, 1977",
+        "basis": "CIA catalog date; no additional printed precision inferred",
+        "catalogValue": "1977-02-15",
+        "precision": "day",
+        "year": 1977,
+        "value": "1977-02-15"
+      },
+      "sourceAddress": "125 Walnut Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/8063",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "reviewed representative point",
+      "reason": "CIA catalog address 125 Walnut Street matched to Old Original Bookbinder's, Wikidata Q7084674. P625 is a representative locator point, not a surveyed building outline. This is separate from Bookbinders at 215 South 15th Street.",
+      "location": {
+        "lat": 39.94688888888889,
+        "lng": -75.1438888888889,
+        "area": "Old City",
+        "address": "125 Walnut Street",
+        "basis": "CIA catalog address 125 Walnut Street matched to Old Original Bookbinder's, Wikidata Q7084674. P625 is a representative locator point, not a surveyed building outline. This is separate from Bookbinders at 215 South 15th Street.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7084674&oldid=1867758754"
+      }
+    },
+    {
+      "menuId": "cia-19268",
+      "name": "Palm Restaurant",
+      "date": {
+        "label": "Undated",
+        "basis": "No date in the CIA catalog",
+        "catalogValue": "",
+        "precision": "unknown",
+        "year": null,
+        "value": null
+      },
+      "sourceAddress": "200 South Broad",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/19268",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "reviewed representative point",
+      "reason": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      }
+    },
+    {
+      "menuId": "cia-12273",
+      "name": "Ristorante da Gaetano",
+      "date": {
+        "label": "Undated",
+        "basis": "No date in the CIA catalog",
+        "catalogValue": "",
+        "precision": "unknown",
+        "year": null,
+        "value": null
+      },
+      "sourceAddress": "727 Walnut Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/12273",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-20356",
+      "name": "Shoyer's",
+      "date": {
+        "label": "December 8, 1956",
+        "basis": "CIA catalog date; no additional printed precision inferred",
+        "catalogValue": "1956-12-08",
+        "precision": "day",
+        "year": 1956,
+        "value": "1956-12-08"
+      },
+      "sourceAddress": "412 Arch Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/20356",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "cia-8285",
+      "name": "Whitman's",
+      "date": {
+        "label": "September 14, 1949",
+        "basis": "CIA catalog date; no additional printed precision inferred",
+        "catalogValue": "1949-09-14",
+        "precision": "day",
+        "year": 1949,
+        "value": "1949-09-14"
+      },
+      "sourceAddress": "1626 Chestnut Street",
+      "sourceUrl": "https://cdm16940.contentdm.oclc.org/digital/collection/p16940coll1/id/8285",
+      "reviewedVenue": "",
+      "printedEvidenceUrls": [],
+      "sourceAuditNote": "",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-27260",
+      "name": "The Warwick Hotel",
+      "date": {
+        "label": "May 12, 1959",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1959-05-12",
+        "precision": "day",
+        "year": 1959,
+        "value": "1959-05-12"
+      },
+      "sourceAddress": "1701 Locust Street",
+      "sourceUrl": "https://menus.nypl.org/menus/27260",
+      "reviewedVenue": "Warwick Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=2057289&t=w",
+        "https://images.nypl.org/index.php?id=3883380&t=w"
+      ],
+      "sourceAuditNote": "Cover explicitly says The Warwick Philadelphia; printed menu date. Address verified by official Pennsylvania Bulletin https://www.pacodeandbulletin.gov/secure/pabulletin/data/vol38/38-23/38_23_p2.pdf. Cuisine is an analytical label from dishes, not catalogue metadata.",
+      "decision": "reviewed representative point",
+      "reason": "The supplied printed-scan audit for NYPL 27260 names the Warwick in Philadelphia and gives 1701 Locust Street, dated May 12, 1959. NPS National Register record 78002460 independently identifies The Warwick at 1701 Locust Street, with significant years 1925 and 1928. Wikidata Q7773621 P625 supplies the representative building point, not a dining-room position.",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.17,
+        "area": "Rittenhouse",
+        "address": "1701 Locust Street · Warwick Hotel",
+        "basis": "The supplied printed-scan audit for NYPL 27260 names the Warwick in Philadelphia and gives 1701 Locust Street, dated May 12, 1959. NPS National Register record 78002460 independently identifies The Warwick at 1701 Locust Street, with significant years 1925 and 1928. Wikidata Q7773621 P625 supplies the representative building point, not a dining-room position.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7773621&oldid=2350025107"
+      }
+    },
+    {
+      "menuId": "nypl-29916",
+      "name": "Kugler's",
+      "date": {
+        "label": "February 1, 1949",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1949-02-01",
+        "precision": "day",
+        "year": 1949,
+        "value": "1949-02-01"
+      },
+      "sourceAddress": "Widener Building, Chestnut Street near Broad Street",
+      "sourceUrl": "https://menus.nypl.org/menus/29916",
+      "reviewedVenue": "Kugler’s Chestnut Street Restaurant",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=3991700&t=w",
+        "https://images.nypl.org/index.php?id=3991701&t=w"
+      ],
+      "sourceAuditNote": "Cover explicitly says Widener Building, Philadelphia, Pennsylvania; menu prints Tuesday February 1 1949. Keep separate from Marine Grill. Exact street number is not assigned. Fourth attached page3991702 is a Rosoff’s New York advertisement and should not be included in a clean Philadelphia dish transcription. Contemporary address support https://ecommons.cornell.edu/bitstream/1813/27575/1/053_14.pdf.",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-29996",
+      "name": "The Benjamin Franklin",
+      "date": {
+        "label": "January 26, 1948",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1948-01-26",
+        "precision": "day",
+        "year": 1948,
+        "value": "1948-01-26"
+      },
+      "sourceAddress": "834 Chestnut Street",
+      "sourceUrl": "https://menus.nypl.org/menus/29996",
+      "reviewedVenue": "Benjamin Franklin Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=3991452&t=w",
+        "https://images.nypl.org/index.php?id=3991453&t=w",
+        "https://images.nypl.org/index.php?id=3991454&t=w"
+      ],
+      "sourceAuditNote": "Cover explicitly says Benjamin Franklin Philadelphia; menu prints Monday January26 1948. Treat Garden Terrace as a room of the hotel for venue count. CIA has a previously known undated breakfast from this hotel, so this is new to dated70, not a wholly new discovery of the venue. Address source https://www.ccpconline.com/contact-us.",
+      "decision": "reviewed representative point",
+      "reason": "The supplied printed-scan audits for NYPL 29996 (1948) and 30777 (1934) explicitly identify the Philadelphia Benjamin Franklin Hotel at 834 Chestnut Street. NPS National Register record 82003808 identifies the historical hotel at 822–840 Chestnut Street with significant year 1925. Wikidata Q4885674 P625 supplies a representative hotel point. The Poe House drawing at 530 North Seventh Street on 30777 is not the dinner venue; no point is assigned there.",
+      "location": {
+        "lat": 39.95,
+        "lng": -75.155,
+        "area": "Washington Square West",
+        "address": "834 Chestnut Street · Benjamin Franklin Hotel",
+        "basis": "The supplied printed-scan audits for NYPL 29996 (1948) and 30777 (1934) explicitly identify the Philadelphia Benjamin Franklin Hotel at 834 Chestnut Street. NPS National Register record 82003808 identifies the historical hotel at 822–840 Chestnut Street with significant year 1925. Wikidata Q4885674 P625 supplies a representative hotel point. The Poe House drawing at 530 North Seventh Street on 30777 is not the dinner venue; no point is assigned there.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q4885674&oldid=2541012720"
+      }
+    },
+    {
+      "menuId": "nypl-30411",
+      "name": "Horn & Hardart",
+      "date": {
+        "label": "August 3, 1940",
+        "basis": "Printed date reviewed in supplied source audit: catalogue date plus printed date code",
+        "catalogValue": "1940-08-03",
+        "precision": "day",
+        "year": 1940,
+        "value": "1940-08-03"
+      },
+      "sourceAddress": "Philadelphia; outlet unresolved",
+      "sourceUrl": "https://menus.nypl.org/menus/30411",
+      "reviewedVenue": "Horn & Hardart, Philadelphia",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=3995471&t=w",
+        "https://images.nypl.org/index.php?id=3995472&t=w"
+      ],
+      "sourceAuditNote": "Printed menu says Horn and Hardart, Philadelphia. Date code80340 supports NYPL catalogue1940-08-03. City confirmed, exact outlet not established; do not assign to an arbitrary chain address.",
+      "decision": "unlocated",
+      "reason": "The exact chain outlet is unresolved; a city name does not support a pin.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-30431",
+      "name": "Bellevue Stratford Hotel",
+      "date": {
+        "label": "September 28, 1940",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1940-09-28",
+        "precision": "day",
+        "year": 1940,
+        "value": "1940-09-28"
+      },
+      "sourceAddress": "Broad and Walnut Streets",
+      "sourceUrl": "https://menus.nypl.org/menus/30431",
+      "reviewedVenue": "Bellevue-Stratford Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=3995524&t=w",
+        "https://images.nypl.org/index.php?id=3995525&t=w"
+      ],
+      "sourceAuditNote": "Cover explicitly names Bellevue-Stratford Hotel Philadelphia and prints Saturday September28 1940. Venue already present in baseline70.",
+      "decision": "reviewed representative point",
+      "reason": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      }
+    },
+    {
+      "menuId": "nypl-30462",
+      "name": "Kugler's Marine Frill",
+      "date": {
+        "label": "January 7, 1941",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1941-01-07",
+        "precision": "day",
+        "year": 1941,
+        "value": "1941-01-07"
+      },
+      "sourceAddress": "Fifteenth Street above Chestnut; 30 South 15th Street contemporary corroboration",
+      "sourceUrl": "https://menus.nypl.org/menus/30462",
+      "reviewedVenue": "Kugler’s Marine Grill",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=3996113&t=w",
+        "https://images.nypl.org/index.php?id=3996114&t=w"
+      ],
+      "sourceAuditNote": "Cover explicitly prints Fifteenth Street above Chestnut Philadelphia; menu prints Tuesday January7 1941. Separate venue/address from Widener Building Kugler. Contemporary primary address corroboration: https://www.phideltathetaarchive.com/wp-content/uploads/2012/04/1939-40_vol64_no1-5.pdf (30S15th). Contemporary evidence of two restaurants: https://ecommons.cornell.edu/bitstream/1813/27450/1/047_09.pdf.",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-30472",
+      "name": "2601 Parkway",
+      "date": {
+        "label": "February 23, 1941",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1941-02-23",
+        "precision": "day",
+        "year": 1941,
+        "value": "1941-02-23"
+      },
+      "sourceAddress": "2601 Pennsylvania Avenue",
+      "sourceUrl": "https://menus.nypl.org/menus/30472",
+      "reviewedVenue": "2601 Parkway Restaurant",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=3996164&t=w"
+      ],
+      "sourceAuditNote": "Menu prints Sunday February23 1941 and 2601Parkway. City and venue corroborated in contemporary1947 fraternity magazine https://www.deltasigmapi.org/docs/default-source/DELTASIG-Magazine/1940s/1947-deltasig-vol-37-no-1-november.pdf?sfvrsn=b995699b_2; building association history describes1939 opening with restaurant https://www.2601parkway.com/history/. Current address https://triobyob.com/2020/. Do not identify the1941 restaurant as the current Thai restaurant.",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-30777",
+      "name": "Benjamin Franklin Hotel",
+      "date": {
+        "label": "January 19, 1934",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1934-01-19",
+        "precision": "day",
+        "year": 1934,
+        "value": "1934-01-19"
+      },
+      "sourceAddress": "834 Chestnut Street",
+      "sourceUrl": "https://menus.nypl.org/menus/30777",
+      "reviewedVenue": "Benjamin Franklin Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4010890&t=w",
+        "https://images.nypl.org/index.php?id=4010892&t=w",
+        "https://images.nypl.org/index.php?id=4010893&t=w"
+      ],
+      "sourceAuditNote": "Cover explicitly names Benjamin Franklin Hotel Philadelphia Pennsylvania and prints January19 1934. Drawing labels Poe House530NorthSeventhStreet, which is not the dinner venue; do not geocode to the drawing address.",
+      "decision": "reviewed representative point",
+      "reason": "The supplied printed-scan audits for NYPL 29996 (1948) and 30777 (1934) explicitly identify the Philadelphia Benjamin Franklin Hotel at 834 Chestnut Street. NPS National Register record 82003808 identifies the historical hotel at 822–840 Chestnut Street with significant year 1925. Wikidata Q4885674 P625 supplies a representative hotel point. The Poe House drawing at 530 North Seventh Street on 30777 is not the dinner venue; no point is assigned there.",
+      "location": {
+        "lat": 39.95,
+        "lng": -75.155,
+        "area": "Washington Square West",
+        "address": "834 Chestnut Street · Benjamin Franklin Hotel",
+        "basis": "The supplied printed-scan audits for NYPL 29996 (1948) and 30777 (1934) explicitly identify the Philadelphia Benjamin Franklin Hotel at 834 Chestnut Street. NPS National Register record 82003808 identifies the historical hotel at 822–840 Chestnut Street with significant year 1925. Wikidata Q4885674 P625 supplies a representative hotel point. The Poe House drawing at 530 North Seventh Street on 30777 is not the dinner venue; no point is assigned there.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q4885674&oldid=2541012720"
+      }
+    },
+    {
+      "menuId": "nypl-32047",
+      "name": "The Bellvue-Stratford",
+      "date": {
+        "label": "September 26, 1919",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1919-09-26",
+        "precision": "day",
+        "year": 1919,
+        "value": "1919-09-26"
+      },
+      "sourceAddress": "Broad and Walnut Streets",
+      "sourceUrl": "https://menus.nypl.org/menus/32047",
+      "reviewedVenue": "Bellevue-Stratford Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4034599&t=w"
+      ],
+      "sourceAuditNote": "Cover prints Bellevue-Stratford September26 1919 and names the Philadelphia citizens committee; catalogue misspellsBellvue/Merrier. Venue already represented.",
+      "decision": "reviewed representative point",
+      "reason": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      }
+    },
+    {
+      "menuId": "nypl-32212",
+      "name": "Hotel Adelphia",
+      "date": {
+        "label": "August 17, 1916",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1916-08-17",
+        "precision": "day",
+        "year": 1916,
+        "value": "1916-08-17"
+      },
+      "sourceAddress": "1229–1237 Chestnut Street",
+      "sourceUrl": "https://menus.nypl.org/menus/32212",
+      "reviewedVenue": "Hotel Adelphia",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4042328&t=w",
+        "https://images.nypl.org/index.php?id=4042329&t=w"
+      ],
+      "sourceAuditNote": "Cover names HotelAdelphia; menu prints ThursdayAugust17 1916. Philadelphia hotel identity/address corroborated by architectural archive https://www.philadelphiabuildings.org/pab/app/ar_display_projects.cfm/22266 and https://www.philadelphiabuildings.org/pab/app/pj_display_citations_holdings.cfm/69318.",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-33270",
+      "name": "Bellevue - Stratford",
+      "date": {
+        "label": "January 2, 1915",
+        "basis": "Printed date correction verified during source audit",
+        "catalogValue": "1915-01-01",
+        "precision": "day",
+        "year": 1915,
+        "value": "1915-01-02"
+      },
+      "sourceAddress": "Broad and Walnut Streets",
+      "sourceUrl": "https://menus.nypl.org/menus/33270",
+      "reviewedVenue": "Bellevue-Stratford Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4045496&t=w",
+        "https://images.nypl.org/index.php?id=4045498&t=w"
+      ],
+      "sourceAuditNote": "IMPORTANT date correction: NYPLCSV gives1915-01-01; cover actually prints January2nd1915 and Bellevue-Stratford Philadelphia. Use printed1915-01-02.",
+      "decision": "reviewed representative point",
+      "reason": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      }
+    },
+    {
+      "menuId": "nypl-33548",
+      "name": "The Bellevue-Stratford",
+      "date": {
+        "label": "January 2, 1914",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1914-01-02",
+        "precision": "day",
+        "year": 1914,
+        "value": "1914-01-02"
+      },
+      "sourceAddress": "Broad and Walnut Streets",
+      "sourceUrl": "https://menus.nypl.org/menus/33548",
+      "reviewedVenue": "Bellevue-Stratford Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4046889&t=w"
+      ],
+      "sourceAuditNote": "Single menu explicitly prints TheBellevue-Stratford Vendredi le2Janvier1914. Same established Philadelphia venue.",
+      "decision": "reviewed representative point",
+      "reason": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      }
+    },
+    {
+      "menuId": "nypl-33662",
+      "name": "Hotel Adelphia",
+      "date": {
+        "label": "1914",
+        "basis": "Catalog year; printed date precision has not been checked",
+        "catalogValue": "1914-01-27",
+        "precision": "year",
+        "year": 1914,
+        "value": "1914"
+      },
+      "sourceAddress": "1229–1237 Chestnut Street",
+      "sourceUrl": "https://menus.nypl.org/menus/33662",
+      "reviewedVenue": "Hotel Adelphia",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4047830&t=w",
+        "https://images.nypl.org/index.php?id=4047831&t=w",
+        "https://images.nypl.org/index.php?id=4047832&t=w"
+      ],
+      "sourceAuditNote": "Date and event from NYPLcatalogue; scans have building image and extremely faint/reversed printing, so exact date not independently legible in derivatives inspected. Hotel identity/address externally confirmed as above. Catalogue date retained as exact catalogued, not an estimated date.",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-33793",
+      "name": "Hotel Adelphia",
+      "date": {
+        "label": "February 18, 1914",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1914-02-18",
+        "precision": "day",
+        "year": 1914,
+        "value": "1914-02-18"
+      },
+      "sourceAddress": "1229–1237 Chestnut Street",
+      "sourceUrl": "https://menus.nypl.org/menus/33793",
+      "reviewedVenue": "Hotel Adelphia",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4049917&t=w"
+      ],
+      "sourceAuditNote": "Cover explicitly prints PhiladelphiaSportingWritersAssociation, HotelAdelphia, WednesdayFebruary18 1914.",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-33796",
+      "name": "Bellevue-Stratford Hotel",
+      "date": {
+        "label": "February 18, 1914",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1914-02-18",
+        "precision": "day",
+        "year": 1914,
+        "value": "1914-02-18"
+      },
+      "sourceAddress": "Broad and Walnut Streets",
+      "sourceUrl": "https://menus.nypl.org/menus/33796",
+      "reviewedVenue": "Bellevue-Stratford Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4049944&t=w",
+        "https://images.nypl.org/index.php?id=4049945&t=w"
+      ],
+      "sourceAuditNote": "Event title page explicitly prints Bellevue-StratfordHotel Philadelphia February18 1914.",
+      "decision": "reviewed representative point",
+      "reason": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      }
+    },
+    {
+      "menuId": "nypl-33815",
+      "name": "Hotel Adelphia",
+      "date": {
+        "label": "February 21, 1914",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1914-02-21",
+        "precision": "day",
+        "year": 1914,
+        "value": "1914-02-21"
+      },
+      "sourceAddress": "1229–1237 Chestnut Street",
+      "sourceUrl": "https://menus.nypl.org/menus/33815",
+      "reviewedVenue": "Hotel Adelphia",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4050049&t=w"
+      ],
+      "sourceAuditNote": "Event page prints HotelAdelphia FebruaryTwentyFirstNineteenFourteen. Honoree organization is DelawareCounty; hotel venue is Philadelphia, externally corroborated.",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-33972",
+      "name": "Hotel Adelphia",
+      "date": {
+        "label": "July 4, 1914",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1914-07-04",
+        "precision": "day",
+        "year": 1914,
+        "value": "1914-07-04"
+      },
+      "sourceAddress": "1229–1237 Chestnut Street",
+      "sourceUrl": "https://menus.nypl.org/menus/33972",
+      "reviewedVenue": "Hotel Adelphia",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4066776&t=w"
+      ],
+      "sourceAuditNote": "Event page explicitly prints HotelAdelphiaPhiladelphia JulyFourthNineteenFourteen.",
+      "decision": "unlocated",
+      "reason": "Historical address retained. A reviewed coordinate source for this exact venue/address is still needed; no current-name geocoding was performed.",
+      "location": null
+    },
+    {
+      "menuId": "nypl-34327",
+      "name": "The Bellevue-Stratford",
+      "date": {
+        "label": "November 30, 1914",
+        "basis": "Printed date reviewed in supplied source audit: printed scan date",
+        "catalogValue": "1914-11-30",
+        "precision": "day",
+        "year": 1914,
+        "value": "1914-11-30"
+      },
+      "sourceAddress": "Broad and Walnut Streets",
+      "sourceUrl": "https://menus.nypl.org/menus/34327",
+      "reviewedVenue": "Bellevue-Stratford Hotel",
+      "printedEvidenceUrls": [
+        "https://images.nypl.org/index.php?id=4067808&t=w",
+        "https://images.nypl.org/index.php?id=4067809&t=w"
+      ],
+      "sourceAuditNote": "Event page names society of Philadelphia and Bellevue-Stratford, November30 1914; menu page contains food/wines.",
+      "decision": "reviewed representative point",
+      "reason": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+      "location": {
+        "lat": 39.94888888888889,
+        "lng": -75.165,
+        "area": "Rittenhouse",
+        "address": "200 South Broad Street · Bellevue-Stratford Hotel",
+        "basis": "CIA restaurant fields explicitly identify Bellevue-Stratford or a restaurant within that hotel. The six NYPL records have supplied printed-scan audits naming the Bellevue-Stratford in Philadelphia, all dated after the present hotel opened in 1904. National Register record 77001182 confirms the historical 200 S. Broad address. Wikidata Q7716429 P625 supplies a representative hotel point; it does not identify an individual dining room. Earlier Bellevue venues and sponsoring organizations are not assigned this point. CIA Palm record 19268 explicitly supplies 200 South Broad. It uses the same representative building point; its date remains unknown and no restaurant continuity or opening date is inferred.",
+        "evidence": "https://www.wikidata.org/w/index.php?title=Q7716429&oldid=2541938715"
+      }
+    }
+  ]
+}
